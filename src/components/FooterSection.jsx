@@ -2,7 +2,7 @@ function FooterSection({ t, logoImg, footerImage }) {
   return (
     <footer id="footer" className="footer">
       <div className="footerAtmosphere" aria-hidden="true">
-        <img src={footerImage} alt="" className="footerAtmosphereImage" loading="lazy" decoding="async" />
+        <img src={footerImage} alt="" className="footerAtmosphereImage" loading="eager" decoding="async" />
         <div className="footerAtmosphereFade" />
       </div>
 
@@ -13,18 +13,6 @@ function FooterSection({ t, logoImg, footerImage }) {
         </div>
 
         <div className="footerLinks">
-          <div className="footerColumn">
-            <h4>{t.footer.exploreTitle}</h4>
-            {t.footer.exploreLinks.map((link, i) => (
-              <a key={i} href="#">{link}</a>
-            ))}
-          </div>
-          <div className="footerColumn">
-            <h4>{t.footer.hostsTitle}</h4>
-            {t.footer.hostsLinks.map((link, i) => (
-              <a key={i} href="#">{link}</a>
-            ))}
-          </div>
           <div className="footerColumn">
             <h4>{t.footer.supportTitle}</h4>
             {t.footer.supportLinks.map((link, i) => (
@@ -40,7 +28,7 @@ function FooterSection({ t, logoImg, footerImage }) {
         </div>
       </div>
 
-      <div className="footerBottom">© 2026 Horizon. {t.footer.rights}</div>
+      <div className="footerBottom">{t.footer.brandLine} {t.footer.rights}</div>
     </footer>
   );
 }

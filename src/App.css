@@ -580,19 +580,16 @@
   width: 100%;
   min-height: 34px;
   margin-top: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 0 38px 0 12px;
+  border: none;
+  border-radius: 0;
+  padding: 0 20px 0 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
     linear-gradient(45deg, transparent 50%, rgba(16, 185, 129, 0.9) 50%),
     linear-gradient(135deg, rgba(16, 185, 129, 0.9) 50%, transparent 50%);
   background-position:
-    0 0,
-    calc(100% - 18px) calc(50% - 1px),
-    calc(100% - 13px) calc(50% - 1px);
+    calc(100% - 14px) calc(50% - 1px),
+    calc(100% - 9px) calc(50% - 1px);
   background-size:
-    100% 100%,
     5px 5px,
     5px 5px;
   background-repeat: no-repeat;
@@ -602,21 +599,26 @@
   font-weight: 600;
   line-height: 1.2;
   outline: none;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  cursor: text;
+  box-shadow: none;
   transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   text-align: left;
 }
 
+.heroGuestsTrigger::placeholder {
+  color: rgba(255, 255, 255, 0.58);
+  font-weight: 600;
+}
+
 .heroGuestsTrigger:hover {
-  border-color: rgba(16, 185, 129, 0.34);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 24px rgba(0, 0, 0, 0.14);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .heroGuestsTrigger:focus-visible,
 .heroGuestsTrigger.open {
-  border-color: rgba(16, 185, 129, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 0 0 3px rgba(16, 185, 129, 0.14);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .heroGuestsMenu {

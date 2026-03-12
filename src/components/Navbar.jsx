@@ -11,6 +11,7 @@ function Navbar({
   onAuthAction
 }) {
   const navSections = [
+    { key: "home", href: "#hero", label: t.navbar.home },
     { key: "homes", href: "#listings", label: t.navbar.homes },
     { key: "host", href: "#experiences", label: t.navbar.host },
     { key: "contact", href: "#footer", label: t.navbar.contact }

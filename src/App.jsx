@@ -86,7 +86,7 @@ function App() {
     guests: ""
   });
   const [catalogFilters, setCatalogFilters] = useState({
-    maxPrice: 350,
+    maxPrice: 255000,
     minGuests: "any",
     services: []
   });
@@ -114,10 +114,6 @@ function App() {
   const handleAuthAction = () => {
     setIsAuthenticated(true);
   };
-
-  const featuredListings = useMemo(() => {
-    return listings.filter((l) => l.featured);
-  }, []);
 
   const todayIso = useMemo(() => toIsoDate(new Date()), []);
 
@@ -293,7 +289,7 @@ function App() {
     const matchedIds = hasSearchMatches ? new Set(searchMatchedListingIds) : null;
 
     return dateConstrainedCatalogListings.filter((listing) => {
-      const listingPrice = Number(listing.price.replace(/[^0-9.]/g, ""));
+      const listingPrice = Number(listing.price.replace(/\D/g, ""));
 
       const matchesLocation = !locationTerm
         || listing.title.toLowerCase().includes(locationTerm)
@@ -308,11 +304,8 @@ function App() {
   }, [catalogFilters, dateConstrainedCatalogListings, heroFilters.location, searchMatchedListingIds]);
 
   const openCatalogOverlay = () => {
-    setHeroFilters((prev) => ({
-      ...prev,
-      date: isoToLocalDate(checkInDate)
-    }));
     setIsCatalogOpen(true);
+    setAvailabilityResult(null);
   };
 
   const handleSelectListing = (listingId) => {
@@ -395,8 +388,8 @@ function App() {
 
       <ListingsSection
         label={t.collections.label}
-        title={t.listings.featuredAccommodations}
-        listings={featuredListings.slice(0, 4)}
+        title={t.listings.additionalStays}
+        listings={listings}
         perNightLabel={t.listings.perNight}
         onSelectListing={handleSelectListing}
         favoriteListingIds={favoriteListingIds}

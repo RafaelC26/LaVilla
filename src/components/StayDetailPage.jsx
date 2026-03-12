@@ -244,7 +244,7 @@ function StayDetailPage({
     return perNightLabel ? `${amount} ${t.detail.perLabel} ${perNightLabel}` : amount;
   };
 
-  const nightlyRate = Number(listing.price.replace(/[^0-9.]/g, ""));
+  const nightlyRate = Number(listing.price.replace(/\D/g, ""));
   const hasFullRange = Boolean(checkInDate && checkOutDate);
   const nights = hasFullRange ? Math.max(1, differenceInCalendarDays(checkOutDate, checkInDate)) : 0;
   const totalBeforeTax = hasFullRange ? (nightlyRate * nights) : 0;
@@ -301,6 +301,10 @@ function StayDetailPage({
   useEffect(() => {
     setCheckOutDate(parseIsoDate(initialCheckOutDate));
   }, [initialCheckOutDate]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [listingId]);
 
   const nextImage = () => {
     setActiveImageIndex((prev) => (prev + 1) % detailImages.length);
@@ -966,7 +970,7 @@ function StayDetailPage({
               <button className="detailContactBtn hostSpotlightPrimary" type="button" onClick={openHostChat}>
                 {hostDialog.contactButton}
               </button>
-              <button className="hostSpotlightSecondary" type="button" onClick={() => navigate("/hosts/mathieu")}>
+              <button className="hostSpotlightSecondary" type="button" onClick={() => navigate("/hosts/andres")}>
                 {hostDialog.profileButton}
               </button>
             </div>

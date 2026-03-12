@@ -54,7 +54,7 @@ function ListingsSection({
             }}
           >
             <div className="listingImage">
-              <img src={listing.image} alt={listing.title} loading="lazy" decoding="async" />
+              <img src={listing.image} alt={listing.title} loading="eager" decoding="async" />
               <button
                 className={`favoriteBtn ${favoriteListingIds.includes(listing.id) ? "active" : ""}`}
                 type="button"

@@ -7,7 +7,7 @@ function HostProfilePage({ t, listings, logoImg }) {
 
   const host = useMemo(() => {
     const fallback = {
-      id: hostId || "mathieu",
+      id: hostId || "andres",
       name: t.detail.hostName,
       badge: t.detail.hostBadge,
       since: t.detail.hostSince,

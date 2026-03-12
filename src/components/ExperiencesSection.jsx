@@ -16,10 +16,10 @@ function ExperiencesSection({ t, onSelectExperienceCategory }) {
           aria-label={t.experiences.profileImageAlt}
         >
           <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=560&h=560&fit=crop"
+            src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=560&h=560&fit=crop&crop=face"
             alt={t.experiences.profileImageAlt}
             className="sellerAvatar"
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </button>

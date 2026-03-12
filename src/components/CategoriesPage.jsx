@@ -81,7 +81,7 @@ function CategoriesPage({
               <img
                 src={categoryImages[index]}
                 alt={cardTitle}
-                loading="lazy"
+                loading="eager"
                 onError={(event) => {
                   event.currentTarget.onerror = null;
                   event.currentTarget.src = fallbackImage;

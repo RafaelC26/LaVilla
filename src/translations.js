@@ -2,6 +2,7 @@ export const translations = {
   es: {
     navbar: {
       logo: "Horizon Stays",
+      home: "Inicio",
       homes: "Casas",
       host: "Sobre mi",
       booking: "Reservas",
@@ -53,8 +54,8 @@ export const translations = {
       confirm: "Aceptar y reservar"
     },
     hero: {
-      title: "La Naturaleza, Refinada",
-      subtitle: "Experimenta un alto chez-vivir y una vida absoluta en nuestra colección seleccionada de retiros en la montaña",
+      title: "Casas con encanto en Boyaca",
+      subtitle: "Encuentra alojamientos unicos en Boyaca, con ubicaciones tranquilas, comodidad y vistas inolvidables.",
       altTitle: "Escápate a lo Extraordinario",
       altSubtitle: "Refugios rurales seleccionados, desde villas en montañas neblinosas hasta fincas en viñedos soleados",
       location: "Ubicación",
@@ -96,11 +97,11 @@ export const translations = {
       forest: "Refugios en el Bosque"
     },
     experiences: {
-      title: "Sobre la propietaria",
+      title: "Sobre el propietario",
       subtitle: "Conoce quien gestiona personalmente cada casa y tu estancia.",
-      tag: "Vendedora",
-      name: "Juliana Monroy",
-      role: "Anfitriona y propietaria",
+      tag: "Anfitrion",
+      name: "Andres",
+      role: "Anfitrion y propietario",
       bio: "Acompaño cada reserva de principio a fin para que llegues con total tranquilidad, con recomendaciones reales y una atención humana en cada detalle.",
       trustHighlights: ["Identidad verificada", "Reseña media 4.9/5", "Check-in guiado"],
       yearsHosting: "+8 años recibiendo huéspedes",
@@ -109,8 +110,8 @@ export const translations = {
       responseTimeDesc: "Confirmaciones agiles y soporte directo antes y durante tu viaje.",
       personalAttention: "Atencion 100% personalizada",
       personalAttentionDesc: "Cada casa se prepara manualmente segun tu tipo de viaje y preferencias.",
-      profileImageAlt: "Retrato de la propietaria",
-      metricsImageAlt: "Detalle del espacio de trabajo de la propietaria"
+      profileImageAlt: "Retrato del propietario",
+      metricsImageAlt: "Detalle del espacio de trabajo del propietario"
     },
     categoriesPage: {
       title: "Explorar Todas las Categorías",
@@ -139,7 +140,7 @@ export const translations = {
         backLabel: "Volver"
       },
       user: {
-        name: "Juliana Monroy",
+        name: "Andres",
         badge: "Miembro premium"
       },
       title: "Mis Viajes",
@@ -161,7 +162,7 @@ export const translations = {
         {
           listingId: 1,
           status: "upcoming",
-          location: "Cotswolds, UK",
+          location: "Duitama, Boyaca",
           title: "The Stone Barn Farmhouse",
           date: "Oct 12 - Oct 15, 2023",
           guests: "4 huespedes",
@@ -170,7 +171,7 @@ export const translations = {
         {
           listingId: 6,
           status: "upcoming",
-          location: "Tuscany, Italy",
+          location: "Nobsa, Boyaca",
           title: "Olive Grove Villa and Vineyard",
           date: "Nov 02 - Nov 10, 2023",
           guests: "2 huespedes",
@@ -179,7 +180,7 @@ export const translations = {
         {
           listingId: 2,
           status: "past",
-          location: "Santorini, Greece",
+          location: "Villa de Leyva, Boyaca",
           title: "Cliffside Escape",
           date: "Aug 04 - Aug 09, 2023",
           guests: "2 huespedes",
@@ -188,7 +189,7 @@ export const translations = {
         {
           listingId: 3,
           status: "cancelled",
-          location: "Kyoto, Japan",
+          location: "Tunja, Boyaca",
           title: "Loft Apartment",
           date: "Jul 15 - Jul 20, 2023",
           guests: "3 huespedes",
@@ -203,21 +204,21 @@ export const translations = {
         {
           country: "Norway",
           title: "The Midnight Pine Cabin",
-          price: "$450 / noche",
+          price: "COP 210.000 / noche",
           categoryKey: "forest",
           image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=80"
         },
         {
           country: "Switzerland",
           title: "Alps Echo Manor",
-          price: "$890 / noche",
+          price: "COP 255.000 / noche",
           categoryKey: "mountain",
           image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"
         },
         {
           country: "France",
           title: "Provence Lavender Mill",
-          price: "$320 / noche",
+          price: "COP 185.000 / noche",
           categoryKey: "vineyards",
           image: "https://images.unsplash.com/photo-1472224371017-08207f84aaae?auto=format&fit=crop&w=700&q=80"
         }
@@ -255,13 +256,13 @@ export const translations = {
         saveButton: "Guardar cambios",
         initialValues: {
           photo: "Anade una foto para personalizar tu cuenta",
-          firstName: "Juliana",
-          lastName: "Monroy",
+          firstName: "Andres",
+          lastName: "",
           birthDate: "22 de agosto de 1996",
           gender: "Mujer",
           idDocument: "DNI 74283915",
           passwordStatus: "Ultima modificacion: 6 jul. 2016",
-          email: "juliana.monroy@horizonstays.com",
+          email: "andres@horizonstays.com",
           phone: "+34 600 123 456",
           address: "Calle Aribau 128",
           city: "Barcelona",
@@ -309,8 +310,8 @@ export const translations = {
           selectedMethodId: "card_visa"
         },
         methods: [
-          { id: "card_visa", brand: "Visa", maskedNumber: "**** 1942", holder: "Juliana Monroy" },
-          { id: "card_master", brand: "Mastercard", maskedNumber: "**** 4481", holder: "Juliana Monroy" }
+          { id: "card_visa", brand: "Visa", maskedNumber: "**** 1942", holder: "Andres" },
+          { id: "card_master", brand: "Mastercard", maskedNumber: "**** 4481", holder: "Andres" }
         ],
         invoices: [
           { id: "inv_001", period: "Ene 2026", amount: "$420", status: "Pagada" },
@@ -349,7 +350,7 @@ export const translations = {
       perNight: "noche"
     },
     catalog: {
-      breadcrumb: "Inicio / Alojamientos en Alpes",
+      breadcrumb: "Inicio / Alojamientos en Boyaca",
       title: "Alojamientos disponibles",
       subtitle: "Encuentra y reserva el alojamiento perfecto para tus fechas",
       showMap: "Mostrar mapa",
@@ -363,7 +364,7 @@ export const translations = {
         destination: "Destinos",
         date: "Fecha",
         price: "Precio",
-        minPrice: "Min: 200",
+        minPrice: "Precio maximo",
         rooms: "Habitaciones",
         anyRoom: "Cualquier cantidad",
         services: "Servicios",
@@ -397,14 +398,14 @@ export const translations = {
       chooseDates: "Elige tus fechas, reserva y activa una confirmacion instantanea.",
       contactHost: "Contactar anfitrión",
       hostBadge: "Superanfitrion",
-      hostName: "Mathieu",
+      hostName: "Andres",
       hostSince: "Anfitrión desde 2018",
       hostBio: "Apasionado por crear experiencias memorables en montaña y naturaleza.",
       hostDialog: {
-        name: "Mathieu",
+        name: "Andres",
         badge: "Superhost",
         properties: "8 propiedades",
-        bio: "¡Hola! Soy Mathieu, tu anfitrión. Estoy aqui para asegurarme de que tengas una estancia increible y responder cualquier pregunta que puedas tener.",
+        bio: "¡Hola! Soy Andres, tu anfitrion. Estoy aqui para asegurarme de que tengas una estancia increible y responder cualquier pregunta que puedas tener.",
         contactButton: "Contacta al Host",
         profileButton: "Ver Perfil",
         image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=320&h=320&fit=crop&crop=face",
@@ -433,7 +434,7 @@ export const translations = {
           {
             id: "host-1",
             sender: "host",
-            text: "Hola, soy Mathieu. Estoy aqui para ayudarte con tu reserva.",
+            text: "Hola, soy Andres. Estoy aqui para ayudarte con tu reserva.",
             time: "25min"
           },
           {
@@ -492,20 +493,18 @@ export const translations = {
     },
     footer: {
       description: "Descubre casas seleccionadas y atendidas personalmente para una estancia tranquila y memorable.",
-      exploreTitle: "Casas",
-      exploreLinks: ["Todas las casas", "Casas de montana", "Casas junto al lago", "Escapadas de fin de semana", "Disponibilidad"],
-      hostsTitle: "Sobre mi",
-      hostsLinks: ["Mi historia", "Mi estilo de hospedaje", "Normas de la casa", "Reseñas de huéspedes"],
       supportTitle: "Tu estancia",
-      supportLinks: ["Como reservar", "Check-in y check-out", "Politica de cancelacion", "Preguntas frecuentes"],
+      supportLinks: ["Como reservar", "Check-in y check-out", "Normas de la casa", "Politica de cancelacion"],
       connectTitle: "Contacto",
       connectLinks: ["WhatsApp", "Correo", "Instagram", "Ubicacion"],
+      brandLine: "© 2026 Horizon y La Villa.",
       rights: "Todos los derechos reservados"
     }
   },
   en: {
     navbar: {
       logo: "Horizon Stays",
+      home: "Home",
       homes: "Homes",
       host: "About me",
       booking: "Bookings",
@@ -557,8 +556,8 @@ export const translations = {
       confirm: "Accept and reserve"
     },
     hero: {
-      title: "Nature, Refined",
-      subtitle: "Experience a high chez-vivre and absolute life in our curated collection of mountain retreats",
+      title: "Boyaca Homes, Beautifully Curated",
+      subtitle: "Stay in distinctive homes across Boyaca, surrounded by mountain views, colonial towns, and calm rural charm.",
       altTitle: "Escape to the Extraordinary",
       altSubtitle: "Selected rural refuges, from villas in misty mountains to estates in sunny vineyards",
       location: "Location",
@@ -602,8 +601,8 @@ export const translations = {
     experiences: {
       title: "About the owner",
       subtitle: "Meet the person who personally manages each home and your stay.",
-      tag: "Seller",
-      name: "Juliana Monroy",
+      tag: "Host",
+      name: "Andres",
       role: "Host and owner",
       bio: "I personally guide every reservation end-to-end so you arrive with clarity, trusted recommendations, and real human support in every detail.",
       trustHighlights: ["Verified identity", "4.9/5 average rating", "Guided check-in"],
@@ -643,7 +642,7 @@ export const translations = {
         backLabel: "Go back"
       },
       user: {
-        name: "Juliana Monroy",
+        name: "Andres",
         badge: "Premium member"
       },
       title: "My Trips",
@@ -665,7 +664,7 @@ export const translations = {
         {
           listingId: 1,
           status: "upcoming",
-          location: "Cotswolds, UK",
+          location: "Duitama, Boyaca",
           title: "The Stone Barn Farmhouse",
           date: "Oct 12 - Oct 15, 2023",
           guests: "4 guests",
@@ -674,7 +673,7 @@ export const translations = {
         {
           listingId: 6,
           status: "upcoming",
-          location: "Tuscany, Italy",
+          location: "Nobsa, Boyaca",
           title: "Olive Grove Villa and Vineyard",
           date: "Nov 02 - Nov 10, 2023",
           guests: "2 guests",
@@ -683,7 +682,7 @@ export const translations = {
         {
           listingId: 2,
           status: "past",
-          location: "Santorini, Greece",
+          location: "Villa de Leyva, Boyaca",
           title: "Cliffside Escape",
           date: "Aug 04 - Aug 09, 2023",
           guests: "2 guests",
@@ -692,7 +691,7 @@ export const translations = {
         {
           listingId: 3,
           status: "cancelled",
-          location: "Kyoto, Japan",
+          location: "Tunja, Boyaca",
           title: "Loft Apartment",
           date: "Jul 15 - Jul 20, 2023",
           guests: "3 guests",
@@ -707,21 +706,21 @@ export const translations = {
         {
           country: "Norway",
           title: "The Midnight Pine Cabin",
-          price: "$450 / night",
+          price: "COP 210,000 / night",
           categoryKey: "forest",
           image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=700&q=80"
         },
         {
           country: "Switzerland",
           title: "Alps Echo Manor",
-          price: "$890 / night",
+          price: "COP 255,000 / night",
           categoryKey: "mountain",
           image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"
         },
         {
           country: "France",
           title: "Provence Lavender Mill",
-          price: "$320 / night",
+          price: "COP 185,000 / night",
           categoryKey: "vineyards",
           image: "https://images.unsplash.com/photo-1472224371017-08207f84aaae?auto=format&fit=crop&w=700&q=80"
         }
@@ -759,13 +758,13 @@ export const translations = {
         saveButton: "Save changes",
         initialValues: {
           photo: "Add a photo to personalize your account",
-          firstName: "Juliana",
-          lastName: "Monroy",
+          firstName: "Andres",
+          lastName: "",
           birthDate: "August 22, 1996",
           gender: "Female",
           idDocument: "ID 74283915",
           passwordStatus: "Last changed: Jul 6, 2016",
-          email: "juliana.monroy@horizonstays.com",
+          email: "andres@horizonstays.com",
           phone: "+34 600 123 456",
           address: "128 Aribau Street",
           city: "Barcelona",
@@ -813,8 +812,8 @@ export const translations = {
           selectedMethodId: "card_visa"
         },
         methods: [
-          { id: "card_visa", brand: "Visa", maskedNumber: "**** 1942", holder: "Juliana Monroy" },
-          { id: "card_master", brand: "Mastercard", maskedNumber: "**** 4481", holder: "Juliana Monroy" }
+          { id: "card_visa", brand: "Visa", maskedNumber: "**** 1942", holder: "Andres" },
+          { id: "card_master", brand: "Mastercard", maskedNumber: "**** 4481", holder: "Andres" }
         ],
         invoices: [
           { id: "inv_001", period: "Jan 2026", amount: "$420", status: "Paid" },
@@ -853,7 +852,7 @@ export const translations = {
       perNight: "night"
     },
     catalog: {
-      breadcrumb: "Home / Stays in Alps",
+      breadcrumb: "Home / Stays in Boyaca",
       title: "Available stays",
       subtitle: "Find and book the perfect stay for your dates",
       showMap: "Show map",
@@ -867,7 +866,7 @@ export const translations = {
         destination: "Destinations",
         date: "Date",
         price: "Price",
-        minPrice: "Min: 200",
+        minPrice: "Max price",
         rooms: "Bedrooms",
         anyRoom: "Any amount",
         services: "Services",
@@ -901,14 +900,14 @@ export const translations = {
       chooseDates: "Pick your dates, book, and enable instant confirmation.",
       contactHost: "Contact host",
       hostBadge: "Superhost",
-      hostName: "Mathieu",
+      hostName: "Andres",
       hostSince: "Hosting since 2018",
       hostBio: "Focused on memorable mountain and nature experiences.",
       hostDialog: {
-        name: "Mathieu",
+        name: "Andres",
         badge: "Superhost",
         properties: "8 properties",
-        bio: "Hi! I am Mathieu, your host. I am here to make sure you have an incredible stay and to answer any questions you may have.",
+        bio: "Hi! I am Andres, your host. I am here to make sure you have an incredible stay and to answer any questions you may have.",
         contactButton: "Contact Host",
         profileButton: "View Profile",
         image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=320&h=320&fit=crop&crop=face",
@@ -937,7 +936,7 @@ export const translations = {
           {
             id: "host-1",
             sender: "host",
-            text: "Hi, I am Mathieu. I am here to help with your booking.",
+            text: "Hi, I am Andres. I am here to help with your booking.",
             time: "25min"
           },
           {
@@ -996,14 +995,11 @@ export const translations = {
     },
     footer: {
       description: "Discover handpicked homes personally hosted for calm, memorable stays.",
-      exploreTitle: "Homes",
-      exploreLinks: ["All homes", "Mountain homes", "Lake homes", "Weekend escapes", "Availability"],
-      hostsTitle: "About me",
-      hostsLinks: ["My story", "Hosting style", "House rules", "Guest reviews"],
       supportTitle: "Your stay",
-      supportLinks: ["How to book", "Check-in and check-out", "Cancellation policy", "FAQ"],
+      supportLinks: ["How to book", "Check-in and check-out", "House rules", "Cancellation policy"],
       connectTitle: "Contact",
       connectLinks: ["WhatsApp", "Email", "Instagram", "Location"],
+      brandLine: "© 2026 Horizon and La Villa.",
       rights: "All rights reserved"
     }
   }

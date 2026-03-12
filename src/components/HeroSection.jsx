@@ -202,6 +202,11 @@ function HeroGuestsField({ t, guestsValue, onChangeGuests }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
+  const handleGuestsInput = (rawValue) => {
+    const digitsOnly = rawValue.replace(/\D/g, "").slice(0, 2);
+    onChangeGuests?.(digitsOnly);
+  };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -230,16 +235,20 @@ function HeroGuestsField({ t, guestsValue, onChangeGuests }) {
         <span>{t.hero.guestsLabel}</span>
       </label>
 
-      <button
+      <input
         id="hero-guests-trigger"
-        type="button"
+        type="text"
         className={`heroGuestsTrigger ${isOpen ? "open" : ""}`}
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={guestsValue}
+        placeholder={t.hero.guestsPlaceholder}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((prev) => !prev)}
-      >
-        <span>{guestsValue || t.hero.guestsPlaceholder}</span>
-      </button>
+        onFocus={() => setIsOpen(true)}
+        onClick={() => setIsOpen(true)}
+        onChange={(event) => handleGuestsInput(event.target.value)}
+      />
 
       {isOpen && (
         <div className="heroGuestsMenu" role="listbox" aria-label={t.hero.guestsLabel}>

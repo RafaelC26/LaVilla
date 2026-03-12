@@ -402,13 +402,17 @@ function CatalogOverlay({
               <h4>{t.catalog.filters.price}</h4>
               <input
                 type="range"
-                min="80"
-                max="350"
-                step="5"
+                min="150000"
+                max="255000"
+                step="5000"
                 value={catalogFilters.maxPrice}
                 onChange={(event) => onCatalogFilterChange("maxPrice", Number(event.target.value))}
               />
-              <p>{`${t.catalog.filters.minPrice}: ${catalogFilters.maxPrice}`}</p>
+              <p>{`${t.catalog.filters.minPrice}: ${new Intl.NumberFormat(language === "es" ? "es-CO" : "en-US", {
+                style: "currency",
+                currency: "COP",
+                maximumFractionDigits: 0
+              }).format(catalogFilters.maxPrice)}`}</p>
             </div>
 
             <div className="catalogFilterBlock">
