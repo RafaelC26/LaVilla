@@ -261,7 +261,7 @@ export const translations = {
           gender: "Mujer",
           idDocument: "DNI 74283915",
           passwordStatus: "Ultima modificacion: 6 jul. 2016",
-          email: "andres@horizonstays.com",
+          email: "andres@lavilla.com",
           phone: "+34 600 123 456",
           address: "Calle Aribau 128",
           city: "Barcelona",
@@ -333,7 +333,8 @@ export const translations = {
           { label: "Terminos de Servicio", path: "/legal/terms" },
           { label: "Soporte", path: "/legal/support" }
         ],
-        rights: "© 2026 Horizon. Todos los derechos reservados."
+        rights: "© 2026 La Villa. Todos los derechos reservados.",
+        digitalCredit: "Experiencia digital por  Horizon"
       }
     },
     legalPages: {
@@ -349,7 +350,7 @@ export const translations = {
           { title: "4. Seguridad de los datos", body: "Implementamos medidas técnicas y organizativas apropiadas para proteger tu información contra accesos no autorizados, alteración, divulgación o destrucción." },
           { title: "5. Tus derechos", body: "Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento desde la configuración de tu cuenta. También puedes solicitar la portabilidad de tus datos contactándonos directamente." },
           { title: "6. Cambios a esta política", body: "Podemos actualizar esta política periódicamente. Te notificaremos por correo electrónico ante cambios significativos. El uso continuo de la plataforma implica tu aceptación." },
-          { title: "7. Contacto", body: "Para preguntas relacionadas con tu privacidad escríbenos a privacidad@horizonstays.com o usa el formulario de contacto en la sección de Soporte." }
+          { title: "7. Contacto", body: "Para preguntas relacionadas con tu privacidad escríbenos a privacidad@lavilla.com o usa el formulario de contacto en la sección de Soporte." }
         ]
       },
       terms: {
@@ -373,8 +374,8 @@ export const translations = {
         contactTitle: "Canales de contacto",
         contactOptions: [
           { icon: "💬", label: "WhatsApp", description: "Respuesta inmediata", value: "+57 310 000 0000" },
-          { icon: "✉️", label: "Correo", description: "Respuesta en menos de 2 horas", value: "hola@horizonstays.com" },
-          { icon: "📸", label: "Instagram", description: "Mensajes directos", value: "@horizonstays" }
+          { icon: "✉️", label: "Correo", description: "Respuesta en menos de 2 horas", value: "hola@lavilla.com" },
+          { icon: "📸", label: "Instagram", description: "Mensajes directos", value: "@lavilla" }
         ],
         faqTitle: "Preguntas frecuentes",
         faqItems: [
@@ -419,8 +420,6 @@ export const translations = {
         price: "Precio",
         minPrice: "Precio maximo",
         rooms: "Habitaciones",
-        anyRoom: "Cualquier cantidad",
-        services: "Servicios",
         serviceOptions: [
           { key: "wifi", label: "Wi-Fi" },
           { key: "pool", label: "Piscina" },
@@ -816,7 +815,7 @@ export const translations = {
           gender: "Female",
           idDocument: "ID 74283915",
           passwordStatus: "Last changed: Jul 6, 2016",
-          email: "andres@horizonstays.com",
+          email: "andres@lavilla.com",
           phone: "+34 600 123 456",
           address: "128 Aribau Street",
           city: "Barcelona",
@@ -888,7 +887,8 @@ export const translations = {
           { label: "Terms of Service", path: "/legal/terms" },
           { label: "Support", path: "/legal/support" }
         ],
-        rights: "© 2026 Horizon. All rights reserved."
+        rights: "© 2026 La Villa. All rights reserved.",
+        digitalCredit: "Digital experience by Horizon"
       }
     },
     legalPages: {
@@ -904,7 +904,7 @@ export const translations = {
           { title: "4. Data Security", body: "We implement appropriate technical and organizational measures to protect your information against unauthorized access, alteration, disclosure or destruction." },
           { title: "5. Your Rights", body: "You have the right to access, correct or delete your personal information at any time from your account settings. You may also request data portability by contacting us directly." },
           { title: "6. Policy Changes", body: "We may update this policy periodically. We will notify you by email of significant changes. Continued use of the platform after updates implies your acceptance." },
-          { title: "7. Contact", body: "For privacy-related questions you can write to us at privacy@horizonstays.com or use the contact form in the Support section." }
+          { title: "7. Contact", body: "For privacy-related questions you can write to us at privacy@lavilla.com or use the contact form in the Support section." }
         ]
       },
       terms: {
@@ -928,8 +928,8 @@ export const translations = {
         contactTitle: "Contact channels",
         contactOptions: [
           { icon: "💬", label: "WhatsApp", description: "Immediate response", value: "+57 310 000 0000" },
-          { icon: "✉️", label: "Email", description: "Response within 2 hours", value: "hello@horizonstays.com" },
-          { icon: "📸", label: "Instagram", description: "Direct messages", value: "@horizonstays" }
+          { icon: "✉️", label: "Email", description: "Response within 2 hours", value: "hello@lavilla.com" },
+          { icon: "📸", label: "Instagram", description: "Direct messages", value: "@lavilla" }
         ],
         faqTitle: "Frequently asked questions",
         faqItems: [
@@ -974,8 +974,6 @@ export const translations = {
         price: "Price",
         minPrice: "Max price",
         rooms: "Bedrooms",
-        anyRoom: "Any amount",
-        services: "Services",
         serviceOptions: [
           { key: "wifi", label: "Wi-Fi" },
           { key: "pool", label: "Pool" },

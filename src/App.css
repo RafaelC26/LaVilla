@@ -22,12 +22,42 @@
 }
 
 .threeIntroOverlay {
+  --intro-shift-x: 0px;
+  --intro-shift-y: 0px;
+  --intro-scale: 1;
   position: fixed;
   inset: 0;
   z-index: 5000;
-  background: #050608;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
   opacity: 1;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease 0.72s;
+}
+
+.threeIntroOverlay::before,
+.threeIntroOverlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transition: opacity 1.05s cubic-bezier(0.22, 0.8, 0.25, 1);
+}
+
+.threeIntroOverlay::before {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(37, 78, 54, 0.08), transparent 24%),
+    linear-gradient(180deg, #f8f7f3 0%, #f0eee7 100%);
+  opacity: 1;
+  z-index: -2;
+}
+
+.threeIntroOverlay::after {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 215, 140, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(16, 18, 17, 0.92) 0%, rgba(10, 10, 10, 0.98) 100%);
+  opacity: 0;
+  z-index: -1;
 }
 
 .threeIntroOverlay.leaving {
@@ -35,63 +65,169 @@
   pointer-events: none;
 }
 
-.threeIntroCanvas {
-  position: absolute;
-  inset: 0;
+.threeIntroOverlay.leaving::before {
+  opacity: 0;
 }
 
-.threeIntroCanvas canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
+.threeIntroOverlay.leaving::after {
+  opacity: 1;
 }
 
-.threeIntroUi {
-  position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 30px;
-  max-width: 560px;
-  z-index: 2;
-  padding: 18px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(160deg, rgba(3, 6, 10, 0.72), rgba(13, 22, 31, 0.52));
-  backdrop-filter: blur(8px);
+.threeIntroStage {
+  width: min(520px, calc(100vw - 40px));
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 28px;
 }
 
 .threeIntroBadge {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(245, 166, 35, 0.95);
-  margin-bottom: 8px;
+  letter-spacing: 0.26em;
+  color: rgba(27, 73, 46, 0.7);
+  margin-bottom: 10px;
 }
 
-.threeIntroUi h1 {
-  font-size: clamp(34px, 6vw, 64px);
+.threeIntroOrbital {
+  position: relative;
+  width: clamp(168px, 28vw, 220px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 24px 42px rgba(32, 48, 38, 0.1));
+  transition:
+    transform 1.08s cubic-bezier(0.2, 0.86, 0.22, 1),
+    opacity 0.4s ease,
+    filter 1.08s cubic-bezier(0.2, 0.86, 0.22, 1);
+}
+
+.threeIntroOverlay.leaving .threeIntroOrbital {
+  transform: translate(var(--intro-shift-x), var(--intro-shift-y)) scale(var(--intro-scale));
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.14));
+}
+
+.threeIntroOrbitBase,
+.threeIntroOrbitSpinner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.threeIntroOrbitBase {
+  border: 1px solid rgba(9, 15, 12, 0.18);
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.45);
+}
+
+.threeIntroOrbitSpinner {
+  inset: -6px;
+  border: 2px solid transparent;
+  border-top-color: #214d34;
+  border-right-color: rgba(33, 77, 52, 0.45);
+  animation: threeIntroSpin 1s linear infinite;
+  will-change: transform;
+}
+
+.threeIntroLogoCore {
+  width: 72%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 12px 34px rgba(33, 47, 38, 0.12);
+}
+
+.threeIntroLogoMark {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  filter: saturate(0.72) contrast(1.06);
+}
+
+.threeIntroLogoFallback {
+  color: #214d34;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.threeIntroWordmark {
+  text-align: center;
+  animation: threeIntroRise 700ms cubic-bezier(0.22, 0.8, 0.25, 1) both;
+  transition: opacity 0.45s ease, transform 0.65s cubic-bezier(0.22, 0.8, 0.25, 1), filter 0.65s ease;
+}
+
+.threeIntroOverlay.leaving .threeIntroWordmark {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(4px);
+}
+
+.threeIntroWordmark h1 {
+  font-size: clamp(34px, 8vw, 58px);
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  font-weight: 700;
+  color: #18452e;
 }
 
-.threeIntroUi p {
-  margin-top: 10px;
-  color: rgba(255, 255, 255, 0.82);
+.threeIntroWordmark p:last-child {
+  margin-top: 12px;
+  color: rgba(24, 69, 46, 0.66);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .threeIntroSkipBtn {
-  margin-top: 14px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  border: 1px solid rgba(24, 69, 46, 0.18);
+  background: rgba(255, 255, 255, 0.65);
+  color: #18452e;
   padding: 8px 14px;
   font-size: 12px;
   font-weight: 600;
+  backdrop-filter: blur(8px);
+  transition: opacity 0.28s ease, transform 0.28s ease, background 0.2s ease;
+}
+
+.threeIntroOverlay.leaving .threeIntroSkipBtn {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 .threeIntroSkipBtn:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+@keyframes threeIntroSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes threeIntroRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Defer rendering of heavy offscreen blocks until they are near viewport. */
@@ -337,6 +473,46 @@
 .languageToggle:hover {
   background: rgba(255,255,255,0.1);
   border-color: rgba(255,255,255,0.5);
+}
+
+.mobileMenuToggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.26);
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileMenuToggle span {
+  display: block;
+  width: 16px;
+  height: 1.7px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobileMenuToggle.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.mobileMenuToggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobileMenuToggle.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobileNavPanel {
+  display: none;
 }
 
 .authDialogBackdrop {
@@ -1848,19 +2024,19 @@
 
 .profileDashLayout {
   width: 100%;
-  max-width: 1460px;
+  max-width: 1360px;
   margin: 0 auto;
-  padding: 108px 36px 34px;
+  padding: 96px 28px 28px;
   display: grid;
-  grid-template-columns: minmax(250px, 290px) minmax(0, 1fr);
-  gap: 30px;
+  grid-template-columns: minmax(220px, 262px) minmax(0, 1fr);
+  gap: 22px;
   flex: 1;
 }
 
 .profileDashSidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
 .profileDashUserBlock {
@@ -1870,25 +2046,25 @@
 }
 
 .profileDashUserPhoto {
-  width: 68px;
-  height: 68px;
-  border-radius: 18px;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
   object-fit: cover;
 }
 
 .profileDashUserBlock h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .profileDashUserBlock span {
   display: inline-block;
-  margin-top: 6px;
+  margin-top: 4px;
   border-radius: 14px;
-  padding: 5px 10px;
+  padding: 4px 9px;
   background: rgba(16, 185, 129, 0.14);
   color: #4be2b0;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1899,13 +2075,13 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .profileDashMenu li {
   border-radius: 12px;
   padding: 0;
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(196, 213, 235, 0.72);
   font-weight: 600;
 }
@@ -1916,7 +2092,7 @@
   border: none;
   color: inherit;
   text-align: left;
-  padding: 12px 14px;
+  padding: 10px 12px;
   font: inherit;
   cursor: pointer;
 }
@@ -1928,12 +2104,12 @@
 
 .profileDashReserveBtn {
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   background: #10b981;
   color: #052316;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 14px 16px;
+  padding: 12px 14px;
 }
 
 .profileDashMain {
@@ -1948,13 +2124,13 @@
 
 .profileDashHeading h1 {
   margin: 0;
-  font-size: 42px;
+  font-size: 28px;
 }
 
 .profileDashHeading p {
-  margin-top: 8px;
+  margin-top: 6px;
   color: rgba(191, 210, 235, 0.68);
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .profileDashTabs {
@@ -2461,8 +2637,27 @@
   text-decoration: none;
 }
 
-.profileDashFooter p {
+.profileDashFooterCredit {
   margin: 0;
+  justify-self: end;
+  text-align: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.profileDashFooterCreditLink {
+  color: rgba(220, 235, 255, 0.82);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.profileDashFooterCreditLink:hover,
+.profileDashFooterCreditLink:focus-visible {
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 /* ===== LEGAL PAGE ===== */
@@ -2974,6 +3169,37 @@
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footerReservedText {
+  flex-shrink: 0;
+}
+
+.footerCreditText {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.footerCreditLink {
+  color: rgba(220, 235, 255, 0.78);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footerCreditLink:hover,
+.footerCreditLink:focus-visible {
+  color: #ffffff;
+  transform: translateX(2px);
 }
 
 /* ===== CATALOG OVERLAY ===== */
@@ -4725,10 +4951,78 @@
 
   .navbar {
     padding: 16px 24px;
+    gap: 12px;
   }
   
   .navLinks {
     display: none;
+  }
+
+  .mobileMenuToggle {
+    display: inline-flex;
+  }
+
+  .authButtons {
+    display: none;
+  }
+
+  .mobileNavPanel {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    z-index: 1100;
+    display: grid;
+    gap: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(8, 10, 14, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 22px 46px rgba(0,0,0,0.42);
+    padding: 14px;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .mobileNavPanel.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mobileNavLinks {
+    display: grid;
+    gap: 6px;
+  }
+
+  .mobileNavLink {
+    display: block;
+    color: rgba(255,255,255,0.92);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .mobileNavLink:hover,
+  .mobileNavLink:focus-visible {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+  }
+
+  .mobileAuthButtons {
+    display: grid;
+    gap: 8px;
+    padding-top: 2px;
+  }
+
+  .mobileAuthButtons .authBtn {
+    width: 100%;
+    justify-content: center;
   }
   
   .stats {
@@ -4911,8 +5205,49 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 14px 14px;
+    gap: 8px;
+  }
+
+  .logo {
+    width: 150px;
+    height: 46px;
+  }
+
+  .logoImg {
+    height: 46px;
+    transform: scale(1.55);
+  }
+
+  .navActions {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .authBtn {
+    padding: 8px 10px;
+    font-size: 11px;
+    border-radius: 18px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .languageToggle {
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+
   .hero {
     min-height: 600px;
+  }
+
+  .heroContent {
+    padding: 0 16px;
+  }
+
+  .heroSubtitle {
+    margin-bottom: 28px;
   }
   
   .searchBar {
@@ -5118,13 +5453,56 @@
 }
 
 @media (max-width: 480px) {
+  .navbar {
+    padding: 12px 10px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .logo {
+    width: 124px;
+    height: 40px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .logoImg {
+    height: 40px;
+    max-width: 100%;
+    transform: none;
+  }
+
+  .navActions {
+    gap: 6px;
+  }
+
+  .languageToggle {
+    padding: 5px 8px;
+    font-size: 10px;
+    min-width: 36px;
+  }
+
   .bookBtn {
     display: none;
   }
 
-  .authBtn {
-    padding: 8px 12px;
+  .mobileNavPanel {
+    top: 62px;
+    left: 8px;
+    right: 8px;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .mobileNavLink {
+    font-size: 14px;
+    padding: 9px 10px;
+  }
+
+  .mobileAuthButtons .authBtn {
     font-size: 12px;
+    padding: 8px 10px;
   }
 
   .authDialog {
@@ -5146,6 +5524,54 @@
   
   .heroTitle {
     font-size: 36px;
+  }
+}
+
+@media (max-width: 390px) {
+  .navbar {
+    padding: 10px 8px;
+    gap: 4px;
+  }
+
+  .logo {
+    width: 104px;
+    height: 34px;
+  }
+
+  .logoImg {
+    height: 34px;
+  }
+
+  .navActions {
+    gap: 4px;
+  }
+
+  .mobileNavPanel {
+    top: 58px;
+  }
+
+  .languageToggle {
+    padding: 4px 6px;
+    min-width: 32px;
+    font-size: 10px;
+  }
+
+  .heroContent {
+    padding: 0 12px;
+  }
+
+  .heroTitle {
+    font-size: 32px;
+    line-height: 1.08;
+  }
+
+  .heroSubtitle {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .searchBar {
+    padding: 10px;
   }
 }
 
@@ -5250,51 +5676,88 @@
 
 .hostDashMain {
   display: grid;
-  gap: 16px;
+  gap: 12px;
+  align-content: start;
+  grid-auto-rows: min-content;
 }
 
 .hostDashStatsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .hostDashStatCard {
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.03);
-  padding: 16px;
+  padding: 12px;
 }
 
 .hostDashStatCard p {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .hostDashStatCard h3 {
-  margin-top: 8px;
-  font-size: 28px;
+  margin-top: 6px;
+  font-size: 20px;
 }
 
 .hostDashPanel {
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 16px;
+  padding: 12px;
   background: rgba(255, 255, 255, 0.02);
 }
 
 .hostDashPanel h2 {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.hostDashKpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.hostDashKpiCard {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.hostDashKpiCard p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+}
+
+.hostDashKpiCard strong {
+  color: #f4f8ff;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.hostDashExportActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .hostDashListingGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .hostDashListingCard {
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.02);
   overflow: hidden;
@@ -5302,48 +5765,49 @@
 
 .hostDashListingCard img {
   width: 100%;
-  height: 160px;
+  height: 130px;
   object-fit: cover;
 }
 
 .hostDashListingCard > div {
-  padding: 12px;
+  padding: 10px;
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .hostDashListingCard p {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .hostDashReservationList {
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .hostDashReservationList li {
-  border-radius: 10px;
+  border-radius: 9px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
-  padding: 12px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .hostDashReservationList p {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 13px;
-  margin-top: 4px;
+  font-size: 12px;
+  margin-top: 3px;
 }
 
 @media (max-width: 900px) {
   .demoAuthGrid,
   .hostDashStatsGrid,
-  .hostDashListingGrid {
+  .hostDashListingGrid,
+  .hostDashKpiGrid {
     grid-template-columns: 1fr;
   }
 }

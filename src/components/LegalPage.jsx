@@ -57,6 +57,7 @@ function LegalPage({
         isAuthenticated={isAuthenticated}
         onAuthAction={onAuthAction}
         currentUser={currentUser}
+        showNavLinks={!isSupport}
       />
 
       <main className="legalPageMain">

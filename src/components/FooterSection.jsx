@@ -1,4 +1,9 @@
-function FooterSection({ t, logoImg, footerImage }) {
+function FooterSection({ t, logoImg, footerImage, language = "es" }) {
+  const rightsText = language === "es"
+    ? "® La Villa. Todos los derechos reservados."
+    : "® La Villa. All rights reserved.";
+  const creditPrefix = language === "es" ? "Experiencia Digital por " : "Digital experience by ";
+
   return (
     <footer id="footer" className="footer">
       <div className="footerAtmosphere" aria-hidden="true">
@@ -28,7 +33,13 @@ function FooterSection({ t, logoImg, footerImage }) {
         </div>
       </div>
 
-      <div className="footerBottom">{t.footer.brandLine} {t.footer.rights}</div>
+      <div className="footerBottom">
+        <span className="footerReservedText">{rightsText}</span>
+        <div className="footerCreditText">
+          <span>{creditPrefix}</span>
+          <a href="#" className="footerCreditLink">Horizon</a>
+        </div>
+      </div>
     </footer>
   );
 }

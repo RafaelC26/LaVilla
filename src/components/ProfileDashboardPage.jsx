@@ -67,6 +67,10 @@ function ProfileDashboardPage({
   const isSecurityView = activeSidebarKey === "security";
   const isPaymentsView = activeSidebarKey === "payments";
   const isFavoritesView = activeSidebarKey === "favorites";
+  const footerRightsText = language === "es"
+    ? "® La Villa. Todos los derechos reservados."
+    : "® La Villa. All rights reserved.";
+  const footerCreditPrefix = language === "es" ? "Experiencia Digital por " : "Digital experience by ";
   const favoriteListings = useMemo(
     () => listings.filter((listing) => favoriteListingIds.includes(listing.id)),
     [listings, favoriteListingIds]
@@ -146,6 +150,7 @@ function ProfileDashboardPage({
         isAuthenticated={isAuthenticated}
         onAuthAction={onAuthAction}
         currentUser={currentUser}
+        showNavLinks={false}
       />
 
       <main className="profileDashLayout">
@@ -619,13 +624,16 @@ function ProfileDashboardPage({
       </main>
 
       <footer className="profileDashFooter">
-        <div className="profileDashFooterBrand">La Villa</div>
+        <div className="profileDashFooterBrand">{footerRightsText}</div>
         <div className="profileDashFooterLinks">
           {profile.footer.links.map((link) => (
             <Link key={link.path} to={link.path}>{link.label}</Link>
           ))}
         </div>
-        <p>{profile.footer.rights}</p>
+        <div className="profileDashFooterCredit">
+          <span>{footerCreditPrefix}</span>
+          <a href="#" className="profileDashFooterCreditLink">Horizon</a>
+        </div>
       </footer>
     </div>
   );

@@ -380,6 +380,7 @@ function App() {
       {showIntro && (
         <ThreeIntroOverlay
           language={language}
+          logoImg={logoImg}
           onComplete={handleIntroComplete}
         />
       )}
@@ -575,7 +576,7 @@ function App() {
         onSelectExperienceCategory={() => {}}
       />
       
-      <FooterSection t={t} logoImg={logoImg} footerImage={footerImage} />
+      <FooterSection t={t} language={language} logoImg={logoImg} footerImage={footerImage} />
 
       {isCatalogOpen && (
         <Suspense fallback={routeFallback}>

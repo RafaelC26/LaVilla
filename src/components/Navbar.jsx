@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const USER_MENU_ICONS = {
   profile: (
@@ -53,8 +53,33 @@ function Navbar({
   onUserMenuAction,
   isAuthenticated = true,
   onAuthAction,
-  currentUser
+  currentUser,
+  showNavLinks = true
 }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 992) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
   const navSections = [
     { key: "home", href: "#hero", label: t.navbar.home },
     { key: "homes", href: "#listings", label: t.navbar.homes },
@@ -74,6 +99,8 @@ function Navbar({
       behavior: prefersReducedMotion ? "auto" : "smooth",
       block: "start"
     });
+
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -82,18 +109,20 @@ function Navbar({
         <img src={logoImg} alt="La Villa" className="logoImg" />
       </div>
 
-      <div className="navLinks">
-        {navSections.map((section) => (
-          <a
-            key={section.key}
-            href={section.href}
-            className="navLink"
-            onClick={(event) => handleNavClick(event, section.href)}
-          >
-            {section.label}
-          </a>
-        ))}
-      </div>
+      {showNavLinks && (
+        <div className="navLinks">
+          {navSections.map((section) => (
+            <a
+              key={section.key}
+              href={section.href}
+              className="navLink"
+              onClick={(event) => handleNavClick(event, section.href)}
+            >
+              {section.label}
+            </a>
+          ))}
+        </div>
+      )}
 
       <div className="navActions">
         {isAuthenticated ? (
@@ -159,7 +188,63 @@ function Navbar({
         <button className="languageToggle" onClick={onToggleLanguage} type="button">
           {language === "es" ? "EN" : "ES"}
         </button>
+        {showNavLinks && (
+          <button
+            className={`mobileMenuToggle ${isMobileMenuOpen ? "open" : ""}`}
+            type="button"
+            aria-label={isMobileMenuOpen ? "Cerrar menu" : "Abrir menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-panel"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        )}
       </div>
+
+      {showNavLinks && (
+        <div id="mobile-nav-panel" className={`mobileNavPanel ${isMobileMenuOpen ? "open" : ""}`}>
+          <div className="mobileNavLinks" role="menu" aria-label={t.navbar.home}>
+            {navSections.map((section) => (
+              <a
+                key={`mobile-${section.key}`}
+                href={section.href}
+                className="mobileNavLink"
+                onClick={(event) => handleNavClick(event, section.href)}
+              >
+                {section.label}
+              </a>
+            ))}
+          </div>
+
+          {!isAuthenticated && (
+            <div className="mobileAuthButtons" aria-label={t.navbar.authActionsLabel}>
+              <button
+                className="authBtn authBtnSecondary"
+                type="button"
+                onClick={() => {
+                  onAuthAction?.("login");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {t.navbar.login}
+              </button>
+              <button
+                className="authBtn authBtnPrimary"
+                type="button"
+                onClick={() => {
+                  onAuthAction?.("register");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {t.navbar.register}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
