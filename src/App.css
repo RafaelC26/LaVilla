@@ -3743,79 +3743,84 @@
 
 .catalogGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-  align-content: start;
-  align-self: start;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
 }
 
 .catalogCard {
-  border-radius: 12px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
   overflow: hidden;
-  background: #0d1116;
-  border: 1px solid rgba(255,255,255,0.08);
-  width: 100%;
-  text-align: left;
-  padding: 0;
-  appearance: none;
-  cursor: pointer;
-  transform: translateY(0);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.28s ease,
-    border-color 0.24s ease;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ececec;
+  transition: box-shadow 0.2s;
+}
+
+.catalogCard:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.16);
 }
 
 .catalogCard img {
   width: 100%;
-  height: 160px;
+  height: 200px;
   object-fit: cover;
-  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+  border-bottom: 1px solid #eee;
 }
 
-.catalogCard:hover,
-.catalogCard:focus-visible {
-  transform: translateY(-5px);
-  border-color: rgba(108, 200, 255, 0.4);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
-}
-
-.catalogCard:hover img,
-.catalogCard:focus-visible img {
-  transform: scale(1.06);
-  filter: saturate(1.05);
-}
-
-.catalogCardContent {
-  padding: 12px;
-  transition: transform 0.28s ease;
-}
-
-.catalogCard:hover .catalogCardContent,
-.catalogCard:focus-visible .catalogCardContent {
-  transform: translateY(-2px);
-}
-
-.catalogCardContent h3 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #f2f5f9;
-  margin-bottom: 6px;
-}
-
-.catalogCardLocation {
-  font-size: 13px;
-  color: rgba(177, 196, 215, 0.68);
-}
-
-.catalogCardFooter {
+.catalogInfo {
+  padding: 1.2rem;
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #ffd972;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.catalogInfo h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.catalogLocation {
+  color: #0077ff;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.catalogPrice {
+  color: #222;
   font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.catalogDescription {
+  color: #555;
+  font-size: 0.98rem;
+  margin-bottom: 0.5rem;
+}
+
+.catalogAmenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.amenityTag {
+  background: #f5f7fa;
+  color: #0077ff;
+  border-radius: 6px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #e0eaff;
+}
+
+.listingActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 /* ===== DETAIL PAGE ===== */
@@ -4389,7 +4394,6 @@
   border-color: #f5a623;
 }
 
-
 .detailAmenitiesCard h3 {
   margin-bottom: 10px;
 }
@@ -4575,7 +4579,7 @@
   padding: 10px 36px 10px 10px;
 }
 
-.hostChatLauncherPanelRail {
+.hostChatLauncherRail {
   display: flex;
   align-items: center;
 }
@@ -4950,7 +4954,7 @@
   }
 
   .catalogGrid {
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 
   .detailLayout {

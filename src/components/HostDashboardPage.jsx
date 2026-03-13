@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -25,7 +25,33 @@ function HostDashboardPage({
     : "® La Villa. All rights reserved.";
   const footerCreditPrefix = isSpanish ? "Experiencia Digital por " : "Digital experience by ";
 
-  const hostListings = useMemo(() => listings.slice(0, 4), [listings]);
+  const [hostListings, setHostListings] = useState(allListings);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editListing, setEditListing] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 900);
+
+  useEffect(() => {
+    // Simulación: cargar alojamientos del host
+    setHostListings([
+      {
+        id: 1,
+        title: isSpanish ? "Apartamento céntrico" : "Central Apartment",
+        location: isSpanish ? "Madrid" : "Madrid",
+        price: isSpanish ? "€120/noche" : "$120/night",
+        image: "https://via.placeholder.com/300x200",
+        description: isSpanish ? "Apartamento moderno en el centro." : "Modern apartment downtown.",
+        amenities: [isSpanish ? "WiFi" : "WiFi", isSpanish ? "Piscina" : "Pool"]
+      }
+    ]);
+  }, [isSpanish]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth > 900);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const dashboardStats = useMemo(() => {
     const totalListings = hostListings.length;
@@ -135,6 +161,47 @@ function HostDashboardPage({
 
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
 
+  function handleAddListing(e) {
+    e.preventDefault();
+    const form = e.target;
+    const newListing = {
+      id: Date.now(),
+      title: form.title.value,
+      location: form.location.value,
+      price: form.price.value,
+      image: form.image.value,
+      description: form.description.value,
+      amenities: form.amenities.value.split(",").map(a => a.trim())
+    };
+    setHostListings([...hostListings, newListing]);
+    setShowAddForm(false);
+    form.reset();
+  }
+
+  function handleEditListing(listing) {
+    setEditListing(listing);
+  }
+
+  function handleUpdateListing(e) {
+    e.preventDefault();
+    const form = e.target;
+    const updatedListing = {
+      ...editListing,
+      title: form.title.value,
+      location: form.location.value,
+      price: form.price.value,
+      image: form.image.value,
+      description: form.description.value,
+      amenities: form.amenities.value.split(",").map(a => a.trim())
+    };
+    setHostListings(hostListings.map(l => l.id === updatedListing.id ? updatedListing : l));
+    setEditListing(null);
+  }
+
+  function handleDeleteListing(id) {
+    setHostListings(hostListings.filter(l => l.id !== id));
+  }
+
   return (
     <div className="profileDashPage hostDashPage">
       <Navbar
@@ -154,26 +221,33 @@ function HostDashboardPage({
       />
 
       <main className="profileDashLayout">
-        <aside className="profileDashSidebar">
-          <div className="profileDashUserBlock">
-            <img className="profileDashUserPhoto" src={currentUser?.avatar} alt={currentUser?.displayName || "Host"} loading="lazy" decoding="async" />
-            <div>
-              <h2>{currentUser?.displayName || (isSpanish ? "Host" : "Host")}</h2>
-              <span>{isSpanish ? "Panel de anfitrion" : "Host dashboard"}</span>
-            </div>
-          </div>
-
-          <ul className="profileDashMenu">
-            {hostMenuItems.map((item) => (
-              <li key={item.key} className={currentSection === item.key ? "active" : ""}>
-                <button type="button" className="profileDashMenuBtn" onClick={() => setSection(item.key)}>{item.label}</button>
-              </li>
-            ))}
-          </ul>
-
-          <button className="profileDashReserveBtn" type="button" onClick={() => navigate("/")}>
-            {isSpanish ? "Ir al catalogo" : "Go to catalog"}
+        <aside className={`profileDashSidebar${isSidebarOpen ? " open" : " closed"}`}>
+          <button className="sidebarToggleBtn" type="button" onClick={() => setIsSidebarOpen((open) => !open)}>
+            <span className="sidebarToggleIcon">{isSidebarOpen ? "▼" : "►"}</span>
           </button>
+          {isSidebarOpen && (
+            <div>
+              <div className="profileDashUserBlock">
+                <img className="profileDashUserPhoto" src={currentUser?.avatar} alt={currentUser?.displayName || "Host"} loading="lazy" decoding="async" />
+                <div>
+                  <h2>{currentUser?.displayName || (isSpanish ? "Host" : "Host")}</h2>
+                  <span>{isSpanish ? "Panel de anfitrión" : "Host dashboard"}</span>
+                </div>
+              </div>
+
+              <ul className="profileDashMenu">
+                {hostMenuItems.map((item) => (
+                  <li key={item.key} className={currentSection === item.key ? "active" : ""}>
+                    <button type="button" className="profileDashMenuBtn" onClick={() => setSection(item.key)}>{item.label}</button>
+                  </li>
+                ))}
+              </ul>
+
+              <button className="profileDashReserveBtn" type="button" onClick={() => navigate("/")}>
+                {isSpanish ? "Ir al catalogo" : "Go to catalog"}
+              </button>
+            </div>
+          )}
         </aside>
 
         <section className="profileDashMain hostDashMain">
@@ -376,30 +450,72 @@ function HostDashboardPage({
           )}
 
           {currentSection === "stays" && (
-            <section className="hostDashPanel">
-              <h2>{isSpanish ? "Gestion de alojamientos" : "Stay management"}</h2>
-              <div className="hostDashKpiGrid">
-                {managementItems.map((item) => (
-                  <article key={item.key} className="hostDashKpiCard">
-                    <p>{item.title}</p>
-                    <strong>{item.text}</strong>
-                  </article>
-                ))}
-              </div>
-              <div className="hostDashListingGrid">
+            <section className="hostManageStaysSection">
+              <header className="profileDashHeading profileDashPersonalHeader">
+                <h1>{isSpanish ? "Gestión de alojamientos" : "Stay Management"}</h1>
+                <p>{isSpanish ? "Administra tus alojamientos, añade, edita o elimina propiedades." : "Manage your stays, add, edit or delete properties."}</p>
+                <button className="profileDashPrimaryBtn" type="button" onClick={() => setShowAddForm(true)}>
+                  {isSpanish ? "Añadir alojamiento" : "Add stay"}
+                </button>
+              </header>
+              <div className="listingsGrid improvedGrid">
                 {hostListings.map((listing) => (
-                  <article key={listing.id} className="hostDashListingCard">
-                    <img src={listing.image} alt={listing.title} loading="lazy" decoding="async" />
-                    <div>
+                  <article key={listing.id} className="listingCard improvedCard">
+                    <div className="listingImage">
+                      <img src={listing.image} alt={listing.title} />
+                    </div>
+                    <div className="listingInfo">
                       <h3>{listing.title}</h3>
-                      <p>{listing.location}</p>
-                      <button type="button" className="profileDashPrimaryBtn" onClick={() => navigate(`/stay/${listing.id}`)}>
-                        {isSpanish ? "Ver detalle" : "View detail"}
-                      </button>
+                      <p className="listingLocation">{listing.location}</p>
+                      <p className="listingPrice">{listing.price}</p>
+                      <p className="listingDescription">{listing.description}</p>
+                      <div className="listingAmenities">
+                        {listing.amenities.map((amenity, idx) => (
+                          <span key={idx} className="amenityTag">{amenity}</span>
+                        ))}
+                      </div>
+                      <div className="listingActions">
+                        <button className="profileDashSecondaryBtn" type="button" onClick={() => handleEditListing(listing)}>
+                          {isSpanish ? "Modificar" : "Edit"}
+                        </button>
+                        <button className="profileDashSecondaryBtn danger" type="button" onClick={() => handleDeleteListing(listing.id)}>
+                          {isSpanish ? "Eliminar" : "Delete"}
+                        </button>
+                      </div>
                     </div>
                   </article>
                 ))}
               </div>
+              {showAddForm && (
+                <div className="hostAddStayModal">
+                  <form className="hostAddStayForm" onSubmit={handleAddListing}>
+                    <h2>{isSpanish ? "Añadir alojamiento" : "Add stay"}</h2>
+                    <label>{isSpanish ? "Título" : "Title"}<input name="title" required /></label>
+                    <label>{isSpanish ? "Ubicación" : "Location"}<input name="location" required /></label>
+                    <label>{isSpanish ? "Precio" : "Price"}<input name="price" required /></label>
+                    <label>{isSpanish ? "Imagen (URL)" : "Image (URL)"}<input name="image" required /></label>
+                    <label>{isSpanish ? "Descripción" : "Description"}<textarea name="description" required /></label>
+                    <label>{isSpanish ? "Servicios" : "Amenities"}<input name="amenities" placeholder="WiFi, Piscina, Cocina..." /></label>
+                    <button className="profileDashPrimaryBtn" type="submit">{isSpanish ? "Guardar" : "Save"}</button>
+                    <button className="profileDashSecondaryBtn" type="button" onClick={() => setShowAddForm(false)}>{isSpanish ? "Cancelar" : "Cancel"}</button>
+                  </form>
+                </div>
+              )}
+              {editListing && (
+                <div className="hostEditStayModal">
+                  <form className="hostAddStayForm" onSubmit={handleUpdateListing}>
+                    <h2>{isSpanish ? "Modificar alojamiento" : "Edit stay"}</h2>
+                    <label>{isSpanish ? "Título" : "Title"}<input name="title" defaultValue={editListing.title} required /></label>
+                    <label>{isSpanish ? "Ubicación" : "Location"}<input name="location" defaultValue={editListing.location} required /></label>
+                    <label>{isSpanish ? "Precio" : "Price"}<input name="price" defaultValue={editListing.price} required /></label>
+                    <label>{isSpanish ? "Imagen (URL)" : "Image (URL)"}<input name="image" defaultValue={editListing.image} required /></label>
+                    <label>{isSpanish ? "Descripción" : "Description"}<textarea name="description" defaultValue={editListing.description} required /></label>
+                    <label>{isSpanish ? "Servicios" : "Amenities"}<input name="amenities" defaultValue={editListing.amenities?.join(", ") || ""} /></label>
+                    <button className="profileDashPrimaryBtn" type="submit">{isSpanish ? "Guardar" : "Save"}</button>
+                    <button className="profileDashSecondaryBtn" type="button" onClick={() => setEditListing(null)}>{isSpanish ? "Cancelar" : "Cancel"}</button>
+                  </form>
+                </div>
+              )}
             </section>
           )}
 
@@ -462,3 +578,5 @@ function HostDashboardPage({
 }
 
 export default HostDashboardPage;
+
+import { listings as allListings } from "../data";

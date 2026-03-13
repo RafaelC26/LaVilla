@@ -136,6 +136,16 @@ function ProfileDashboardPage({
     navigate("/");
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth > 900);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="profileDashPage">
       <Navbar
@@ -154,42 +164,49 @@ function ProfileDashboardPage({
       />
 
       <main className="profileDashLayout">
-        <aside className="profileDashSidebar">
-          <div className="profileDashUserBlock">
-            <img
-              className="profileDashUserPhoto"
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face"
-              alt={profile.user.name}
-              loading="lazy"
-              decoding="async"
-            />
-            <div>
-              <h2>{profile.user.name}</h2>
-              <span>{profile.user.badge}</span>
-            </div>
-          </div>
-
-          <ul className="profileDashMenu">
-            {profile.sidebarItems.map((item) => (
-              <li key={item.key} className={activeSidebarKey === item.key ? "active" : ""}>
-                <button
-                  type="button"
-                  className="profileDashMenuBtn"
-                  onClick={() => handleSidebarSelection(item.key)}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          <button
-            className="profileDashReserveBtn"
-            type="button"
-            onClick={openAllStaysOverlay}
-          >
-            {profile.newStayButton}
+        <aside className={`profileDashSidebar${isSidebarOpen ? " open" : " closed"}`}>
+          <button className="sidebarToggleBtn" type="button" onClick={() => setIsSidebarOpen((open) => !open)}>
+            <span className="sidebarToggleIcon">{isSidebarOpen ? "▼" : "►"}</span>
           </button>
+          {isSidebarOpen && (
+            <div>
+              <div className="profileDashUserBlock">
+                <img
+                  className="profileDashUserPhoto"
+                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face"
+                  alt={profile.user.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div>
+                  <h2>{profile.user.name}</h2>
+                  <span>{profile.user.badge}</span>
+                </div>
+              </div>
+
+              <ul className="profileDashMenu">
+                {profile.sidebarItems.map((item) => (
+                  <li key={item.key} className={activeSidebarKey === item.key ? "active" : ""}>
+                    <button
+                      type="button"
+                      className="profileDashMenuBtn"
+                      onClick={() => handleSidebarSelection(item.key)}
+                    >
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                className="profileDashReserveBtn"
+                type="button"
+                onClick={openAllStaysOverlay}
+              >
+                {profile.newStayButton}
+              </button>
+            </div>
+          )}
         </aside>
 
         <section className="profileDashMain">
