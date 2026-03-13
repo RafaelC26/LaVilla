@@ -106,6 +106,13 @@ function App() {
     [currentUserId]
   );
   const isAuthenticated = Boolean(currentUser);
+  // Selección dinámica de opciones de menú según rol
+  const userMenuOptions = useMemo(() => {
+    if (currentUser?.role === "host") {
+      return t.userMenu.hostOptions;
+    }
+    return t.userMenu.options;
+  }, [currentUser, t]);
 
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "en" ? "es" : "en"));
@@ -418,6 +425,7 @@ function App() {
               isAuthenticated={isAuthenticated}
               onAuthAction={handleAuthAction}
               currentUser={currentUser}
+              userMenuOptions={userMenuOptions}
             />
           </Suspense>
         }
@@ -536,6 +544,8 @@ function App() {
         isAuthenticated={isAuthenticated}
         onAuthAction={handleAuthAction}
         currentUser={currentUser}
+        showNavLinks={!isCatalogOpen}
+        userMenuOptions={userMenuOptions}
       />
 
       <HeroSection

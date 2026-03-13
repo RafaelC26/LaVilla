@@ -85,10 +85,7 @@ function ThreeIntroOverlay({ onComplete, language = "es", duration = 2600, logoI
           <p>{language === "es" ? "Esencia de Boyaca" : "Essence of Boyaca"}</p>
         </div>
       </div>
-
-      <button type="button" onClick={handleSkip} className="threeIntroSkipBtn">
-          {language === "es" ? "Saltar intro" : "Skip intro"}
-      </button>
+      {/* Botón de saltar intro eliminado */}
     </div>
   );
 }

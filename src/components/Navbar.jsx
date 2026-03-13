@@ -54,7 +54,8 @@ function Navbar({
   isAuthenticated = true,
   onAuthAction,
   currentUser,
-  showNavLinks = true
+  showNavLinks = true,
+  userMenuOptions
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -145,7 +146,7 @@ function Navbar({
 
             {isUserMenuOpen && (
               <div className="userDropdown" role="menu" aria-label={t.userMenu.actionsLabel}>
-                {t.userMenu.options.map((option) => (
+                {(userMenuOptions || t.userMenu.options).map((option) => (
                   <Fragment key={option.key}>
                     {option.key === "logout" && (
                       <div className="userMenuDivider" aria-hidden="true" />
