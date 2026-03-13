@@ -22,6 +22,13 @@ export const translations = {
         { key: "settings", label: "Configuracion de cuenta" },
         { key: "help", label: "Centro de ayuda" },
         { key: "logout", label: "Cerrar sesion" }
+      ],
+      hostOptions: [
+        { key: "profile", label: "Panel de anfitrión" },
+        { key: "bookings", label: "Reservas recibidas" },
+        { key: "saved", label: "Mis propiedades" },
+        { key: "settings", label: "Editar información de anfitrión" },
+        { key: "logout", label: "Cerrar sesión" }
       ]
     },
     authDialog: {

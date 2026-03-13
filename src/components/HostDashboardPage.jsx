@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -133,6 +133,8 @@ function HostDashboardPage({
     setSearchParams(params, { replace: true });
   };
 
+  const [isEditingPersonal, setIsEditingPersonal] = useState(false);
+
   return (
     <div className="profileDashPage hostDashPage">
       <Navbar
@@ -148,6 +150,7 @@ function HostDashboardPage({
         onAuthAction={onAuthAction}
         currentUser={currentUser}
         showNavLinks={false}
+        userMenuOptions={t.userMenu.hostOptions}
       />
 
       <main className="profileDashLayout">
@@ -178,6 +181,140 @@ function HostDashboardPage({
             <h1>{isSpanish ? "Dashboard del host" : "Host dashboard"}</h1>
             <p>{isSpanish ? "Panel de administracion con estadisticas en tiempo real." : "Administration panel with real-time statistics."}</p>
           </header>
+
+          {/* Panel de edición de información de anfitrión */}
+          {currentSection === "admin-info" && (
+            <section className="profileDashPersonalSection">
+              <header className="profileDashHeading profileDashPersonalHeader">
+                <h1>{t.profileDashboard.personalInfo.title}</h1>
+                <p>{t.profileDashboard.personalInfo.subtitle}</p>
+                <div className="profileDashPersonalActions">
+                  {!isEditingPersonal ? (
+                    <button type="button" className="profileDashSecondaryBtn" onClick={() => setIsEditingPersonal(true)}>
+                      {t.profileDashboard.personalInfo.enableEditButton}
+                    </button>
+                  ) : (
+                    <>
+                      <button type="button" className="profileDashSecondaryBtn" onClick={() => setIsEditingPersonal(false)}>
+                        {t.profileDashboard.personalInfo.cancelButton || "Cancelar"}
+                      </button>
+                      <button type="button" className="profileDashPrimaryBtn" onClick={() => setIsEditingPersonal(false)}>
+                        {t.profileDashboard.personalInfo.saveButton || "Guardar"}
+                      </button>
+                    </>
+                  )}
+                </div>
+              </header>
+
+              <article className="profileDashPersonalCard">
+                <h2>{t.profileDashboard.personalInfo.profileSectionTitle}</h2>
+                <p>{t.profileDashboard.personalInfo.profileSectionHint}</p>
+                <ul className="profileDashSettingList">
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.photo}</span>
+                    <strong>{currentUser?.avatar || "Añade una foto para personalizar tu cuenta"}</strong>
+                    <span className="chevron">›</span>
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.name}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.displayName || ""} />
+                    ) : (
+                      <strong>{currentUser?.displayName || ""}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.birthDate}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.birthdate || ""} />
+                    ) : (
+                      <strong>{currentUser?.birthdate || "22 de agosto de 1996"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.gender}</span>
+                    {isEditingPersonal ? (
+                      <select defaultValue={currentUser?.gender || "Mujer"}>
+                        {t.profileDashboard.personalInfo.genderOptions.map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <strong>{currentUser?.gender || "Mujer"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.idDocument}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.document || ""} />
+                    ) : (
+                      <strong>{currentUser?.document || "DNI 74283915"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.password}</span>
+                    <strong>{t.profileDashboard.personalInfo.passwordStatus || "Última modificación: 6 jul. 2016"}</strong>
+                    <span className="chevron">›</span>
+                  </li>
+                </ul>
+              </article>
+
+              <article className="profileDashPersonalCard">
+                <h2>{t.profileDashboard.personalInfo.contactSectionTitle}</h2>
+                <ul className="profileDashSettingList">
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.email}</span>
+                    {isEditingPersonal ? (
+                      <input type="email" defaultValue={currentUser?.email || ""} />
+                    ) : (
+                      <strong>{currentUser?.email || "host.demo@horizon.test"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.phone}</span>
+                    {isEditingPersonal ? (
+                      <input type="tel" defaultValue={currentUser?.phone || ""} />
+                    ) : (
+                      <strong>{currentUser?.phone || "+34 600 123 456"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.address}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.address || ""} />
+                    ) : (
+                      <strong>{currentUser?.address || "Calle Aribau 128"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.city}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.city || ""} />
+                    ) : (
+                      <strong>{currentUser?.city || "Barcelona"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                  <li>
+                    <span>{t.profileDashboard.personalInfo.labels.country}</span>
+                    {isEditingPersonal ? (
+                      <input type="text" defaultValue={currentUser?.country || ""} />
+                    ) : (
+                      <strong>{currentUser?.country || "España"}</strong>
+                    )}
+                    {!isEditingPersonal && <span className="chevron">›</span>}
+                  </li>
+                </ul>
+              </article>
+            </section>
+          )}
 
           {currentSection === "admin" && (
             <section className="hostDashStatsGrid">

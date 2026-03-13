@@ -147,7 +147,7 @@ function App() {
         : `${baseDashboardPath}?section=favorites`);
     } else if (actionKey === "settings") {
       navigate(role === "host"
-        ? `${baseDashboardPath}?section=settings`
+        ? `${baseDashboardPath}?section=admin-info`
         : `${baseDashboardPath}?section=security`);
     } else if (actionKey === "help") {
       navigate("/legal/support");

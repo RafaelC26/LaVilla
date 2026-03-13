@@ -3398,7 +3398,7 @@
 
 .catalogSearchInput::placeholder,
 .catalogSearchDatePicker::placeholder {
-  color: rgba(214, 225, 240, 0.62);
+  color: rgba(181, 199, 220, 0.6);
 }
 
 .catalogSearchBtn {
@@ -3643,7 +3643,7 @@
   padding: 10px 12px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
 }
 
 .catalogRoomsOption:hover {
@@ -4496,6 +4496,7 @@
 
 .hostSpotlightStatItem:last-child {
   border-right: none;
+  padding-bottom: 8px;
 }
 
 .hostSpotlightMetric {
@@ -4565,7 +4566,7 @@
   width: min(360px, calc(100vw - 16px));
   border: 1px solid rgba(255,255,255,0.16);
   border-radius: 18px;
-  background: linear-gradient(165deg, rgba(12, 16, 28, 0.98), rgba(8, 11, 20, 0.98));
+  background: linear-gradient(165deg, rgba(12, 16, 28, 0.98) 0%, rgba(8, 11, 20, 0.98) 100%);
   backdrop-filter: blur(8px);
   box-shadow: 0 22px 52px rgba(0,0,0,0.56);
   display: flex;
@@ -4628,11 +4629,6 @@
   font-size: 18px;
   line-height: 1;
   margin-left: -1px;
-}
-
-.hostChatLauncherArrow:hover {
-  border-color: rgba(255,255,255,0.62);
-  transform: translateX(-1px);
 }
 
 .hostChatLauncherAvatar {
@@ -5013,16 +5009,76 @@
     min-height: calc(100vh - 12px);
   }
 
+  .categoriesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    flex: initial;
+  }
+
+  .profileDashTopbar {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 12px;
+    padding: 14px 20px;
+  }
+
+  .profileDashBrand,
+  .profileDashNavLinks,
+  .profileDashTopActions {
+    justify-self: start;
+  }
+
   .profileDashLayout {
+    padding: 22px 20px 34px;
+  }
+
+  .profileDashHeading h1 {
+    font-size: 44px;
+  }
+
+  .profileDashHeading p {
+    font-size: 22px;
+  }
+
+  .profileDashPersonalGrid {
     grid-template-columns: 1fr;
   }
 
-  .profileDashSidebar {
-    order: 2;
+  .profileDashSettingList li {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
-  .profileDashMain {
-    order: 1;
+  .profileDashFavoritesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileDashInlineFields {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .profileDashPersonalHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .profileDashPersonalActions {
+    grid-column: 1;
+    grid-row: auto;
+    justify-content: flex-start;
+  }
+
+  .profileDashSettingList .chevron {
+    display: none;
+  }
+
+  .profileDashTripCard {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .profileDashTripCard img {
+    min-height: 210px;
   }
 }
 
@@ -5161,260 +5217,6 @@
   }
   
   .footerColumn {
-    min-width: 120px;
-    flex: 1;
-  }
-  
-  .footerBottom {
-    padding: 20px 32px;
-  }
-
-  .catalogTopBar {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 16px 24px;
-  }
-
-  .catalogRightControls {
-    justify-self: start;
-  }
-
-  .catalogContent {
-    padding: 24px 24px 36px;
-  }
-
-  .catalogSearchShell {
-    flex-direction: column;
-    border-radius: 10px;
-  }
-
-  .catalogSearchSegment {
-    width: 100%;
-  }
-
-  .catalogSearchSegment + .catalogSearchSegment {
-    border-left: none;
-    border-top: 1px solid rgba(255,255,255,0.12);
-  }
-
-  .catalogSearchBtn {
-    width: 100%;
-    min-height: 42px;
-  }
-
-  .catalogBody {
-    grid-template-columns: 1fr;
-  }
-
-  .detailInfoSplit,
-  .detailSleepFeatures,
-  .detailRoomGallery {
-    grid-template-columns: 1fr;
-  }
-
-  .detailHighlightStrip {
-    grid-template-columns: 1fr;
-  }
-
-  .categoriesHero {
-    padding-top: 106px;
-    min-height: auto;
-  }
-
-  .categoriesGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: none;
-    flex: initial;
-  }
-
-  .profileDashTopbar {
-    grid-template-columns: 1fr;
-    height: auto;
-    gap: 12px;
-    padding: 14px 20px;
-  }
-
-  .profileDashBrand,
-  .profileDashNavLinks,
-  .profileDashTopActions {
-    justify-self: start;
-  }
-
-  .profileDashLayout {
-    padding: 22px 20px 34px;
-  }
-
-  .profileDashHeading h1 {
-    font-size: 44px;
-  }
-
-  .profileDashHeading p {
-    font-size: 22px;
-  }
-
-  .profileDashPersonalGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .profileDashSettingList li {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-
-  .profileDashFavoritesGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .profileDashInlineFields {
-    grid-template-columns: 1fr;
-    max-width: 100%;
-  }
-
-  .profileDashPersonalHeader {
-    grid-template-columns: 1fr;
-  }
-
-  .profileDashPersonalActions {
-    grid-column: 1;
-    grid-row: auto;
-    justify-content: flex-start;
-  }
-
-  .profileDashSettingList .chevron {
-    display: none;
-  }
-
-  .profileDashTripCard {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  .profileDashTripCard img {
-    min-height: 210px;
-  }
-}
-
-@media (max-width: 768px) {
-  .mainPage .heroSubtitle {
-    font-size: clamp(24px, 5vw, 32px);
-  }
-
-  .navbar {
-    padding: 14px 14px;
-    gap: 8px;
-  }
-
-  .logo {
-    width: 150px;
-    height: 46px;
-  }
-
-  .logoImg {
-    height: 46px;
-    transform: scale(1.55);
-  }
-
-  .navActions {
-    gap: 8px;
-    flex-shrink: 0;
-  }
-
-  .authBtn {
-    padding: 8px 10px;
-    font-size: 11px;
-    border-radius: 18px;
-    line-height: 1.1;
-    white-space: nowrap;
-  }
-
-  .languageToggle {
-    padding: 5px 9px;
-    font-size: 11px;
-  }
-
-  .hero {
-    min-height: 600px;
-  }
-
-  .heroContent {
-    padding: 0 16px;
-  }
-
-  .heroSubtitle {
-    margin-bottom: 28px;
-  }
-  
-  .searchBar {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 12px;
-  }
-  
-  .searchDivider {
-    display: none;
-  }
-  
-  .searchField {
-    width: 100%;
-    padding: 8px 0;
-  }
-  
-  .searchButton {
-    width: 100%;
-    min-width: 0;
-    min-height: 48px;
-  }
-
-  .publishedOverlayBackdrop {
-    padding: 12px;
-  }
-
-  .publishedOverlayPanel {
-    padding: 14px;
-    border-radius: 14px;
-  }
-
-  .publishedOverlayGrid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  
-  .collections,
-  .experiences,
-  .listings {
-    padding: 40px 24px;
-  }
-  
-  .collectionsGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 200px);
-  }
-  
-  .collectionCard.large {
-    grid-column: 1;
-  }
-  
-  .stats {
-    grid-template-columns: 1fr;
-    padding: 0 24px 40px;
-  }
-  
-  .listingsGrid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footerMain {
-    padding: 32px 24px;
-    gap: 40px;
-  }
-  
-  .footerLinks {
-    gap: 32px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .footerColumn {
     min-width: auto;
   }
   
@@ -5427,7 +5229,7 @@
   }
   
   .footerBottom {
-    padding: 20px 24px;
+    padding: 20px 32px;
     text-align: center;
   }
 
