@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import { listings as allListings } from "../data";
 
 function HostDashboardPage({
   t,
@@ -23,7 +24,7 @@ function HostDashboardPage({
 
   const [statusMessage, setStatusMessage] = useState(null);
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
-  const [hostListings, setHostListings] = useState(allListings);
+  const [hostListings, setHostListings] = useState(listings?.length > 0 ? listings : allListings);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editListing, setEditListing] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 900);
@@ -43,21 +44,6 @@ function HostDashboardPage({
     ? "® La Villa. Todos los derechos reservados."
     : "® La Villa. All rights reserved.";
   const footerCreditPrefix = isSpanish ? "Experiencia Digital por " : "Digital experience by ";
-
-  useEffect(() => {
-    // Simulación: cargar alojamientos del host
-    setHostListings([
-      {
-        id: 1,
-        title: isSpanish ? "Apartamento céntrico" : "Central Apartment",
-        location: isSpanish ? "Madrid" : "Madrid",
-        price: isSpanish ? "€120/noche" : "$120/night",
-        image: "https://via.placeholder.com/300x200",
-        description: isSpanish ? "Apartamento moderno en el centro." : "Modern apartment downtown.",
-        amenities: [isSpanish ? "WiFi" : "WiFi", isSpanish ? "Piscina" : "Pool"]
-      }
-    ]);
-  }, [isSpanish]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -600,5 +586,3 @@ function HostDashboardPage({
 }
 
 export default HostDashboardPage;
-
-import { listings as allListings } from "../data";

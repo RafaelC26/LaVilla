@@ -319,12 +319,16 @@ button {
 }
 
 .logoImg {
-  height: 64px;
+  height: 128px;
   width: auto;
   object-fit: contain;
   transform: scale(2.0);
   transform-origin: left center;
   filter: brightness(0) invert(1);
+}
+
+.navbar .logoImg {
+  height: 64px;
 }
 
 .navLinks {
@@ -1702,7 +1706,7 @@ button {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 28px 32px 48px;
+  padding: 140px 32px 48px;
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   gap: 32px;
@@ -3736,14 +3740,14 @@ button {
 }
 
 .detailLogoImg {
-  height: clamp(24px, 3.5vh, 32px);
+  height: clamp(64px, 9vh, 88px);
   width: auto;
   filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(16, 185, 129, 0.2));
 }
 
 .detailBrandText {
   font-family: var(--font-display);
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(40px, 5vw, 48px);
   font-weight: 800;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
@@ -5171,21 +5175,38 @@ button {
 
 .catalogTopBar {
   height: 90px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   padding: 0 48px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: #050505;
 }
 
+.catalogTopBar > *:nth-child(1) {
+  justify-self: start;
+}
+
+.catalogTopBar > *:nth-child(2) {
+  justify-self: center;
+}
+
+.catalogRightControls {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 16px;
+}
+
 .catalogSearchShell {
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 100px;
-  padding: 4px 4px 4px 28px;
+  padding: 8px 16px;
   gap: 32px;
   width: min(800px, 60vw);
 }
@@ -5236,11 +5257,18 @@ button {
 }
 
 .catalogSearchBtn {
+  position: absolute;
+  right: 8px;
   background: #10b981;
   color: #ffffff;
   border: none;
-  padding: 12px 28px;
-  border-radius: 100px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
