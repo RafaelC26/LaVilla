@@ -750,6 +750,26 @@ function StayDetailPage({
                     </>
                   );
                 })()
+              ) : listing.id === 2 ? (
+                (() => {
+                  const desc = `Acerca de este espacio<br>Dúplex moderno de 80 m² en el centro de Sogamoso, cerca de la Plaza de la Villa y la Plaza 6 de Septiembre. Totalmente equipado, combina diseño contemporáneo y esencia local. Ubicado en el corazón de la ciudad, es un lugar muy tranquilo, ideal para descansar o trabajar. Cuenta con cocina equipada, luz natural y todos los servicios para una estadía cómoda.<br>Perfecto para explorar la ciudad caminando, disfrutar su historia y relajarte en un espacio amplio y acogedor.<br><br>El espacio<br>Cuenta con estacionamiento privado y en su interior espacios amplios y luminosos, cocina equipada, Wi-Fi, Smart TV y todas las comodidades necesarias para una estadía placentera, ya sea de trabajo o descanso. Sus tres habitaciones bien distribuidas ofrecen descanso ideal para familias, parejas o grupos pequeños.<br><br>Acceso de los huéspedes<br>Estacionamiento privado`;
+                  const [showAllDesc, setShowAllDesc] = window.useState ? window.useState(false) : useState(false);
+                  const shortDesc = desc.split('<br>').slice(0, 2).join(' ');
+                  return (
+                    <>
+                      <p dangerouslySetInnerHTML={{ __html: showAllDesc ? desc : shortDesc }} />
+                      <button
+                        className="detailDescToggleBtn"
+                        type="button"
+                        onClick={() => setShowAllDesc((prev) => !prev)}
+                        style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        {showAllDesc ? 'Mostrar menos' : 'Mostrar más'}
+                        <span style={{ fontSize: '18px', transform: showAllDesc ? 'rotate(180deg)' : 'none' }}>▼</span>
+                      </button>
+                    </>
+                  );
+                })()
               ) : (
                 <p>{translatedDescription}</p>
               )}
@@ -911,60 +931,7 @@ function StayDetailPage({
                 <div className="reviewCardsGrid">
                   {(() => {
                     const reviews = [
-                      { name: "María G.", date: "Febrero 2026", text: "Increíble estancia. Todo impecable, la ubicación perfecta y Andrés fue un gran anfitrión. Sin duda volveré.", rating: 5 },
-                      { name: "Carlos M.", date: "Enero 2026", text: "Espacio muy acogedor, las fotos no le hacen justicia. La atención del anfitrión fue excepcional.", rating: 5 },
-                      { name: "Laura P.", date: "Diciembre 2025", text: "Perfecto para desconectarse. Limpieza impecable y todo lo necesario. La vista desde el balcón es espectacular.", rating: 5 },
-                      { name: "David R.", date: "Noviembre 2025", text: "Superó nuestras expectativas. La zona es tranquila y hermosa. Comunicación rápida y check-in muy fácil.", rating: 4 },
-                      // Nuevas reseñas
-                      { name: "Xiomara Alexandra", date: "Diciembre 2025", text: "Andrés es una persona muy hospitalaria y amable. Estuvo pendiente de nosotros todo el tiempo y nos brindó la información turística para el recorrido de alumbrado navideño y la pasadía en Tibasosa. El apartamento está ubicado en una zona central, tranquila y segura. Además con un letrero de recibimiento y decoración navideña. Recomendado para viajes en familia con mascotas.", rating: 5 },
-                      { name: "Camilo Augusto", date: "Diciembre 2025", text: "Primero quiero resaltar que Andrés es una persona muy amable y proactiva para resolver cualquier situación que se presenta. El apartamento es cómodo y es una buena opción en Sogamoso (Boyacá) si vienes en familia. El apartamento cuenta con un parqueadero seguro y amplio.", rating: 4 },
-                      { name: "Oscar", date: "Diciembre 2025", text: "Andrés fué un excelente anfitrión, da instrucciones clara y está pendiente de la llegada de uno. El apartamento es agradable y queda ubicado cerca a todo el comercio que uno necesita, droguerias. supermercados, almacenes, restaurantes. En las noches es muy tranquilo y no se escucha ningún ruido.", rating: 5 },
-                      { name: "Diana Patricia", date: "Octubre 2025", text: "Definitivamente un lugar muy muy lindo, el edificio en general limpio, tranquilo, gente amable; el apartamento desde que entramos se sintió un ambiente acogedor, cálido, el apto es hermosísimo , su decoración me encantó, las habitaciones súper cómodas y la ubicación espectacular, central y seguro !!! volveríamos nos encantó!!!", rating: 5 },
-                      { name: "Carol Susana", date: "Noviembre 2025", text: "Pasamos una agradable estadía. la ubicación es super central, restaurantes, almacenes de cadena y comercio en general. El espacio es cómodo y cumplía con la descripción del mismo. Andrés es muy atento, responde rápido y está presto a colaborar siempre.", rating: 5 },
-                      { name: "Lady Constanza", date: "Octubre 2025", text: "El apartamento muy bonito y amplio, Andrés siempre está muy atento a las solicitudes, la ubicación es excelente y aunque está en el centro en el apto no se escucha nada de ruido. Excelente estadía.", rating: 5 },
-                      { name: "Paola", date: "Enero 2026", text: "un sitio agradable con los elementos necesarios para una estancia cómoda. ubicado en pleno centro de Sogamoso, con mucha oferta de almacenes cerca", rating: 4 },
-                      { name: "Viviana Andrea", date: "Enero 2026", text: "Es un buen espacio para alojarse, es limpio, cómodo y de fácil acceso. Andres como anfitrión es excelente, amable y siempre atento a cualquier cosa. Súper recomendado!!!", rating: 5 },
-                      { name: "Julián Alejandro", date: "Enero 2026", text: "Un hospedaje muy ameno y súper recomendado. Es cómodo, amplio, limpio y organizado. El anfitrión estuvo muy atento a todo.", rating: 5 },
-                      { name: "Sandra", date: "Enero 2026", text: "Andres es muy amable y servicial; esta siempre atento a las inquietudes de los huéspedes. El lugar es genial. Aseado, cómodo y bien ubicado", rating: 5 },
-                      { name: "Julian", date: "Diciembre 2025", text: "El apartamento es un muy buen lugar para hospedarse, todo está en orden, muy organizado, 100% recomendado. Andrés es un excelente anfitrión, muy amable, cordial y siempre presto a resolver cualquier inquietud. Muchas gracias.", rating: 5 },
-                      { name: "Danny Valentina", date: "Junio 2025", text: "Excelente acomodación, buena comunicación por parte del host. Lugar bastante central con facilidad de entrada, diferentes tiendas y comercios al rededor. La casa en general muy limpia y organizada, perfecta para mi familia incluyendo a nuestro perro, definitivamente un lugar que tendremos en cuenta para futuros hospedajes, muchas gracias!", rating: 5 },
-                      { name: "Valentina", date: "Junio 2025", text: "El apartamento es exactamente como se describe en la página: acogedor, limpio y perfectamente decorado. La ubicación es inmejorable, a solo unos pasos del centro de la ciudad y de todos los lugares turísticos. Lo que realmente hizo que mi estancia fuera especial fue la atención y la hospitalidad de los anfitriones", rating: 5 },
-                      { name: "Jefferson", date: "Mayo 2025", text: "El lugar es tal cual se muestra en el anuncio y en las fotos: limpio, cómodo y bien equipado. La ubicación es muy conveniente, con fácil acceso a todo lo necesario. Me sentí muy a gusto durante toda mi estancia. El anfitrión fue muy amable, siempre atento y con una comunicación clara y rápida. Sin duda, lo recomendaría y volvería a hospedarme allí.", rating: 5 },
-                      { name: "Víctor", date: "Diciembre 2025", text: "Apto muy bonito, cómodo,. Buena ubicación, todo queda muy cerca.", rating: 4 },
-                      { name: "Luz Yenny", date: "Diciembre 2025", text: "estuvo bien solo le recomendaría una remodelación a los baños ya que están un poco deteriorados", rating: 4 },
-                      { name: "Olga", date: "Diciembre 2025", text: "Excelente anfitrión, el apartamento muy acogedor, tranquilo, limpio, muy central, parqueadero privado, se encuentra de todo cerca sin necesidad de salir en auto!!", rating: 5 },
-                      { name: "Dora Alba", date: "Noviembre 2025", text: "Un buen lugar de paso limpio fácil ingrato y ubicación Todo en bien estado Andrés muy pendiente Regresaría", rating: 4 },
-                      { name: "Camila", date: "Noviembre 2025", text: "Alojamiento confortable, central y limpio. El anfitrión muy pendiendiente siempre, recomendado 100%.", rating: 5 },
-                      { name: "Daniel Santiago", date: "Octubre 2025", text: "toda la estadía en el Air BNB fue muy agradable y cómoda, el apartamento está en un lugar muy céntrico y permite ir a cualquier lugar.", rating: 5 },
-                      { name: "Deisy Johanna", date: "Junio 2025", text: "Andrés siempre pendiente, un edificio tranquilo ideal para descansar, muy central, a 10 minutos caminando del terminal de transporte, a 5 minutos caminando del comercio. El apartamento tal cual está en las fotos y la descripción, muy recomendable.", rating: 5 },
-                      { name: "Andres", date: "Abril 2025", text: "Excelente estadía y ubicación. Andres, Andrea y su familia fueron muy amables y atentos. El apto es impecable, limpio y organizado y tenía muchos detalles de aseo para nuestro uso.", rating: 5 },
-                      { name: "Johanna", date: "Diciembre 2025", text: "Andrés, es muy amable. Me Encantó el hospedaje sin duda volveré. Muchas gracias!!", rating: 5 },
-                      { name: "Daniel", date: "Diciembre 2025", text: "Excelente lugar para hospedarse, volvería a quedarme aquí. Andrés muy amable y atento a todo.", rating: 5 },
-                      { name: "Jhonattan Ricardo", date: "Noviembre 2025", text: "Muchas gracias por la amabilidad y la atención, siempre estuvierom pendientes de nosotros, sin lugar a dudas volveriamos, lugar muy central y el apto muy acogedor.🫶🏻", rating: 5 },
-                      { name: "Jonattan", date: "Octubre 2025", text: "Un Excelente lugar para descansar y compartir en familia y compañeros, super recomendado!!", rating: 5 },
-                      { name: "Ricardo Luis", date: "Enero 2026", text: "Un sector muy tranquilo, muy comodo el apartamento", rating: 5 },
-                      { name: "Victor Hugo", date: "Diciembre 2025", text: "Andrés es un excelente anfitrión", rating: 5 },
-                      { name: "Laura", date: "Octubre 2025", text: "Cumple con las expectativas, buena ubicación, edificio tranquilo !", rating: 5 },
-                      { name: "Yeison", date: "Septiembre 2025", text: "un lugar muy completo. estaba limpio y el host fue muy amable", rating: 5 },
-                      { name: "Deison", date: "Julio 2025", text: "excelente ubicación muy central, todo estába en perfectas condiciones, todo muy limpio, la atención, siempre estuvieron pendientes y muy serviciables.", rating: 5 },
-                      { name: "Eduardo Alfonso", date: "Noviembre 2025", text: "Lo que se ofrece se cumple, buena ubicación. Agradable.", rating: 5 },
-                      { name: "Luis Edgar", date: "Noviembre 2025", text: "Apartamento acogedor y confortable.", rating: 5 },
-                      { name: "Luisa", date: "Agosto 2025", text: "Tuvimos una experiencia muy agradable, el apartamento impecable y la atención de Andrés inmejorable. Muchas gracias!", rating: 5 },
-                      { name: "Jesus Antonio", date: "Agosto 2025", text: "apartamento perfecto una bendición encontrar personas y sitios tan geniales por tan poco precio", rating: 5 },
-                      { name: "Tito Alfonso", date: "Agosto 2025", text: "Lugar muy bonito, buena energía, nos dieron una bienvenida con un letrero bien bonito, como dicen por hay, detalles de fina coquetería. Muy recomendable 10 de 10.", rating: 5 },
-                      { name: "Lina", date: "Julio 2025", text: "Andrés muy amable, todo el tiempo nos colaboró con el tema de la televisión y se preocupo porque nos sintiéramos en casa. Un excelente lugar de descanso.", rating: 5 },
-                      { name: "Jessica", date: "Julio 2025", text: "Todo súper, igual que en las fotos, Andrés siempre fue muy amable!", rating: 5 },
-                      { name: "Natalia", date: "Junio 2025", text: "Excelente lugar, muy bonito!!! Andrés es un excelente anfitrión, siempre pendiente a lo que pudieramos necesitar, cuando regresemos a Sogamoso seguro será nuestro lugar", rating: 5 },
-                      { name: "Leonardo", date: "Mayo 2025", text: "Es un lugar muy bonito y comodo, el anfitirion es super atento y muy servicial, 100 % recomendado.", rating: 5 },
-                      { name: "Dani", date: "Abril 2025", text: "Excelente ubicacion, muy comodo acogedor amplio. Andres fue un gran anfitrión.", rating: 5 },
-                      { name: "Rocio", date: "Junio 2025", text: "Un apartamento muy lindo y buenos anfitriones. Sin duda volveremos.", rating: 5 },
-                      { name: "Keegan", date: "Septiembre 2025", text: "¡Gran lugar en el centro de Sogamoso! La casa está muy limpia y equipada con todo lo que uno podría necesitar para una estancia cómoda. ¡Recomiendo encarecidamente esta casa!", rating: 5 },
-                      { name: "Carolina", date: "Agosto 2025", text: "muy bonito y central el apartamento, volvería sin duda", rating: 5 },
-                      { name: "Jose David", date: "Julio 2025", text: "Lugar recomendado y muy buena atención por parte de Andrés", rating: 5 },
-                      { name: "Diana", date: "Agosto 2025", text: "Muy buena atención", rating: 5 },
-                      { name: "Sergio", date: "Junio 2025", text: "La comunicación con Andrés fue muy agradable y eficaz, siempre estuvo atento para responder a nuestras preguntas. El apartamento coincide con la descripción, incluso es mejor. Las habitaciones estaban limpias, el apartamento bien cuidado, con buenas mantas, camas cómodas y todo el equipo necesario para la estancia. Lo recomiendo sin duda. Si vuelvo a Sogamoso, sin duda me alojaré aquí de nuevo. Muchas gracias Andrés.", rating: 5 },
-                      { name: "Juan Sebastian", date: "Mayo 2025", text: "Una belleza", rating: 5 },
-                      { name: "Dominik", date: "Septiembre 2025", text: "El anfitrión fue muy amable y servicial. La ubicación es perfecta para explorar Sogamoso. El departamento también está bien equipado. Perfecto para unos días", rating: 5 }
+                      { name: "Paula", date: "Hace 2 días", text: "Casa con un ambiente muy acogedor, tranquilo y muy limpio", rating: 5, extra: "11 meses en Airbnb", family: true },
                     ];
                     return reviews.map((review) => (
                       <article key={review.name + review.date + review.text.slice(0,10)} className="reviewCard">
