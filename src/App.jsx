@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ListingsSection from "./components/ListingsSection";
 import ExperiencesSection from "./components/ExperiencesSection";
+import ReviewsSection from "./components/ReviewsSection";
 import FooterSection from "./components/FooterSection";
 import ThreeIntroOverlay from "./components/ThreeIntroOverlay";
 
@@ -339,7 +340,24 @@ function App() {
     if (introAlreadySeen || prefersReducedMotion) {
       setShowIntro(false);
     }
-  }, []);
+
+    // Scroll reveal observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    const revealElements = document.querySelectorAll(".revealRow, .premiumReveal, .hostSectionEnhanced");
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    return () => revealObserver.disconnect();
+  }, [showIntro]);
 
   const handleIntroComplete = () => {
     window.sessionStorage.setItem("horizon-intro-seen", "1");
@@ -457,6 +475,8 @@ function App() {
         language={language}
         onSelectExperienceCategory={() => {}}
       />
+
+      <ReviewsSection t={t} />
       
       <FooterSection t={t} language={language} logoImg={logoImg} footerImage={footerImage} />
 

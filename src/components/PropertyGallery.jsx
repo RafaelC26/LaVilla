@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function PropertyGallery({ images, title, language = 'es' }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -39,23 +40,24 @@ export default function PropertyGallery({ images, title, language = 'es' }) {
 
   if (!images || images.length === 0) return null;
 
-  const viewGalleryText = language === 'es' ? 'Ver galería' : 'View gallery';
+  const viewGalleryText = language === 'es' ? 'Ver galeria' : 'View gallery';
+  const showAllPhotosText = language === 'es' ? 'Mostrar todas las fotos' : 'Show all photos';
   const imageAlt = language === 'es' ? 'Imagen' : 'Image';
   const ofText = language === 'es' ? 'de' : 'of';
 
   return (
     <>
       {/* Grid de imágenes */}
-      <div className="property-gallery">
+      <div className="property-gallery detailGalleryGrid">
         {/* Imagen principal grande */}
         <div 
-          className="property-gallery-main"
+          className="property-gallery-main detailHeroImageWrap"
           onClick={() => openLightbox(0)}
         >
           <img 
-            src={images[0]} 
+            src={images[0]?.url || images[0]} 
             alt={`${title} - ${imageAlt} 1`}
-            className="property-gallery-main-img"
+            className="property-gallery-main-img detailHeroImage"
           />
           <div className="property-gallery-overlay">
             <div className="property-gallery-zoom">
@@ -70,16 +72,17 @@ export default function PropertyGallery({ images, title, language = 'es' }) {
         </div>
 
         {/* Grid de miniaturas */}
-        <div className="property-gallery-grid">
+        <div className="property-gallery-grid detailThumbCol">
           {images.slice(1, 5).map((img, idx) => (
             <div 
               key={idx}
-              className="property-gallery-thumb"
+              className="property-gallery-thumb detailThumbBtn"
               onClick={() => openLightbox(idx + 1)}
             >
               <img 
-                src={img} 
+                src={img.url || img} 
                 alt={`${title} - ${imageAlt} ${idx + 2}`}
+                className="detailThumb"
               />
               <div className="property-gallery-thumb-overlay">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -88,80 +91,84 @@ export default function PropertyGallery({ images, title, language = 'es' }) {
                   <path d="M11 8v6M8 11h6"/>
                 </svg>
               </div>
-              {idx === 3 && images.length > 5 && (
-                <div className="property-gallery-more">
-                  <span>+{images.length - 5}</span>
-                </div>
+              {idx === 3 && (
+                <button
+                  type="button"
+                  className="galleryShowAllBtn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openLightbox(0);
+                  }}
+                >
+                  {showAllPhotosText}
+                </button>
               )}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Lightbox */}
-      {lightboxOpen && (
+      {/* Lightbox - Premium Carousel Mode */}
+      {lightboxOpen && createPortal(
         <div 
           className="property-lightbox-backdrop"
           onClick={closeLightbox}
         >
-          <div className="property-lightbox-content" onClick={(e) => e.stopPropagation()}>
-            {/* Botón cerrar */}
-            <button className="property-lightbox-close" onClick={closeLightbox}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M18 6L6 18M6 6l12 12"/>
-              </svg>
-            </button>
-
-            {/* Navegación */}
-            {images.length > 1 && (
-              <>
-                <button className="property-lightbox-nav prev" onClick={prevImage}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                  </svg>
-                </button>
-                <button className="property-lightbox-nav next" onClick={nextImage}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M9 18l6-6-6-6"/>
-                  </svg>
-                </button>
-              </>
-            )}
-
-            {/* Imagen principal */}
-            <div className="property-lightbox-image-container">
-              <img 
-                src={images[currentImageIndex]} 
-                alt={`${title} - ${imageAlt} ${currentImageIndex + 1}`}
-                className="property-lightbox-image"
-              />
+          <div className="property-lightbox-content carousel-mode" onClick={(e) => e.stopPropagation()}>
+            <div className="property-lightbox-header overlay">
+              <button className="property-lightbox-close white" onClick={closeLightbox}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="24" height="24">
+                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             </div>
 
-            {/* Info */}
-            <div className="property-lightbox-info">
-              <span className="property-lightbox-counter">
-                {currentImageIndex + 1} {ofText} {images.length}
-              </span>
-              <span className="property-lightbox-title">{title}</span>
+            <div className="property-lightbox-carousel">
+              <button className="carousel-nav-btn prev-btn" onClick={prevImage} aria-label="Previous image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="24" height="24">
+                  <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <div className="carousel-main-stage">
+                <img 
+                  key={currentImageIndex}
+                  src={images[currentImageIndex]?.url || images[currentImageIndex]} 
+                  alt={`${title} - ${imageAlt} ${currentImageIndex + 1}`}
+                  className="lightbox-carousel-image"
+                />
+              </div>
+
+              <button className="carousel-nav-btn next-btn" onClick={nextImage} aria-label="Next image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="24" height="24">
+                  <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <div className="carousel-counter">
+                {currentImageIndex + 1} / {images.length}
+              </div>
             </div>
 
-            {/* Thumbnails */}
-            {images.length > 1 && (
-              <div className="property-lightbox-thumbnails">
+            {/* Thumbnails at the bottom */}
+            <div className="carousel-thumbnails-container">
+              <div className="carousel-thumbnails">
                 {images.map((img, idx) => (
-                  <button
+                  <div 
                     key={idx}
-                    className={`property-lightbox-thumb ${idx === currentImageIndex ? 'active' : ''}`}
+                    className={`thumbnail-item ${idx === currentImageIndex ? 'active' : ''}`}
                     onClick={() => setCurrentImageIndex(idx)}
                   >
-                    <img src={img} alt={`${imageAlt} ${idx + 1}`} />
-                  </button>
+                    <img src={img.url || img} alt={`${imageAlt} ${idx + 1}`} />
+                  </div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
 }
+

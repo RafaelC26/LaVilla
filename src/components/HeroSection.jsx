@@ -3,23 +3,14 @@ import { differenceInCalendarDays } from "date-fns";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const isoToDate = (isoValue) => {
-  if (!isoValue) {
-    return null;
-  }
-
+  if (!isoValue) return null;
   const [year, month, day] = isoValue.split("-").map(Number);
-  if (!year || !month || !day) {
-    return null;
-  }
-
+  if (!year || !month || !day) return null;
   return new Date(year, month - 1, day);
 };
 
 const dateToIso = (date) => {
-  if (!date) {
-    return "";
-  }
-
+  if (!date) return "";
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
@@ -38,49 +29,7 @@ function HeroDateField({
   rangeStart,
   rangeEnd
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hoverDate, setHoverDate] = useState(null);
-
   const selectedDate = useMemo(() => isoToDate(value), [value]);
-  const minDate = useMemo(() => isoToDate(minValue), [minValue]);
-  const rangeStartDate = useMemo(() => isoToDate(rangeStart), [rangeStart]);
-  const rangeEndDate = useMemo(() => isoToDate(rangeEnd), [rangeEnd]);
-
-  const monthNames = language === "es"
-    ? ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-    : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-  const yearOptions = useMemo(() => {
-    const baseYear = new Date().getFullYear();
-    return Array.from({ length: 9 }, (_, index) => baseYear - 2 + index);
-  }, []);
-
-  const formatDisplayDate = (rawDate) => {
-    if (!rawDate) {
-      return null;
-    }
-
-    return rawDate.toLocaleDateString(language === "es" ? "es-ES" : "en-US", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    });
-  };
-
-  const handleOpen = () => {
-    setHoverDate(null);
-    setIsOpen(true);
-  };
-
-  const getRangeBounds = (startDate, endDate) => {
-    if (!startDate || !endDate) {
-      return null;
-    }
-
-    return startDate <= endDate
-      ? { rangeMin: startDate, rangeMax: endDate }
-      : { rangeMin: endDate, rangeMax: startDate };
-  };
 
   return (
     <div className="searchInputWrapper heroDateField">
@@ -92,118 +41,26 @@ function HeroDateField({
         id={id}
         selected={selectedDate}
         onChange={(date) => {
-          if (!date) {
-            return;
-          }
-
-          setHoverDate(null);
+          if (!date) return;
           onApplyDate(dateToIso(date));
-          setIsOpen(false);
         }}
-        minDate={minDate}
-        shouldCloseOnSelect
-        open={isOpen}
-        onClickOutside={() => {
-          setHoverDate(null);
-          setIsOpen(false);
-        }}
-        onInputClick={handleOpen}
-        onCalendarClose={() => setHoverDate(null)}
-        onDayMouseEnter={(date) => {
-          if (rangeStartDate && !rangeEndDate) {
-            setHoverDate(date);
-          }
-        }}
-        popperPlacement="bottom-start"
-        popperClassName="heroDatePickerPopper"
-        calendarClassName="heroDatePickerCalendar"
-        formatWeekDay={(weekday) => weekday.slice(0, 1).toUpperCase()}
-        customInput={(
-          <button
-            className="calendarTrigger"
-            type="button"
-            aria-label={label}
-            onClick={handleOpen}
-          >
-            {formatDisplayDate(selectedDate) || placeholder}
-          </button>
-        )}
-        dayClassName={(date) => {
-          const committedBounds = getRangeBounds(rangeStartDate, rangeEndDate);
-          const previewBounds = !rangeEndDate ? getRangeBounds(rangeStartDate, hoverDate) : null;
-          const activeBounds = committedBounds || previewBounds;
-          const isInRange = Boolean(activeBounds && date >= activeBounds.rangeMin && date <= activeBounds.rangeMax);
-          const isPreview = Boolean(!committedBounds && previewBounds);
-
-          if (!isInRange) {
-            return undefined;
-          }
-
-          if (activeBounds && date.getTime() === activeBounds.rangeMin.getTime()) {
-            return `${isPreview ? "heroDayPreview" : "heroDayInRange"} heroDayRangeStart`;
-          }
-
-          if (activeBounds && date.getTime() === activeBounds.rangeMax.getTime()) {
-            return `${isPreview ? "heroDayPreview" : "heroDayInRange"} heroDayRangeEnd`;
-          }
-
-          return isPreview ? "heroDayPreview" : "heroDayInRange";
-        }}
-        renderDayContents={(dayOfMonth, date) => {
-          const committedBounds = getRangeBounds(rangeStartDate, rangeEndDate);
-          const previewBounds = !rangeEndDate ? getRangeBounds(rangeStartDate, hoverDate) : null;
-          const activeBounds = committedBounds || previewBounds;
-          const isInRange = Boolean(
-            activeBounds
-            && date >= activeBounds.rangeMin
-            && date <= activeBounds.rangeMax
-          );
-          const rangeStep = isInRange
-            ? Math.max(0, Math.min(20, differenceInCalendarDays(date, activeBounds.rangeMin)))
-            : 0;
-
-          return (
-            <span
-              className={`heroDayBubble ${isInRange ? "inRange" : ""}`.trim()}
-              style={isInRange ? { "--hero-range-step": rangeStep } : undefined}
-            >
-              {dayOfMonth}
-            </span>
-          );
-        }}
-        renderCustomHeader={({ date, changeMonth, changeYear }) => (
-          <div className="heroCalendarHeaderControls">
-            <select
-              className="heroCalendarSelect"
-              value={date.getMonth()}
-              onChange={(event) => changeMonth(Number(event.target.value))}
-            >
-              {monthNames.map((monthName, index) => (
-                <option key={monthName} value={index}>{monthName}</option>
-              ))}
-            </select>
-            <select
-              className="heroCalendarSelect"
-              value={date.getFullYear()}
-              onChange={(event) => changeYear(Number(event.target.value))}
-            >
-              {yearOptions.map((year) => (
-                <option key={year} value={year}>{year}</option>
-              ))}
-            </select>
-          </div>
-        )}
+        minDate={isoToDate(minValue)}
+        placeholderText={placeholder}
+        className="heroDateInput"
+        dateFormat="dd/MM/yyyy"
+        autoComplete="off"
       />
     </div>
   );
 }
 
-function HeroLocationField({ t, locationValue, locations, onChangeLocation }) {
+function HeroLocationField({ t, locationValue, onChangeLocation, locations }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
   const uniqueLocations = useMemo(() => {
-    return [...new Set(locations || [])];
+    if (!Array.isArray(locations)) return [];
+    return [...new Set(locations)];
   }, [locations]);
 
   const filteredLocations = useMemo(() => {
@@ -279,14 +136,8 @@ function HeroGuestsField({ t, guestsValue, onChangeGuests }) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("touchstart", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("touchstart", handleOutsideClick);
-    };
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
   return (
@@ -300,36 +151,17 @@ function HeroGuestsField({ t, guestsValue, onChangeGuests }) {
         </svg>
         <span>{t.hero.guestsLabel}</span>
       </label>
-
       <input
         id="hero-guests-trigger"
         type="text"
         className={`heroGuestsTrigger ${isOpen ? "open" : ""}`}
-        inputMode="numeric"
-        pattern="[0-9]*"
         value={guestsValue}
         placeholder={t.hero.guestsPlaceholder}
-        aria-haspopup="listbox"
-        aria-expanded={isOpen}
         onFocus={() => setIsOpen(true)}
-        onClick={() => setIsOpen(true)}
         onChange={(event) => handleGuestsInput(event.target.value)}
       />
-
       {isOpen && (
-        <div className="heroGuestsMenu" role="listbox" aria-label={t.hero.guestsLabel}>
-          <button
-            type="button"
-            className={`heroGuestsOption ${guestsValue === "" ? "active" : ""}`}
-            role="option"
-            aria-selected={guestsValue === ""}
-            onClick={() => {
-              onChangeGuests?.("");
-              setIsOpen(false);
-            }}
-          >
-            {t.hero.guestsPlaceholder}
-          </button>
+        <div className="heroGuestsMenu" role="listbox">
           {Array.from({ length: 10 }, (_, index) => {
             const value = String(index + 1);
             return (
@@ -337,8 +169,6 @@ function HeroGuestsField({ t, guestsValue, onChangeGuests }) {
                 key={value}
                 type="button"
                 className={`heroGuestsOption ${guestsValue === value ? "active" : ""}`}
-                role="option"
-                aria-selected={guestsValue === value}
                 onClick={() => {
                   onChangeGuests?.(value);
                   setIsOpen(false);
@@ -369,29 +199,12 @@ function HeroSection({
   onChangeCheckIn,
   onChangeCheckOut,
   onCheckAvailability,
-  onShowListings,
   locations
 }) {
-  const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (availabilityResult) {
-      setIsAvailabilityModalOpen(true);
-    }
-  }, [availabilityResult]);
-
-  const closeAvailabilityModal = () => {
-    setIsAvailabilityModalOpen(false);
-  };
-
   const scrollToListings = () => {
     const target = document.querySelector("#listings");
     if (target) {
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      target.scrollIntoView({
-        behavior: prefersReducedMotion ? "auto" : "smooth",
-        block: "start"
-      });
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -399,7 +212,14 @@ function HeroSection({
     <section id="hero" className="hero">
       <div className="heroOverlay" />
       <div className="heroContent">
-        <h1 className="heroTitle">{t.hero.title}</h1>
+        <h1 className="heroTitle">
+          {language === 'es' ? (
+            <>Descubre el lugar <span className="highlight">perfecto</span> para tu próxima estancia.</>
+          ) : (
+            <>Discover the <span className="highlight">perfect</span> place for your next stay.</>
+          )}
+        </h1>
+        
         <p className="heroSubtitle">{t.hero.subtitle}</p>
 
         <div className="heroActions">
@@ -412,7 +232,6 @@ function HeroSection({
         </div>
       </div>
     </section>
-
   );
 }
 

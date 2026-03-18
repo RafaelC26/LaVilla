@@ -137,19 +137,188 @@ export const translations = {
       role: "CTO · Docente · Anfitrión",
       bio: "Soy apasionado por la tecnología, el diseño funcional y los pequeños detalles, así que me esfuerzo para que tu estadía sea cómoda, práctica y agradable. Si necesitas recomendaciones locales, ¡estaré encantado de ayudarte!",
       trustHighlights: ["Identidad Verificada", "Valoración Excelente (4.9/5)", "Check-in Guiado y Personalizado"],
-      yearsHosting: "CTO · Docente",
-      yearsHostingDesc: "Profesional de la tecnología y la educación al servicio de tu experiencia.",
-      responseTime: "Respuesta Inmediata",
-      responseTimeDesc: "Atención ágil en menos de 1 hora para tu total tranquilidad.",
-      personalAttention: "Alojamiento Único",
-      personalAttentionDesc: "Muy acogedor y cómodo, preparado con detalle para cada huésped.",
-      profileImageAlt: "Retrato Profesional del Propietario",
-      metricsImageAlt: "Espacio de Gestión Directa",
+      profileImageAlt: "Andrés - Anfitrión de La Villa",
+      stats: {
+        reviews: "66",
+        rating: "4.9",
+        months: "11",
+        properties: "2",
+        superhostLabel: "Superanfitrión",
+        reviewsLabel: "Reseñas",
+        ratingLabel: "Calificación",
+        monthsLabel: "Meses",
+        propertiesLabel: "Propiedades"
+      },
       personalFacts: [
-        { icon: "work", text: "A qué me dedico: CTO · Docente" },
-        { icon: "music", text: "Mi canción favorita en la secundaria: I don't want to miss a thing - Aerosmith" },
+        { icon: "work", text: "A qué me dedico: CTO - Docente" },
+        { icon: "skill", text: "Mi habilidad menos útil: Memorizar diálogos de películas" },
         { icon: "star", text: "Porqué mi alojamiento es único: Muy acogedor y cómodo" },
-        { icon: "time", text: "A qué le dedico mucho tiempo: Ejercicio, runner, Gym." }
+        { icon: "pet", text: "Mascotas: Drago, Horus, Orión y Bonnie le cat" },
+        { icon: "time", text: "A qué le dedico mucho tiempo: Ejercicio, runner, Gym" },
+        { icon: "music", text: "Mi canción favorita en la secundaria: I don't want to miss a thing - Aerosmith" },
+        { icon: "love", text: "Amo: Planearlo todo" },
+        { icon: "language", text: "Habla español e inglés" },
+        { icon: "location", text: "Vive en Colombia, Colombia" }
+      ]
+    },
+    reviews: {
+      title: "Lo que dicen los huéspedes",
+      overview: "66 reseñas",
+      overviewLabel: "En total",
+      guestCount: "50",
+      guestsLabel: "De huéspedes",
+      hostCount: "16",
+      hostCountLabel: "De anfitriones",
+      items: [
+        {
+          id: 1,
+          name: "Paula",
+          location: "Huésped ocasional",
+          gender: "female",
+          rating: 5,
+          date: "Hace 2 días",
+          comment: "Casa con un ambiente muy acogedor, tranquilo y muy limpio",
+          avatar: "https://i.pravatar.cc/150?u=paula"
+        },
+        {
+          id: 2,
+          name: "Ricardo Luis",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "Enero de 2026",
+          comment: "Un sector muy tranquilo, muy comodo el apartamento",
+          avatar: "https://i.pravatar.cc/150?u=ricardoluis"
+        },
+        {
+          id: 3,
+          name: "Paola",
+          location: "Visitante de Negocios",
+          gender: "female",
+          rating: 4,
+          date: "Enero de 2026",
+          comment: "Un sitio agradable con los elementos necesarios para una estancia cómoda. Ubicado en pleno centro de Sogamoso, con mucha oferta de almacenes cerca.",
+          avatar: "https://i.pravatar.cc/150?u=paola2"
+        },
+        {
+          id: 4,
+          name: "Viviana Andrea",
+          location: "Turista Familiar",
+          gender: "female",
+          rating: 5,
+          date: "Enero de 2026",
+          comment: "Es un buen espacio para alojarse, es limpio, cómodo y de fácil acceso. Andres como anfitrión es excelente, amable y siempre atento a cualquier cosa. Súper recomendado!!!",
+          avatar: "https://i.pravatar.cc/150?u=viviana"
+        },
+        {
+          id: 5,
+          name: "Julián Alejandro",
+          location: "Palmira, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "Enero de 2026",
+          comment: "Un hospedaje muy ameno y súper recomendado. Es cómodo, amplio, limpio y organizado. El anfitrión estuvo muy atento a todo.",
+          avatar: "https://i.pravatar.cc/150?u=julian"
+        },
+        {
+          id: 6,
+          name: "Sandra",
+          location: "Bogotá, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "Enero de 2026",
+          comment: "Andres es muy amable y servicial; esta siempre atento a las inquietudes de los huéspedes. El lugar es genial. Aseado, cómodo y bien ubicado.",
+          avatar: "https://i.pravatar.cc/150?u=sandra"
+        },
+        {
+          id: 7,
+          name: "Victor Hugo",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Andrés es un excelente anfitrión.",
+          avatar: "https://i.pravatar.cc/150?u=victorh"
+        },
+        {
+          id: 8,
+          name: "Xiomara Alexandra",
+          location: "Villavicencio, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Andrés es una persona muy hospitalaria y amable. Estuvo pendiente de nosotros todo el tiempo y nos brindó la información turística. Recomendado para viajes en familia con mascotas.",
+          avatar: "https://i.pravatar.cc/150?u=xiomara"
+        },
+        {
+          id: 9,
+          name: "Johanna",
+          location: "Viajera Solitaria",
+          gender: "female",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Andrés, es muy amable. Me encantó el hospedaje sin duda volveré. Muchas gracias!!",
+          avatar: "https://i.pravatar.cc/150?u=johanna"
+        },
+        {
+          id: 10,
+          name: "Víctor",
+          location: "Turista Regional",
+          gender: "male",
+          rating: 4,
+          date: "Diciembre de 2025",
+          comment: "Apto muy bonito, cómodo. Buena ubicación, todo queda muy cerca.",
+          avatar: "https://i.pravatar.cc/150?u=victor"
+        },
+        {
+          id: 11,
+          name: "Luz Yenny",
+          location: "Gachetá, Colombia",
+          gender: "female",
+          rating: 4,
+          date: "Diciembre de 2025",
+          comment: "Estuvo bien solo le recomendaría una remodelación a los baños ya que están un poco deteriorados.",
+          avatar: "https://i.pravatar.cc/150?u=luz"
+        },
+        {
+          id: 12,
+          name: "Camilo Augusto",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 4,
+          date: "Diciembre de 2025",
+          comment: "Andrés es una persona muy amable y proactiva. El apartamento es cómodo y es una buena opción en Sogamoso si vienes en familia.",
+          avatar: "https://i.pravatar.cc/150?u=camilo"
+        },
+        {
+          id: 13,
+          name: "Oscar",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Andrés fué un excelente anfitrión. El apartamento es agradable y queda ubicado cerca a todo el comercio necesario.",
+          avatar: "https://i.pravatar.cc/150?u=oscar"
+        },
+        {
+          id: 14,
+          name: "Olga",
+          location: "Bogotá, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Excelente anfitrión, el apartamento muy acogedor, tranquilo, limpio, muy central, parqueadero privado.",
+          avatar: "https://i.pravatar.cc/150?u=olga"
+        },
+        {
+          id: 15,
+          name: "Daniel",
+          location: "Viajero Reincidente",
+          rating: 5,
+          date: "Diciembre de 2025",
+          comment: "Excelente lugar para hospedarse, volvería a quedarme aquí. Andrés muy amable y atento a todo.",
+          avatar: "https://i.pravatar.cc/150?u=daniel"
+        }
       ]
     },
     categoriesPage: {
@@ -504,9 +673,9 @@ export const translations = {
         profileButton: "Ver Perfil Profesional",
         image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=320&h=320&fit=crop&crop=face",
         stats: [
-          { icon: "★", value: "4.9 / 5", label: "Calificación" },
-          { icon: "👥", value: "240+", label: "Huéspedes Satisfechos" },
-          { icon: "◷", value: "8 Años", label: "Experiencia" }
+          { icon: "★", value: "4.9", label: "Calificación" },
+          { icon: "👥", value: "66", label: "Reseñas" },
+          { icon: "◷", value: "11 Meses", label: "Experiencia" }
         ]
       },
       hostChat: {
@@ -719,21 +888,196 @@ export const translations = {
       forest: "Forest Retreats"
     },
     experiences: {
-      title: "About the owner",
-      subtitle: "Direct and dedicated management to guarantee excellence in every stay.",
-      tag: "Premium Host",
+      title: "About Andrés",
+      subtitle: "Direct and dedicated management to ensure excellence in every stay.",
+      tag: "Verified Host",
       name: "Andrés",
-      role: "Owner & Direct Manager",
-      bio: "My mission is to transform every reservation into an unforgettable experience. I offer comprehensive guidance from the first contact, ensuring every detail of your stay is flawless, backed by over 8 years of excellence in luxury hospitality.",
-      trustHighlights: ["Verified Identity", "Excellent Rating (4.9/5)", "Custom Guided Check-in"],
-      yearsHosting: "Hospitality Leadership",
-      yearsHostingDesc: "8+ years delivering consistent standards in high-end stays.",
-      responseTime: "Immediate Response",
-      responseTimeDesc: "Swift attention in under 1 hour for your complete peace of mind.",
-      personalAttention: "Personalized Detail",
-      personalAttentionDesc: "Handcrafted preparation for each property based on your individual preferences.",
-      profileImageAlt: "Professional Portrait of the Owner",
-      metricsImageAlt: "Direct Management Space"
+      role: "CTO · Teacher · Host",
+      bio: "I am passionate about technology, functional design and the small details, so I strive to make your stay comfortable, practical and pleasant. If you need local recommendations, I will be happy to help you!",
+      trustHighlights: ["Verified Identity", "Excellent Rating (4.9/5)", "In-Person Guided Check-in"],
+      profileImageAlt: "Andrés - La Villa Host",
+      stats: {
+        reviews: "66",
+        rating: "4.9",
+        months: "11",
+        properties: "2",
+        superhostLabel: "Superhost",
+        reviewsLabel: "Reviews",
+        ratingLabel: "Rating",
+        monthsLabel: "Months",
+        propertiesLabel: "Properties"
+      },
+      personalFacts: [
+        { icon: "work", text: "What I do: CTO - Teacher" },
+        { icon: "skill", text: "My least useful skill: Memorizing movie dialogues" },
+        { icon: "star", text: "Why my place is unique: Very cozy and comfortable" },
+        { icon: "pet", text: "Pets: Drago, Horus, Orion and Bonnie le cat" },
+        { icon: "time", text: "What I spend a lot of time on: Exercise, runner, Gym" },
+        { icon: "music", text: "My favorite song in High School: I don't want to miss a thing - Aerosmith" },
+        { icon: "love", text: "I love: Planning everything" },
+        { icon: "language", text: "Speaks Spanish and English" },
+        { icon: "location", text: "Lives in Colombia, Colombia" }
+      ]
+    },
+    reviews: {
+      title: "What guests are saying",
+      overview: "66 reviews",
+      overviewLabel: "In total",
+      guestCount: "50",
+      guestsLabel: "From guests",
+      hostCount: "16",
+      hostCountLabel: "From hosts",
+      items: [
+        {
+          id: 1,
+          name: "Paula",
+          location: "Occasional Guest",
+          gender: "female",
+          rating: 5,
+          date: "2 days ago",
+          comment: "House with a very cozy, quiet and very clean environment",
+          avatar: "https://i.pravatar.cc/150?u=paula"
+        },
+        {
+          id: 2,
+          name: "Ricardo Luis",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "January 2026",
+          comment: "A very quiet area, very comfortable apartment",
+          avatar: "https://i.pravatar.cc/150?u=ricardoluis"
+        },
+        {
+          id: 3,
+          name: "Paola",
+          location: "Business Visitor",
+          gender: "female",
+          rating: 4,
+          date: "January 2026",
+          comment: "A pleasant place with the necessary elements for a comfortable stay. located in the heart of Sogamoso, with a lot of shops nearby",
+          avatar: "https://i.pravatar.cc/150?u=paola2"
+        },
+        {
+          id: 4,
+          name: "Viviana Andrea",
+          location: "Family Tourist",
+          gender: "female",
+          rating: 5,
+          date: "January 2026",
+          comment: "It is a good space to stay, it is clean, comfortable and easy to access. Andres as a host is excellent, friendly and always attentive to anything. Super recommended!!!",
+          avatar: "https://i.pravatar.cc/150?u=viviana"
+        },
+        {
+          id: 5,
+          name: "Julián Alejandro",
+          location: "Palmira, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "January 2026",
+          comment: "A very pleasant stay and super recommended. It is comfortable, spacious, clean and organized. The host was very attentive to everything.",
+          avatar: "https://i.pravatar.cc/150?u=julian"
+        },
+        {
+          id: 6,
+          name: "Sandra",
+          location: "Bogotá, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "January 2026",
+          comment: "Andres is very kind and helpful; is always attentive to the concerns of the guests. The place is great. Neat, comfortable and well located.",
+          avatar: "https://i.pravatar.cc/150?u=sandra"
+        },
+        {
+          id: 7,
+          name: "Victor Hugo",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "December 2025",
+          comment: "Andrés is an excellent host.",
+          avatar: "https://i.pravatar.cc/150?u=victorh"
+        },
+        {
+          id: 8,
+          name: "Xiomara Alexandra",
+          location: "Villavicencio, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "December 2025",
+          comment: "Andrés is a very hospitable and kind person. He was aware of us all the time and provided us with tourist information. Recommended for family trips with pets.",
+          avatar: "https://i.pravatar.cc/150?u=xiomara"
+        },
+        {
+          id: 9,
+          name: "Johanna",
+          location: "Solo Traveler",
+          gender: "female",
+          rating: 5,
+          date: "December 2025",
+          comment: "Andrés, is very kind. I loved the lodging without a doubt I will return. Thank you very much!!",
+          avatar: "https://i.pravatar.cc/150?u=johanna"
+        },
+        {
+          id: 10,
+          name: "Víctor",
+          location: "Regional Tourist",
+          gender: "male",
+          rating: 4,
+          date: "December 2025",
+          comment: "Very nice, comfortable apartment. Good location, everything is very close.",
+          avatar: "https://i.pravatar.cc/150?u=victor"
+        },
+        {
+          id: 11,
+          name: "Luz Yenny",
+          location: "Gachetá, Colombia",
+          gender: "female",
+          rating: 4,
+          date: "December 2025",
+          comment: "It was fine I would only recommend a remodel to the bathrooms as they are a bit deteriorated.",
+          avatar: "https://i.pravatar.cc/150?u=luz"
+        },
+        {
+          id: 12,
+          name: "Camilo Augusto",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 4,
+          date: "December 2025",
+          comment: "Andrés is a very kind and proactive person. The apartment is comfortable and is a good option in Sogamoso if you come with family.",
+          avatar: "https://i.pravatar.cc/150?u=camilo"
+        },
+        {
+          id: 13,
+          name: "Oscar",
+          location: "Bogotá, Colombia",
+          gender: "male",
+          rating: 5,
+          date: "December 2025",
+          comment: "Andrés was an excellent host. The apartment is pleasant and is located close to all necessary commerce.",
+          avatar: "https://i.pravatar.cc/150?u=oscar"
+        },
+        {
+          id: 14,
+          name: "Olga",
+          location: "Bogotá, Colombia",
+          gender: "female",
+          rating: 5,
+          date: "December 2025",
+          comment: "Excellent host, the apartment very cozy, quiet, clean, very central, private parking.",
+          avatar: "https://i.pravatar.cc/150?u=olga"
+        },
+        {
+          id: 15,
+          name: "Daniel",
+          location: "Returning Traveler",
+          rating: 5,
+          date: "December 2025",
+          comment: "Excellent place to stay, I would stay here again. Andrés very kind and attentive to everything.",
+          avatar: "https://i.pravatar.cc/150?u=daniel"
+        }
+      ]
     },
     categoriesPage: {
       title: "Explore All Categories",
@@ -1053,7 +1397,6 @@ export const translations = {
     },
     detail: {
       breadcrumbPrefix: "Home",
-      reviews: "(132 reviews)",
       entirePlace: "Entire place",
       beds: "5 beds",
       guests: "guests",
@@ -1068,30 +1411,11 @@ export const translations = {
       serviceFee: "Service fee",
       selectDates: "Select dates",
       totalLabel: "Total:",
-      totalBeforeTax: "Total before taxes",
       mapLink: "Show map",
       tabs: ["Details", "Availability", "Reviews", "Location"],
       monthLabel: "May 2024",
       chooseDates: "Pick your dates, book, and enable instant confirmation.",
       contactHost: "Contact host",
-      hostBadge: "Superhost",
-      hostName: "Andres",
-      hostSince: "Hosting since 2018",
-      hostBio: "Focused on memorable mountain and nature experiences.",
-      hostDialog: {
-        name: "Andrés",
-        badge: "Premium Host",
-        properties: "8 exclusive properties",
-        bio: "Hi, I'm Andrés. My goal is for you to experience Boyacá in a unique way. I'm here to personalize your stay and ensure that every moment in our properties is exceptional.",
-        contactButton: "Chat with Andrés",
-        profileButton: "View Professional Profile",
-        image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=320&h=320&fit=crop&crop=face",
-        stats: [
-          { icon: "★", value: "4.9 / 5", label: "Rating" },
-          { icon: "👥", value: "240+", label: "Happy Guests" },
-          { icon: "◷", value: "8 Years", label: "Experience" }
-        ]
-      },
       hostChat: {
         title: "Host chat",
         status: "Online",
@@ -1128,15 +1452,9 @@ export const translations = {
           }
         ]
       },
-      hostProfileTitle: "Host profile",
-      hostSpecialtyOne: "Fast and personal response",
-      hostSpecialtyTwo: "Local mountain recommendations",
-      hostSpecialtyThree: "Premium care throughout your stay",
       trustTitle: "Your safety is our priority",
       mapPreviewAlt: "Map preview",
       trustItems: ["Your data stays encrypted", "Hosts are verified", "Fraud protection included", "24/7 support"],
-      reviewSummary: "4.9 / 5 (132 reviews)",
-      reviewWord: "reviews",
       whereYouWillSleep: "Where you'll sleep",
       quickHighlights: ["Entire place", "Spotless cleaning", "Scenic location", "Premium host care"],
       sleepFeatures: [
