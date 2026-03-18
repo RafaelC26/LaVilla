@@ -109,6 +109,7 @@ function Navbar({
     setIsMobileMenuOpen(false);
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
   return (
     <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
       <div className="logo">
@@ -178,7 +179,7 @@ function Navbar({
         <button className="languageToggle" onClick={onToggleLanguage} type="button">
           {language === "es" ? "EN" : "ES"}
         </button>
-        {showNavLinks && (
+        {showNavLinks && !isMobile && (
           <button
             className={`mobileMenuToggle ${isMobileMenuOpen ? "open" : ""}`}
             type="button"
@@ -194,7 +195,7 @@ function Navbar({
         )}
       </div>
 
-      {showNavLinks && (
+      {showNavLinks && !isMobile && (
         <div id="mobile-nav-panel" className={`mobileNavPanel ${isMobileMenuOpen ? "open" : ""}`}>
           <div className="mobileNavLinks" role="menu" aria-label={t.navbar.home}>
             {navSections.map((section) => (
