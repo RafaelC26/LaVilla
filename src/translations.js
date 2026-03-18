@@ -85,7 +85,7 @@ export const translations = {
       whatsappMessage: "¡Hola! Quisiera reservar *{listing}*.\n\n*Detalles de mi estancia:*\n📅 *Fechas:* {dates}\n👥 *Huéspedes:* {guests}\n💰 *Monto total:* {total}\n\n*Mis datos:*\n👤 *Nombre:* {name}\n\n{comments}\n\nQuedo atento(a) a tu confirmación. ¡Muchas gracias!"
     },
     hero: {
-      title: "Descubre el lugar perfecto para tu próxima estancia.",
+      title: "Descubre el lugar perfecto para tu próxima estancia",
       subtitle: "Encuentra alojamientos únicos, con ubicaciones tranquilas, comodidad y vistas inolvidables.",
       viewStaysBtn: "Ver alojamientos",
       bookNowBtn: "Reservar ahora",
