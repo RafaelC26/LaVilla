@@ -1,6 +1,67 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+/* Custom styles for StayDetailPage details tab */
+.detailInfoTab {
+  background: rgba(255,255,255,0.03);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 32px;
+  margin-bottom: 48px;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  margin-top: 32px;
+}
+.detailInfoTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.detailInfoDescription {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+.detailAmenitiesTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #fff;
+}
+.detailAmenitiesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+}
+.detailAmenityItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #b6e2ff;
+  background: rgba(36, 74, 131, 0.12);
+  border-radius: 8px;
+  padding: 8px 18px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.detailAmenityIcon {
+  color: #4fd18b;
+  font-weight: bold;
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+.detailAmenityText {
+  color: #e0e0e0;
+  font-size: 15px;
+}
+
 :root {
   --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-display: 'Outfit', sans-serif;
@@ -2970,7 +3031,7 @@ button {
    LISTINGS SECTION - Premium Grid & Cards
    ═══════════════════════════════════════════════════════════════════════════════ */
 .listings {
-  padding: 80px 48px;
+  padding: 100px 48px;
   background: #05070b;
 }
 
@@ -2981,7 +3042,7 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: #10b981;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
   padding: 6px 16px;
   background: rgba(16, 185, 129, 0.1);
   border-radius: 100px;
@@ -2992,7 +3053,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: 64px;
   gap: 24px;
 }
 
@@ -3001,7 +3062,7 @@ button {
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #ffffff;
-  margin: 0;
+  margin: 0 0 56px;
 }
 
 .sectionTitle.light {
@@ -3032,7 +3093,7 @@ button {
 .listingsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 32px;
+  gap: 48px;
 }
 
 
@@ -3417,8 +3478,67 @@ button {
   font-size: 15px;
   line-height: 1.7;
   color: rgba(220, 220, 220, 0.85);
-  margin-bottom: 12px;
+  margin-bottom: 24px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
+
+/* Personal Facts Section */
+.hostPersonalFacts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hostFactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.hostFactIcon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 1px;
+}
+
+.hostFactIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hostFactText {
+  font-size: 15px;
+  color: rgba(220,220,220,0.85);
+  line-height: 1.5;
+}
+
+.hostVerifiedRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.hostVerifiedRow svg {
+  width: 20px;
+  height: 20px;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.hostVerifiedLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 
 .hostTrustLabels {
   display: flex;
@@ -4179,6 +4299,58 @@ button {
   font-size: 18px;
 }
 
+.detailAmenitiesUnavailable {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detailAmenitiesUnavailableTitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.detailAmenityUnavailable {
+  opacity: 0.4;
+}
+
+.detailAmenityUnavailable span:last-child {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.detailAmenityX {
+  color: rgba(255, 100, 100, 0.7);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.detailHighlightItem > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.detailHighlightItem > div strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.detailHighlightItem > div p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}
+
 /* Tabs System */
 .detailTabsRow {
   display: flex;
@@ -4609,7 +4781,35 @@ button {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+}
+
+.reviewCardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.reviewCardDate {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.reviewCardDot {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.reviewCardTripType {
+  color: rgba(255, 255, 255, 0.45);
+  font-style: italic;
+}
+
+.reviewMemberSince {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
 }
 
 .reviewCardAvatar {
@@ -6292,7 +6492,9 @@ textarea:focus-visible {
 }
 
 .footerLogoPremium {
-  height: 32px;
+  height: 64px;
+  width: auto;
+  object-fit: contain;
   margin-bottom: 12px;
   filter: brightness(0) invert(1);
 }
@@ -6710,6 +6912,30 @@ textarea:focus-visible {
   background: rgba(16, 185, 129, 0.25) !important;
   color: #ffffff !important;
   border-radius: 0 !important;
+}
+
+/* Booked / blocked dates from iCal */
+.react-datepicker__day.detailDayBlocked,
+.react-datepicker__day--excluded {
+  background: rgba(220, 38, 38, 0.12) !important;
+  color: rgba(255, 100, 100, 0.55) !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* iCal loading label */
+.icalLoadingLabel {
+  font-size: 12px;
+  color: #10b981;
+  margin-bottom: 8px;
+  opacity: 0.8;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .detailCalendarCard p {

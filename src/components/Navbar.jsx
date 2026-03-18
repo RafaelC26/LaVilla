@@ -90,8 +90,7 @@ function Navbar({
   const navSections = [
     { key: "home", href: "#hero", label: t.navbar.home },
     { key: "homes", href: "#listings", label: t.navbar.homes },
-    { key: "host", href: "#experiences", label: t.navbar.host },
-    { key: "contact", href: "#footer", label: t.navbar.contact }
+    { key: "host", href: "#experiences", label: t.navbar.host }
   ];
 
   const handleNavClick = (event, href) => {
@@ -174,24 +173,8 @@ function Navbar({
               </div>
             )}
           </div>
-        ) : (
-          <div className="authButtons" aria-label={t.navbar.authActionsLabel}>
-            <button
-              className="authBtn authBtnSecondary"
-              type="button"
-              onClick={() => onAuthAction?.("login")}
-            >
-              {t.navbar.login}
-            </button>
-            <button
-              className="authBtn authBtnPrimary"
-              type="button"
-              onClick={() => onAuthAction?.("register")}
-            >
-              {t.navbar.register}
-            </button>
-          </div>
-        )}
+        ) : null}
+
         <button className="languageToggle" onClick={onToggleLanguage} type="button">
           {language === "es" ? "EN" : "ES"}
         </button>
@@ -226,30 +209,7 @@ function Navbar({
             ))}
           </div>
 
-          {!isAuthenticated && (
-            <div className="mobileAuthButtons" aria-label={t.navbar.authActionsLabel}>
-              <button
-                className="authBtn authBtnSecondary"
-                type="button"
-                onClick={() => {
-                  onAuthAction?.("login");
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                {t.navbar.login}
-              </button>
-              <button
-                className="authBtn authBtnPrimary"
-                type="button"
-                onClick={() => {
-                  onAuthAction?.("register");
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                {t.navbar.register}
-              </button>
-            </div>
-          )}
+
         </div>
       )}
     </nav>

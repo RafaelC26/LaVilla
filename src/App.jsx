@@ -5,7 +5,7 @@ import { listings } from "./data";
 import { translations } from "./translations";
 import logoImg from "./assets/logo.png";
 import footerImage from "./assets/footer.jpg";
-import { demoUsers, getDashboardPathForRole } from "./demoUsers";
+import { demoUsers } from "./demoUsers";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ListingsSection from "./components/ListingsSection";
@@ -15,10 +15,7 @@ import ThreeIntroOverlay from "./components/ThreeIntroOverlay";
 
 const StayDetailPage = lazy(() => import("./components/StayDetailPage"));
 const CatalogOverlay = lazy(() => import("./components/CatalogOverlay"));
-const ProfileDashboardPage = lazy(() => import("./components/ProfileDashboardPage"));
-const HostDashboardPage = lazy(() => import("./components/HostDashboardPage"));
-const AuthDemoPage = lazy(() => import("./components/AuthDemoPage"));
-const LegalPage = lazy(() => import("./components/LegalPage"));
+
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -33,25 +30,13 @@ const addDays = (baseDate, days) => {
   return nextDate;
 };
 
-const isoToLocalDate = (isoValue) => {
-  if (!isoValue) {
-    return null;
-  }
-
-  const [year, month, day] = isoValue.split("-").map(Number);
-  if (!year || !month || !day) {
-    return null;
-  }
-
-  return new Date(year, month - 1, day);
-};
 
 const eachDayIso = (startIso, endIso) => {
   const startDate = new Date(`${startIso}T00:00:00`);
   const endDate = new Date(`${endIso}T00:00:00`);
   const allDates = [];
 
-  for (let cursor = startDate; cursor < endDate; cursor = new Date(cursor.getTime() + DAY_IN_MS)) {
+  for (let cursor = startDate; cursor <= endDate; cursor = new Date(cursor.getTime() + DAY_IN_MS)) {
     allDates.push(toIsoDate(cursor));
   }
 
@@ -75,6 +60,20 @@ const buildUnavailableDatesForListing = (listingId, baseDate) => {
 
   return unavailableDates;
 };
+
+const isoToLocalDate = (isoValue) => {
+  if (!isoValue) {
+    return null;
+  }
+
+  const [year, month, day] = isoValue.split("-").map(Number);
+  if (!year || !month || !day) {
+    return null;
+  }
+
+  return new Date(year, month - 1, day);
+};
+
 
 function App() {
   const navigate = useNavigate();
@@ -127,47 +126,16 @@ function App() {
   const handleUserMenuAction = (actionKey) => {
     setIsUserMenuOpen(false);
 
-    const role = currentUser?.role || "client";
-    const baseDashboardPath = getDashboardPathForRole(role);
-
     if (actionKey === "logout") {
       setCurrentUserId(null);
       navigate("/");
-    } else if (actionKey === "profile") {
-      navigate(role === "host"
-        ? `${baseDashboardPath}?section=overview`
-        : `${baseDashboardPath}?section=personal`);
-    } else if (actionKey === "bookings") {
-      navigate(role === "host"
-        ? `${baseDashboardPath}?section=reservations`
-        : `${baseDashboardPath}?section=trips`);
-    } else if (actionKey === "saved") {
-      navigate(role === "host"
-        ? `${baseDashboardPath}?section=properties`
-        : `${baseDashboardPath}?section=favorites`);
-    } else if (actionKey === "settings") {
-      navigate(role === "host"
-        ? `${baseDashboardPath}?section=admin-info`
-        : `${baseDashboardPath}?section=security`);
-    } else if (actionKey === "help") {
-      navigate("/legal/support");
     }
   };
 
-  const handleAuthAction = () => {
-    navigate("/demo-login");
-  };
 
-  const handleSelectDemoUser = (userId) => {
-    const selectedUser = demoUsers.find((user) => user.id === userId);
-    if (!selectedUser) {
-      return;
-    }
 
-    setCurrentUserId(selectedUser.id);
-    setIsUserMenuOpen(false);
-    navigate(getDashboardPathForRole(selectedUser.role));
-  };
+
+
 
   const todayIso = useMemo(() => toIsoDate(new Date()), []);
 
@@ -393,107 +361,7 @@ function App() {
       )}
 
       <Routes>
-      <Route
-        path="/demo-login"
-        element={
-          isAuthenticated ? (
-            <Navigate to={getDashboardPathForRole(currentUser.role)} replace />
-          ) : (
-            <Suspense fallback={routeFallback}>
-              <AuthDemoPage
-                t={t}
-                language={language}
-                onSelectUser={handleSelectDemoUser}
-              />
-            </Suspense>
-          )
-        }
-      />
-      <Route
-        path="/legal/:pageKey"
-        element={
-          <Suspense fallback={routeFallback}>
-            <LegalPage
-              t={t}
-              language={language}
-              onToggleLanguage={toggleLanguage}
-              isUserMenuOpen={isUserMenuOpen}
-              setIsUserMenuOpen={setIsUserMenuOpen}
-              userMenuRef={userMenuRef}
-              logoImg={logoImg}
-              onUserMenuAction={handleUserMenuAction}
-              isAuthenticated={isAuthenticated}
-              onAuthAction={handleAuthAction}
-              currentUser={currentUser}
-              userMenuOptions={userMenuOptions}
-            />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          isAuthenticated
-            ? <Navigate to={getDashboardPathForRole(currentUser.role)} replace />
-            : <Navigate to="/demo-login" replace />
-        }
-      />
-      <Route
-        path="/dashboard/client"
-        element={
-          !isAuthenticated
-            ? <Navigate to="/demo-login" replace />
-            : currentUser.role !== "client"
-              ? <Navigate to={getDashboardPathForRole(currentUser.role)} replace />
-              : (
-                <Suspense fallback={routeFallback}>
-                  <ProfileDashboardPage
-                    t={t}
-                    language={language}
-                    onToggleLanguage={toggleLanguage}
-                    isUserMenuOpen={isUserMenuOpen}
-                    setIsUserMenuOpen={setIsUserMenuOpen}
-                    userMenuRef={userMenuRef}
-                    logoImg={logoImg}
-                    onUserMenuAction={handleUserMenuAction}
-                    listings={listings}
-                    favoriteListingIds={favoriteListingIds}
-                    onToggleFavorite={toggleFavoriteListing}
-                    isAuthenticated={isAuthenticated}
-                    onAuthAction={handleAuthAction}
-                    currentUser={currentUser}
-                  />
-                </Suspense>
-              )
-        }
-      />
-      <Route
-        path="/dashboard/host"
-        element={
-          !isAuthenticated
-            ? <Navigate to="/demo-login" replace />
-            : currentUser.role !== "host"
-              ? <Navigate to={getDashboardPathForRole(currentUser.role)} replace />
-              : (
-                <Suspense fallback={routeFallback}>
-                  <HostDashboardPage
-                    t={t}
-                    language={language}
-                    onToggleLanguage={toggleLanguage}
-                    isUserMenuOpen={isUserMenuOpen}
-                    setIsUserMenuOpen={setIsUserMenuOpen}
-                    userMenuRef={userMenuRef}
-                    logoImg={logoImg}
-                    onUserMenuAction={handleUserMenuAction}
-                    listings={listings}
-                    isAuthenticated={isAuthenticated}
-                    onAuthAction={handleAuthAction}
-                    currentUser={currentUser}
-                  />
-                </Suspense>
-              )
-        }
-      />
+
       <Route
         path="/stay/:listingId"
         element={
@@ -518,7 +386,7 @@ function App() {
               userMenuRef={userMenuRef}
               onUserMenuAction={handleUserMenuAction}
               isAuthenticated={isAuthenticated}
-              onAuthAction={handleAuthAction}
+              onAuthAction={() => {}}
               onReserveNow={() => {}}
               onReservationConfirmed={() => {}}
               listings={listings}
@@ -544,7 +412,7 @@ function App() {
         logoImg={logoImg}
         onUserMenuAction={handleUserMenuAction}
         isAuthenticated={isAuthenticated}
-        onAuthAction={handleAuthAction}
+        onAuthAction={() => {}}
         currentUser={currentUser}
         showNavLinks={!isCatalogOpen}
         userMenuOptions={userMenuOptions}
@@ -620,7 +488,7 @@ function App() {
             userMenuRef={userMenuRef}
             onUserMenuAction={handleUserMenuAction}
             isAuthenticated={isAuthenticated}
-            onAuthAction={handleAuthAction}
+            onAuthAction={() => {}}
             onClose={() => setIsCatalogOpen(false)}
             logoImg={logoImg}
           />

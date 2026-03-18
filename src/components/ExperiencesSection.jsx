@@ -91,48 +91,53 @@ function ExperiencesSection({ t, language, onSelectExperienceCategory }) {
                 <p className="hostRoleBadge">{t.experiences.role}</p>
               </div>
 
-              <p className="hostDescriptionText">{t.experiences.bio}</p>
-
-              <div className="hostTrustLabels">
-                {t.experiences.trustHighlights.map((item, idx) => (
-                  <div key={idx} className="trustLabelItem">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span>{item}</span>
+              <div className="hostPersonalFacts">
+                {(t.experiences.personalFacts || [
+                  { icon: "work", text: "A qué me dedico: CTO · Docente" },
+                  { icon: "music", text: "Mi canción favorita en la secundaria: I don't want to miss a thing - Aerosmith" },
+                  { icon: "star", text: "Porqué mi alojamiento es único: Muy acogedor y cómodo" },
+                  { icon: "time", text: "A qué le dedico mucho tiempo: Ejercicio, runner, Gym." }
+                ]).map((fact, idx) => (
+                  <div key={idx} className="hostFactItem">
+                    <span className="hostFactIcon">
+                      {fact.icon === "work" && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                          <line x1="12" y1="12" x2="12" y2="12"/><path d="M2 12h20"/>
+                        </svg>
+                      )}
+                      {fact.icon === "music" && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+                        </svg>
+                      )}
+                      {fact.icon === "star" && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2l2 6.5H21l-5.5 4 2 6.5L12 15l-5.5 4 2-6.5L3 8.5h7z"/>
+                        </svg>
+                      )}
+                      {fact.icon === "time" && (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                        </svg>
+                      )}
+                    </span>
+                    <span className="hostFactText">{fact.text}</span>
                   </div>
                 ))}
+
+                <div className="hostVerifiedRow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  <span className="hostVerifiedLabel">{language === "es" ? "Identidad verificada" : "Verified identity"}</span>
+                </div>
               </div>
 
-              <div className="hostStatsMarqueePremium">
-                <div className="hostStatBox">
-                  <div className="hostStatIcon">{yearsIcon}</div>
-                  <span className="statValue">{t.experiences.yearsHosting}</span>
-                  <span className="statLabel">{t.experiences.yearsHostingDesc}</span>
-                </div>
-                <div className="hostStatBox">
-                  <div className="hostStatIcon">{responseIcon}</div>
-                  <span className="statValue">{t.experiences.responseTime}</span>
-                  <span className="statLabel">{t.experiences.responseTimeDesc}</span>
-                </div>
-                <div className="hostStatBox">
-                  <div className="hostStatIcon">{attentionIcon}</div>
-                  <span className="statValue">{t.experiences.personalAttention}</span>
-                  <span className="statLabel">{t.experiences.personalAttentionDesc}</span>
-                </div>
-              </div>
+              <p className="hostDescriptionText">{t.experiences.bio}</p>
 
               <div className="hostFooterActions">
-                <button 
-                  className="hostKnowMoreBtn"
-                  onClick={handleKnowMoreClick}
-                >
-                  <span className="btnText">
-                    {language === 'es' ? `Conocer más sobre ${t.experiences.name.split(' ')[0]}` : `Know more about ${t.experiences.name.split(' ')[0]}`}
-                  </span>
-                  <span className="btnArrow">→</span>
-                </button>
-
                 <button 
                   className="hostPrimaryActionBtn"
                   onClick={handleContactClick}

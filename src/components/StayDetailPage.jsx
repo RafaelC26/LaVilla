@@ -344,10 +344,23 @@ function StayDetailPage({
     return perNightLabel ? `${amount} ${t.detail.perLabel} ${perNightLabel}` : amount;
   };
 
-  const nightlyRate = Number(listing.price.replace(/\D/g, ""));
+  // Lógica de cobro con descuentos semanales y mensuales
+  // Precio base fijo por noche
+  const nightlyRate = listing.id === 1 ? 232432 : 169360;
   const hasFullRange = Boolean(checkInDate && checkOutDate);
   const nights = hasFullRange ? Math.max(1, differenceInCalendarDays(checkOutDate, checkInDate)) : 0;
-  const totalBeforeTax = hasFullRange ? (nightlyRate * nights) : 0;
+  let totalBeforeTax = 0;
+  if (hasFullRange) {
+    if (nights >= 30) {
+      // Descuento mensual: 25% sobre el total
+      totalBeforeTax = nightlyRate * nights * 0.75;
+    } else if (nights >= 7) {
+      // Descuento semanal: 10% sobre el total
+      totalBeforeTax = nightlyRate * nights * 0.90;
+    } else {
+      totalBeforeTax = nightlyRate * nights;
+    }
+  }
 
   const tabKeys = ["details", "availability", "reviews", "location"];
 
@@ -601,13 +614,7 @@ function StayDetailPage({
             {language === "es" ? "EN" : "ES"}
           </button>
           
-          {isAuthenticated ? (
-            renderUserMenu()
-          ) : (
-            <button className="authBtn authBtnPrimary" onClick={() => onAuthAction?.("login")}>
-              {t.navbar.login}
-            </button>
-          )}
+          {isAuthenticated && renderUserMenu()}
         </div>
       </div>
 
@@ -715,14 +722,37 @@ function StayDetailPage({
             </div>
 
             <div className="detailFacts">
-              <span>{t.detail.entirePlace}</span>
-              <span>{t.detail.beds}</span>
-              <span>{`${listing.maxGuests} ${t.detail.guests}`}</span>
+              <span>{listing.maxGuests} huéspedes</span>
+              <span>{listing.rooms || 3} habitaciones</span>
+              <span>{listing.beds || 3} camas</span>
+              <span>{listing.bathrooms || 2} baños</span>
             </div>
 
             <div className="detailDescriptionCard">
               <h3>{t.detail.hostTitle}</h3>
-              <p>{translatedDescription}</p>
+              {listing.id === 1 ? (
+                (() => {
+                  const desc = `Acerca de este espacio<br>🏡 Hermosa casa privada con zona verde y parqueadero, rodeada de cerca viva que brinda privacidad y una agradable sensación campestre. Ubicada a la entrada de Sogamoso a solo 5 minutos del centro y 10 minutos de Tibasosa o Nobsa. Espacio acogedor, ideal para descanso, viajes de trabajo o estudio. Sus ambientes luminosos y zona exterior ofrecen comodidad y tranquilidad después de una jornada laboral o un día de turismo. Perfecta para parejas y familias. Ubicada en condominio tranquilo y seguro.<br><br>El espacio<br>🏡 Refugio La Villa – Boyacá<br><br>Ubicado en la entrada de Sogamoso, a solo 5 minutos del centro y 10 minutos de Tibasosa y Nobsa. Un espacio acogedor que combina comodidad, privacidad y una agradable sensación campestre, ideal para descansar después de una jornada laboral o un día de turismo.<br><br>✨ Lo que encontrarás<br><br>🚗 Comodidades principales<br>• Parqueadero privado al ingreso de la casa<br>• Internet de alta velocidad con fibra óptica<br>• Smart TV<br>• Internet de alta velocidad<br><br>🍳 Zona social y cocina<br>• Cocina totalmente equipada<br>• Electrodomésticos menores listos para usar<br>• Sala y comedor amplios<br>• Excelente iluminación natural durante el día<br>• Conexión directa a zona exterior privada<br><br>🛏 Habitaciones<br>• 3 habitaciones amplias y bien iluminadas<br>• Cama doble en cada habitación<br>• Colchones ortopédicos<br>• Ropa de cama de alta calidad<br>• Clósets amplios<br>• Cortinas y persianas blackout<br><br>🚿 Baños<br>• 2 baños completos<br>• Baño privado en habitación principal<br>• Calentador de agua a gas<br><br>🌿 Exterior y entorno<br>• Zona verde privada ideal para desayunos al aire libre o un café en la tarde<br>• Ambiente tranquilo y seguro<br>• Condominio con seguridad 24/7<br>• Senderos peatonales para caminar o pasear con tu mascota<br><br>Se encuentra dentro de un amplio condominio con seguridad 24/7, vías adoquinadas y senderos peatonales ideales para caminar o pasear con tu mascota. Además, cuenta con zona comercial con<br>🛍 Servicios cercanos como:<br>• Tiendas y víveres<br>• Restaurantes y cafeterías<br>• Gimnasio y pilates<br>• Peluquería y salón de belleza<br><br>Un refugio pensado para parejas, familias y viajeros de trabajo que buscan confort, privacidad y una estadía tranquila.`;
+                  const [showAllDesc, setShowAllDesc] = window.useState ? window.useState(false) : useState(false);
+                  const shortDesc = desc.split('<br>').slice(0, 2).join(' ');
+                  return (
+                    <>
+                      <p dangerouslySetInnerHTML={{ __html: showAllDesc ? desc : shortDesc }} />
+                      <button
+                        className="detailDescToggleBtn"
+                        type="button"
+                        onClick={() => setShowAllDesc((prev) => !prev)}
+                        style={{ marginTop: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        {showAllDesc ? 'Mostrar menos' : 'Mostrar más'}
+                        <span style={{ fontSize: '18px', transform: showAllDesc ? 'rotate(180deg)' : 'none' }}>▼</span>
+                      </button>
+                    </>
+                  );
+                })()
+              ) : (
+                <p>{translatedDescription}</p>
+              )}
             </div>
 
             <div className="detailHighlightStrip">
@@ -879,24 +909,76 @@ function StayDetailPage({
                 </div>
 
                 <div className="reviewCardsGrid">
-                  {[
-                    { name: "María G.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face", date: language === "es" ? "Febrero 2026" : "February 2026", text: language === "es" ? "Increíble estancia. Todo impecable, la ubicación perfecta y Andrés fue un gran anfitrión. Sin duda volveré." : "Amazing stay. Everything was spotless, perfect location and Andrés was a great host. Will definitely return.", rating: 5 },
-                    { name: "Carlos M.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face", date: language === "es" ? "Enero 2026" : "January 2026", text: language === "es" ? "Espacio muy acogedor, las fotos no le hacen justicia. La atención del anfitrión fue excepcional." : "Very cozy space, photos don't do it justice. Host attention was exceptional.", rating: 5 },
-                    { name: "Laura P.", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face", date: language === "es" ? "Diciembre 2025" : "December 2025", text: language === "es" ? "Perfecto para desconectarse. Limpieza impecable y todo lo necesario. La vista desde el balcón es espectacular." : "Perfect to disconnect. Spotless cleanliness and everything you need. Balcony view is spectacular.", rating: 5 },
-                    { name: "David R.", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face", date: language === "es" ? "Noviembre 2025" : "November 2025", text: language === "es" ? "Superó nuestras expectativas. La zona es tranquila y hermosa. Comunicación rápida y check-in muy fácil." : "Exceeded our expectations. Quiet, beautiful area. Fast communication and easy check-in.", rating: 4 }
-                  ].map((review) => (
-                    <article key={review.name} className="reviewCard">
-                      <div className="reviewCardHead">
-                        <img src={review.avatar} alt={review.name} className="reviewCardAvatar" />
-                        <div className="reviewCardInfo">
-                          <strong>{review.name}</strong>
-                          <span>{review.date}</span>
+                  {(() => {
+                    const reviews = [
+                      { name: "María G.", date: "Febrero 2026", text: "Increíble estancia. Todo impecable, la ubicación perfecta y Andrés fue un gran anfitrión. Sin duda volveré.", rating: 5 },
+                      { name: "Carlos M.", date: "Enero 2026", text: "Espacio muy acogedor, las fotos no le hacen justicia. La atención del anfitrión fue excepcional.", rating: 5 },
+                      { name: "Laura P.", date: "Diciembre 2025", text: "Perfecto para desconectarse. Limpieza impecable y todo lo necesario. La vista desde el balcón es espectacular.", rating: 5 },
+                      { name: "David R.", date: "Noviembre 2025", text: "Superó nuestras expectativas. La zona es tranquila y hermosa. Comunicación rápida y check-in muy fácil.", rating: 4 },
+                      // Nuevas reseñas
+                      { name: "Xiomara Alexandra", date: "Diciembre 2025", text: "Andrés es una persona muy hospitalaria y amable. Estuvo pendiente de nosotros todo el tiempo y nos brindó la información turística para el recorrido de alumbrado navideño y la pasadía en Tibasosa. El apartamento está ubicado en una zona central, tranquila y segura. Además con un letrero de recibimiento y decoración navideña. Recomendado para viajes en familia con mascotas.", rating: 5 },
+                      { name: "Camilo Augusto", date: "Diciembre 2025", text: "Primero quiero resaltar que Andrés es una persona muy amable y proactiva para resolver cualquier situación que se presenta. El apartamento es cómodo y es una buena opción en Sogamoso (Boyacá) si vienes en familia. El apartamento cuenta con un parqueadero seguro y amplio.", rating: 4 },
+                      { name: "Oscar", date: "Diciembre 2025", text: "Andrés fué un excelente anfitrión, da instrucciones clara y está pendiente de la llegada de uno. El apartamento es agradable y queda ubicado cerca a todo el comercio que uno necesita, droguerias. supermercados, almacenes, restaurantes. En las noches es muy tranquilo y no se escucha ningún ruido.", rating: 5 },
+                      { name: "Diana Patricia", date: "Octubre 2025", text: "Definitivamente un lugar muy muy lindo, el edificio en general limpio, tranquilo, gente amable; el apartamento desde que entramos se sintió un ambiente acogedor, cálido, el apto es hermosísimo , su decoración me encantó, las habitaciones súper cómodas y la ubicación espectacular, central y seguro !!! volveríamos nos encantó!!!", rating: 5 },
+                      { name: "Carol Susana", date: "Noviembre 2025", text: "Pasamos una agradable estadía. la ubicación es super central, restaurantes, almacenes de cadena y comercio en general. El espacio es cómodo y cumplía con la descripción del mismo. Andrés es muy atento, responde rápido y está presto a colaborar siempre.", rating: 5 },
+                      { name: "Lady Constanza", date: "Octubre 2025", text: "El apartamento muy bonito y amplio, Andrés siempre está muy atento a las solicitudes, la ubicación es excelente y aunque está en el centro en el apto no se escucha nada de ruido. Excelente estadía.", rating: 5 },
+                      { name: "Paola", date: "Enero 2026", text: "un sitio agradable con los elementos necesarios para una estancia cómoda. ubicado en pleno centro de Sogamoso, con mucha oferta de almacenes cerca", rating: 4 },
+                      { name: "Viviana Andrea", date: "Enero 2026", text: "Es un buen espacio para alojarse, es limpio, cómodo y de fácil acceso. Andres como anfitrión es excelente, amable y siempre atento a cualquier cosa. Súper recomendado!!!", rating: 5 },
+                      { name: "Julián Alejandro", date: "Enero 2026", text: "Un hospedaje muy ameno y súper recomendado. Es cómodo, amplio, limpio y organizado. El anfitrión estuvo muy atento a todo.", rating: 5 },
+                      { name: "Sandra", date: "Enero 2026", text: "Andres es muy amable y servicial; esta siempre atento a las inquietudes de los huéspedes. El lugar es genial. Aseado, cómodo y bien ubicado", rating: 5 },
+                      { name: "Julian", date: "Diciembre 2025", text: "El apartamento es un muy buen lugar para hospedarse, todo está en orden, muy organizado, 100% recomendado. Andrés es un excelente anfitrión, muy amable, cordial y siempre presto a resolver cualquier inquietud. Muchas gracias.", rating: 5 },
+                      { name: "Danny Valentina", date: "Junio 2025", text: "Excelente acomodación, buena comunicación por parte del host. Lugar bastante central con facilidad de entrada, diferentes tiendas y comercios al rededor. La casa en general muy limpia y organizada, perfecta para mi familia incluyendo a nuestro perro, definitivamente un lugar que tendremos en cuenta para futuros hospedajes, muchas gracias!", rating: 5 },
+                      { name: "Valentina", date: "Junio 2025", text: "El apartamento es exactamente como se describe en la página: acogedor, limpio y perfectamente decorado. La ubicación es inmejorable, a solo unos pasos del centro de la ciudad y de todos los lugares turísticos. Lo que realmente hizo que mi estancia fuera especial fue la atención y la hospitalidad de los anfitriones", rating: 5 },
+                      { name: "Jefferson", date: "Mayo 2025", text: "El lugar es tal cual se muestra en el anuncio y en las fotos: limpio, cómodo y bien equipado. La ubicación es muy conveniente, con fácil acceso a todo lo necesario. Me sentí muy a gusto durante toda mi estancia. El anfitrión fue muy amable, siempre atento y con una comunicación clara y rápida. Sin duda, lo recomendaría y volvería a hospedarme allí.", rating: 5 },
+                      { name: "Víctor", date: "Diciembre 2025", text: "Apto muy bonito, cómodo,. Buena ubicación, todo queda muy cerca.", rating: 4 },
+                      { name: "Luz Yenny", date: "Diciembre 2025", text: "estuvo bien solo le recomendaría una remodelación a los baños ya que están un poco deteriorados", rating: 4 },
+                      { name: "Olga", date: "Diciembre 2025", text: "Excelente anfitrión, el apartamento muy acogedor, tranquilo, limpio, muy central, parqueadero privado, se encuentra de todo cerca sin necesidad de salir en auto!!", rating: 5 },
+                      { name: "Dora Alba", date: "Noviembre 2025", text: "Un buen lugar de paso limpio fácil ingrato y ubicación Todo en bien estado Andrés muy pendiente Regresaría", rating: 4 },
+                      { name: "Camila", date: "Noviembre 2025", text: "Alojamiento confortable, central y limpio. El anfitrión muy pendiendiente siempre, recomendado 100%.", rating: 5 },
+                      { name: "Daniel Santiago", date: "Octubre 2025", text: "toda la estadía en el Air BNB fue muy agradable y cómoda, el apartamento está en un lugar muy céntrico y permite ir a cualquier lugar.", rating: 5 },
+                      { name: "Deisy Johanna", date: "Junio 2025", text: "Andrés siempre pendiente, un edificio tranquilo ideal para descansar, muy central, a 10 minutos caminando del terminal de transporte, a 5 minutos caminando del comercio. El apartamento tal cual está en las fotos y la descripción, muy recomendable.", rating: 5 },
+                      { name: "Andres", date: "Abril 2025", text: "Excelente estadía y ubicación. Andres, Andrea y su familia fueron muy amables y atentos. El apto es impecable, limpio y organizado y tenía muchos detalles de aseo para nuestro uso.", rating: 5 },
+                      { name: "Johanna", date: "Diciembre 2025", text: "Andrés, es muy amable. Me Encantó el hospedaje sin duda volveré. Muchas gracias!!", rating: 5 },
+                      { name: "Daniel", date: "Diciembre 2025", text: "Excelente lugar para hospedarse, volvería a quedarme aquí. Andrés muy amable y atento a todo.", rating: 5 },
+                      { name: "Jhonattan Ricardo", date: "Noviembre 2025", text: "Muchas gracias por la amabilidad y la atención, siempre estuvierom pendientes de nosotros, sin lugar a dudas volveriamos, lugar muy central y el apto muy acogedor.🫶🏻", rating: 5 },
+                      { name: "Jonattan", date: "Octubre 2025", text: "Un Excelente lugar para descansar y compartir en familia y compañeros, super recomendado!!", rating: 5 },
+                      { name: "Ricardo Luis", date: "Enero 2026", text: "Un sector muy tranquilo, muy comodo el apartamento", rating: 5 },
+                      { name: "Victor Hugo", date: "Diciembre 2025", text: "Andrés es un excelente anfitrión", rating: 5 },
+                      { name: "Laura", date: "Octubre 2025", text: "Cumple con las expectativas, buena ubicación, edificio tranquilo !", rating: 5 },
+                      { name: "Yeison", date: "Septiembre 2025", text: "un lugar muy completo. estaba limpio y el host fue muy amable", rating: 5 },
+                      { name: "Deison", date: "Julio 2025", text: "excelente ubicación muy central, todo estába en perfectas condiciones, todo muy limpio, la atención, siempre estuvieron pendientes y muy serviciables.", rating: 5 },
+                      { name: "Eduardo Alfonso", date: "Noviembre 2025", text: "Lo que se ofrece se cumple, buena ubicación. Agradable.", rating: 5 },
+                      { name: "Luis Edgar", date: "Noviembre 2025", text: "Apartamento acogedor y confortable.", rating: 5 },
+                      { name: "Luisa", date: "Agosto 2025", text: "Tuvimos una experiencia muy agradable, el apartamento impecable y la atención de Andrés inmejorable. Muchas gracias!", rating: 5 },
+                      { name: "Jesus Antonio", date: "Agosto 2025", text: "apartamento perfecto una bendición encontrar personas y sitios tan geniales por tan poco precio", rating: 5 },
+                      { name: "Tito Alfonso", date: "Agosto 2025", text: "Lugar muy bonito, buena energía, nos dieron una bienvenida con un letrero bien bonito, como dicen por hay, detalles de fina coquetería. Muy recomendable 10 de 10.", rating: 5 },
+                      { name: "Lina", date: "Julio 2025", text: "Andrés muy amable, todo el tiempo nos colaboró con el tema de la televisión y se preocupo porque nos sintiéramos en casa. Un excelente lugar de descanso.", rating: 5 },
+                      { name: "Jessica", date: "Julio 2025", text: "Todo súper, igual que en las fotos, Andrés siempre fue muy amable!", rating: 5 },
+                      { name: "Natalia", date: "Junio 2025", text: "Excelente lugar, muy bonito!!! Andrés es un excelente anfitrión, siempre pendiente a lo que pudieramos necesitar, cuando regresemos a Sogamoso seguro será nuestro lugar", rating: 5 },
+                      { name: "Leonardo", date: "Mayo 2025", text: "Es un lugar muy bonito y comodo, el anfitirion es super atento y muy servicial, 100 % recomendado.", rating: 5 },
+                      { name: "Dani", date: "Abril 2025", text: "Excelente ubicacion, muy comodo acogedor amplio. Andres fue un gran anfitrión.", rating: 5 },
+                      { name: "Rocio", date: "Junio 2025", text: "Un apartamento muy lindo y buenos anfitriones. Sin duda volveremos.", rating: 5 },
+                      { name: "Keegan", date: "Septiembre 2025", text: "¡Gran lugar en el centro de Sogamoso! La casa está muy limpia y equipada con todo lo que uno podría necesitar para una estancia cómoda. ¡Recomiendo encarecidamente esta casa!", rating: 5 },
+                      { name: "Carolina", date: "Agosto 2025", text: "muy bonito y central el apartamento, volvería sin duda", rating: 5 },
+                      { name: "Jose David", date: "Julio 2025", text: "Lugar recomendado y muy buena atención por parte de Andrés", rating: 5 },
+                      { name: "Diana", date: "Agosto 2025", text: "Muy buena atención", rating: 5 },
+                      { name: "Sergio", date: "Junio 2025", text: "La comunicación con Andrés fue muy agradable y eficaz, siempre estuvo atento para responder a nuestras preguntas. El apartamento coincide con la descripción, incluso es mejor. Las habitaciones estaban limpias, el apartamento bien cuidado, con buenas mantas, camas cómodas y todo el equipo necesario para la estancia. Lo recomiendo sin duda. Si vuelvo a Sogamoso, sin duda me alojaré aquí de nuevo. Muchas gracias Andrés.", rating: 5 },
+                      { name: "Juan Sebastian", date: "Mayo 2025", text: "Una belleza", rating: 5 },
+                      { name: "Dominik", date: "Septiembre 2025", text: "El anfitrión fue muy amable y servicial. La ubicación es perfecta para explorar Sogamoso. El departamento también está bien equipado. Perfecto para unos días", rating: 5 }
+                    ];
+                    return reviews.map((review) => (
+                      <article key={review.name + review.date + review.text.slice(0,10)} className="reviewCard">
+                        <div className="reviewCardHead">
+                          <div className="reviewCardInfo">
+                            <strong>{review.name}</strong>
+                            <span>{review.date}</span>
+                          </div>
+                          <span className="reviewCardStars">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
                         </div>
-                        <span className="reviewCardStars">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
-                      </div>
-                      <p className="reviewCardText">{review.text}</p>
-                    </article>
-                  ))}
+                        <p className="reviewCardText">{review.text}</p>
+                      </article>
+                    ));
+                  })()}
                 </div>
               </div>
             )}
@@ -953,7 +1035,17 @@ function StayDetailPage({
           <aside className="detailSidebar">
             <div className="detailBookingCard">
               <div className="detailPrice">
-                <strong>{formatPrice(listing.price)}</strong>
+                <strong>{`$${nightlyRate.toLocaleString()} COP`}</strong>
+                {hasFullRange && nights >= 30 && (
+                  <div className="detailDiscountLabel" style={{ color: '#2e8b57', fontWeight: 'bold', fontSize: '15px' }}>
+                    {language === 'es' ? 'Descuento mensual aplicado (25%)' : 'Monthly discount applied (25%)'}
+                  </div>
+                )}
+                {hasFullRange && nights >= 7 && nights < 30 && (
+                  <div className="detailDiscountLabel" style={{ color: '#4682b4', fontWeight: 'bold', fontSize: '15px' }}>
+                    {language === 'es' ? 'Descuento semanal aplicado (10%)' : 'Weekly discount applied (10%)'}
+                  </div>
+                )}
               </div>
               <div className="detailBookingDates">
                 <DetailDateRangeField
@@ -976,19 +1068,162 @@ function StayDetailPage({
               <div className="detailSummary">
                 <div><span>{t.detail.duration}</span><span>{hasFullRange ? `${nights} ${t.detail.nights}` : t.detail.selectDates}</span></div>
                 <div><span>{t.detail.nightlyRate}</span><span>{`$${nightlyRate}`}</span></div>
-                <div className="totalRow"><span>{t.detail.totalBeforeTax}</span><span>{hasFullRange ? `$${totalBeforeTax}` : "-"}</span></div>
+                <div className="totalRow"><span>{t.detail.totalBeforeTax}</span><span>{hasFullRange ? `$${Math.round(totalBeforeTax).toLocaleString()}` : "-"}</span></div>
               </div>
             </div>
 
             <div className="detailAmenitiesCard">
-              <h3>{t.detail.whatThisPlaceOffers}</h3>
+              <h3>Lo que este lugar ofrece</h3>
               <div className="detailAmenitiesGrid">
-                {translatedAmenities.map((amenity) => (
-                  <div key={amenity} className="detailAmenityListItem">
-                    <span className="detailAmenityCheck">✓</span>
-                    <span>{amenity}</span>
-                  </div>
-                ))}
+                {(() => {
+                  const amenities = listing.id === 1 ? [
+                    "Baño",
+                    "Productos de limpieza",
+                    "Jabón corporal",
+                    "Agua caliente",
+                    "Gel de ducha",
+                    "Dormitorio y lavadero",
+                    "Ganchos para la ropa",
+                    "Sábanas",
+                    "Sábanas de algodón",
+                    "Persianas o cortinas opacas",
+                    "Plancha",
+                    "Tendedero de ropa",
+                    "Entretenimiento",
+                    "TV",
+                    "Seguridad en el hogar",
+                    "Cámaras de seguridad en la parte exterior de la propiedad",
+                    "Refugio La Villa está ubicado dentro de un condominio el cual cuenta con CCTV desde el ingreso en portería.",
+                    "Internet y oficina",
+                    "Wifi",
+                    "Utensilios y vajilla",
+                    "Cocina",
+                    "Los huéspedes pueden cocinar en este espacio",
+                    "Refrigerador",
+                    "Utensilios básicos para cocinar",
+                    "Ollas y sartenes, aceite, sal y pimienta",
+                    "Platos y cubiertos",
+                    "Bols, palitos chinos, platos, tazas, etc.",
+                    "Estufa de gas de acero inoxidable",
+                    "Horno doble de acero inoxidable",
+                    "Cafetera: Cafetera de filtro",
+                    "Copas de vino",
+                    "Licuadora",
+                    "Mesa del comedor",
+                    "Características de la ubicación",
+                    "Entrada independiente",
+                    "Entrada por otra calle o edificio",
+                    "Exterior",
+                    "Patio trasero privado",
+                    "Un espacio abierto en la propiedad generalmente cubierto de pasto",
+                    "Mobiliario exterior",
+                    "Zona de comida al aire libre",
+                    "Tumbonas",
+                    "Estacionamiento e instalaciones",
+                    "Estacionamiento gratuito en las instalaciones",
+                    "Estacionamiento gratuito en la calle",
+                    "Gimnasio compartido cerca",
+                    "Servicios",
+                    "Se permiten mascotas",
+                    "No hay restricciones respecto los animales de asistencia",
+                    "Apto para fumadores",
+                    "Llegada autónoma",
+                    "Cerradura con teclado",
+                    "Accede al alojamiento por tu cuenta con el código de acceso",
+                    "No incluidos",
+                    "No disponible: Lavadora",
+                    "No disponible: Secadora",
+                    "No disponible: Aire acondicionado",
+                    "No disponible: Servicios básicos",
+                    "No disponible: Detector de humo",
+                    "Es posible que este lugar no tenga un detector de humo. Si tienes alguna pregunta, comunícate con el anfitrión.",
+                    "No disponible: Detector de monóxido de carbono",
+                    "Es posible que este lugar no tenga un detector de monóxido de carbono. Si tienes alguna pregunta, comunícate con el anfitrión.",
+                    "No disponible: Calefacción"
+                  ] : [
+                    // ...existing code for other listings...
+                    "Baño",
+                    "Productos de limpieza",
+                    "Champú",
+                    "Agua caliente",
+                    "Gel de ducha",
+                    "Dormitorio y lavadero",
+                    "Servicios básicos",
+                    "Toallas, sábanas, jabón y papel higiénico",
+                    "Ganchos para la ropa",
+                    "Persianas o cortinas opacas",
+                    "Tendedero de ropa",
+                    "Espacio para guardar ropa: armario",
+                    "Entretenimiento",
+                    "TV",
+                    "Familia",
+                    "Seguros para ventanas",
+                    "Seguridad en el hogar",
+                    "Cámaras de seguridad en la parte exterior de la propiedad",
+                    "El edificio cuenta con CCTV en todas las zonas comunas, ingreso y hall de entrada.",
+                    "Extintor de incendios",
+                    "Botiquín de primeros auxilios",
+                    "Internet y oficina",
+                    "Wifi",
+                    "Utensilios y vajilla",
+                    "Cocina",
+                    "Los huéspedes pueden cocinar en este espacio",
+                    "Refrigerador",
+                    "Utensilios básicos para cocinar",
+                    "Ollas y sartenes, aceite, sal y pimienta",
+                    "Platos y cubiertos",
+                    "Bols, palitos chinos, platos, tazas, etc.",
+                    "Congelador",
+                    "Estufa de gas de acero inoxidable",
+                    "Horno de acero inoxidable",
+                    "Cafetera: Máquina de café expreso",
+                    "Licuadora",
+                    "Mesa del comedor",
+                    "Café",
+                    "Características de la ubicación",
+                    "Lavandería cercana",
+                    "Estacionamiento e instalaciones",
+                    "Estacionamiento gratis en las instalaciones: 1 puesto",
+                    "Estacionamiento de pago en las instalaciones",
+                    "Servicios",
+                    "Se permiten mascotas",
+                    "No hay restricciones respecto los animales de asistencia",
+                    "Servicio de limpieza disponible: 2 horas al día, 3 días a la semana, costo: disponible por un costo adicional",
+                    "El anfitrión te va a recibir",
+                    "No incluidos",
+                    "No disponible: Lavadora",
+                    "No disponible: Secadora",
+                    "No disponible: Aire acondicionado",
+                    "No disponible: Detector de humo",
+                    "Es posible que este lugar no tenga un detector de humo. Si tienes alguna pregunta, comunícate con el anfitrión.",
+                    "No disponible: Detector de monóxido de carbono",
+                    "Es posible que este lugar no tenga un detector de monóxido de carbono. Si tienes alguna pregunta, comunícate con el anfitrión.",
+                    "No disponible: Calefacción"
+                  ];
+                  const [showAll, setShowAll] = window.useState ? window.useState(false) : useState(false);
+                  const visibleAmenities = showAll ? amenities : amenities.slice(0, 5);
+                  return (
+                    <>
+                      {visibleAmenities.map((amenity) => (
+                        <div key={amenity} className="detailAmenityListItem">
+                          <span className="detailAmenityCheck">✓</span>
+                          <span>{amenity}</span>
+                        </div>
+                      ))}
+                      {amenities.length > 5 && (
+                        <button
+                          className="detailAmenitiesToggleBtn"
+                          type="button"
+                          onClick={() => setShowAll((prev) => !prev)}
+                          style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        >
+                          {showAll ? 'Mostrar menos' : 'Mostrar todos'}
+                          <span style={{ fontSize: '18px', transform: showAll ? 'rotate(180deg)' : 'none' }}>▼</span>
+                        </button>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             </div>
 

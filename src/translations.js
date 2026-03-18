@@ -130,21 +130,27 @@ export const translations = {
       forest: "Refugios en el Bosque"
     },
     experiences: {
-      title: "Sobre el propietario",
+      title: "Acerca de Andrés",
       subtitle: "Gestión directa y dedicada para garantizar la excelencia en cada estancia.",
-      tag: "Anfitrión Premium",
+      tag: "Anfitrión Verificado",
       name: "Andrés",
-      role: "Propietario y Gestor Directo",
-      bio: "Mi misión es transformar cada reserva en una experiencia inolvidable. Ofrezco un acompañamiento integral desde el primer contacto, asegurando que cada detalle de tu estancia sea impecable, con el respaldo de más de 8 años de trayectoria en hospitalidad de lujo.",
+      role: "CTO · Docente · Anfitrión",
+      bio: "Soy apasionado por la tecnología, el diseño funcional y los pequeños detalles, así que me esfuerzo para que tu estadía sea cómoda, práctica y agradable. Si necesitas recomendaciones locales, ¡estaré encantado de ayudarte!",
       trustHighlights: ["Identidad Verificada", "Valoración Excelente (4.9/5)", "Check-in Guiado y Personalizado"],
-      yearsHosting: "Liderazgo en Hospitalidad",
-      yearsHostingDesc: "+8 años ofreciendo estándares consistentes en estancias de alto nivel.",
+      yearsHosting: "CTO · Docente",
+      yearsHostingDesc: "Profesional de la tecnología y la educación al servicio de tu experiencia.",
       responseTime: "Respuesta Inmediata",
       responseTimeDesc: "Atención ágil en menos de 1 hora para tu total tranquilidad.",
-      personalAttention: "Detalle Personalizado",
-      personalAttentionDesc: "Preparación artesanal de cada propiedad según tus preferencias individuales.",
+      personalAttention: "Alojamiento Único",
+      personalAttentionDesc: "Muy acogedor y cómodo, preparado con detalle para cada huésped.",
       profileImageAlt: "Retrato Profesional del Propietario",
-      metricsImageAlt: "Espacio de Gestión Directa"
+      metricsImageAlt: "Espacio de Gestión Directa",
+      personalFacts: [
+        { icon: "work", text: "A qué me dedico: CTO · Docente" },
+        { icon: "music", text: "Mi canción favorita en la secundaria: I don't want to miss a thing - Aerosmith" },
+        { icon: "star", text: "Porqué mi alojamiento es único: Muy acogedor y cómodo" },
+        { icon: "time", text: "A qué le dedico mucho tiempo: Ejercicio, runner, Gym." }
+      ]
     },
     categoriesPage: {
       title: "Explorar Todas las Categorías",

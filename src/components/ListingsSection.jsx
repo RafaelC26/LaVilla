@@ -97,6 +97,12 @@ function ListingsSection({
                 <span className="listingRating">★ {listing.rating}</span>
               </div>
               <p className="listingLocation">{listing.location}</p>
+              <div className="listingFactsRow" style={{ color: '#fff', margin: '8px 0', fontSize: '1.05rem', display: 'flex', flexWrap: 'wrap', gap: '18px' }}>
+                <span>• {listing.maxGuests} huéspedes</span>
+                <span>• {listing.bedrooms || 3} habitaciones</span>
+                <span>• {listing.beds || 3} camas</span>
+                <span>• {listing.bathrooms || 2} baños</span>
+              </div>
               <div className="listingFooter">
                 <span className="listingPrice"><strong>{formatPrice(listing.price).split('/')[0]}</strong> / {perNightLabel || 'noche'}</span>
                 <button

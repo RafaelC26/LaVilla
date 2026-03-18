@@ -34,8 +34,6 @@ function FooterSection({ t, logoImg, footerImage, language = "es" }) {
     explore: [
       { label: isSpanish ? "Inicio" : "Home", action: () => scrollToTop() },
       { label: isSpanish ? "Alojamientos" : "Stays", action: () => scrollToSection("listings") },
-      { label: isSpanish ? "Experiencias" : "Experiences", action: () => scrollToSection("experiences") },
-      { label: isSpanish ? "Categorías" : "Categories", action: () => window.location.href = "/categories" },
     ],
     support: [
       { label: isSpanish ? "Centro de ayuda" : "Help Center", href: "#" },
@@ -44,7 +42,6 @@ function FooterSection({ t, logoImg, footerImage, language = "es" }) {
       { label: isSpanish ? "Privacidad" : "Privacy", href: "#" },
     ],
     contact: [
-      { icon: "location", label: "Finca La Villa, Villa de Leyva, Colombia" },
       { icon: "email", label: "stay@lavilla.com" },
       { icon: "phone", label: "+57 321 000 0000" },
     ]
@@ -90,7 +87,6 @@ function FooterSection({ t, logoImg, footerImage, language = "es" }) {
             {/* Brand Column */}
             <div className="footerBrandCol footerBrandEnhanced">
               <div className="footerBrandHeader">
-                <img src={logoImg} alt="La Villa" className="footerLogoPremium" loading="lazy" decoding="async" />
                 <div className="footerBrandBadge">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -100,61 +96,18 @@ function FooterSection({ t, logoImg, footerImage, language = "es" }) {
               </div>
               <p className="footerDescription">{t.footer.description}</p>
               
-              {/* Newsletter */}
-              <div className="footerNewsletter">
-                <h4>{isSpanish ? 'Suscríbete' : 'Subscribe'}</h4>
-                <p>{isSpanish ? 'Recibe ofertas exclusivas' : 'Get exclusive offers'}</p>
-                <form onSubmit={handleSubscribe} className="footerNewsletterForm">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={isSpanish ? "Tu correo" : "Your email"}
-                    required
-                  />
-                  <button type="submit" className="footerNewsletterBtn">
-                    {subscribed ? (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <path d="M20 6L9 17l-5-5"/>
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
-                    )}
-                  </button>
-                </form>
-                {subscribed && (
-                  <span className="footerNewsletterSuccess">
-                    {isSpanish ? '¡Gracias por suscribirte!' : 'Thanks for subscribing!'}
-                  </span>
-                )}
-              </div>
+              
 
               {/* Social Links */}
               <div className="footerSocials footerSocialsEnhanced">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="Instagram">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                <a href="https://www.airbnb.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="Airbnb">
+                  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.54 17.63c-.24.27-.57.42-.93.42s-.69-.15-.93-.42c-1.02-1.14-4.11-4.8-4.11-7.08 0-2.78 2.26-5.04 5.04-5.04s5.04 2.26 5.04 5.04c0 2.28-3.09 5.94-4.11 7.08zm.54-5.13c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                   </svg>
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="Facebook">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                  </svg>
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="Twitter">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                <a href="https://www.booking.com" target="_blank" rel="noopener noreferrer" className="socialBtn socialBtnEnhanced" aria-label="Booking.com">
+                  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.91 0H3.09C1.38 0 0 1.38 0 3.09v17.82C0 22.62 1.38 24 3.09 24h17.82C22.62 24 24 22.62 24 20.91V3.09C24 1.38 22.62 0 20.91 0zM7.5 17.5H5V9h2.5v8.5zm-1.25-9.7a1.45 1.45 0 1 1 0-2.9 1.45 1.45 0 0 1 0 2.9zm11.25 9.7h-2.5v-4.25c0-1.01-.36-1.7-1.27-1.7-.69 0-1.1.47-1.28.92-.07.16-.08.39-.08.62V17.5H10v-8.5h2.4v1.16h.03c.33-.63 1.14-1.29 2.35-1.29 2.07 0 2.92 1.36 2.92 3.42V17.5z"/>
                   </svg>
                 </a>
               </div>
@@ -173,22 +126,6 @@ function FooterSection({ t, logoImg, footerImage, language = "es" }) {
                           <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                       </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="footerLinksCol footerLinksColEnhanced">
-                <h4 className="footerColTitle">{isSpanish ? 'Soporte' : 'Support'}</h4>
-                <ul className="footerLinksList footerLinksListEnhanced">
-                  {footerLinks.support.map((link, i) => (
-                    <li key={i}>
-                      <a href={link.href} className="footerLinkItem">
-                        <span>{link.label}</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                        </svg>
-                      </a>
                     </li>
                   ))}
                 </ul>

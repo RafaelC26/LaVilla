@@ -384,21 +384,15 @@ function HeroSection({
     setIsAvailabilityModalOpen(false);
   };
 
-  const showListings = () => {
-    if (onShowListings) {
-      onShowListings();
-    } else {
-      const target = document.querySelector("#listings");
-      if (target) {
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        target.scrollIntoView({
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-          block: "start"
-        });
-      }
+  const scrollToListings = () => {
+    const target = document.querySelector("#listings");
+    if (target) {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
     }
-
-    setIsAvailabilityModalOpen(false);
   };
 
   return (
@@ -409,147 +403,16 @@ function HeroSection({
         <p className="heroSubtitle">{t.hero.subtitle}</p>
 
         <div className="heroActions">
-          <button type="button" className="heroBtnPremium primary" onClick={showListings}>
+          <button type="button" className="heroBtnPremium primary" onClick={scrollToListings}>
             <span className="btnText">{t.hero.viewStaysBtn}</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="btnIcon">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <button type="button" className="heroBtnPremium secondary" onClick={showListings}>
-            <span className="btnText">{t.hero.bookNowBtn}</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="btnIcon">
-              <path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
         </div>
-
-        <form
-          className="searchBar"
-          onSubmit={(event) => {
-            event.preventDefault();
-            onCheckAvailability();
-          }}
-        >
-          <div className="searchField">
-            <HeroLocationField
-              t={t}
-              locationValue={locationValue}
-              locations={locations}
-              onChangeLocation={onChangeLocation}
-            />
-          </div>
-
-          <div className="searchDivider" />
-
-          <div className="searchField">
-            <HeroDateField
-              id="hero-check-in"
-              label={t.hero.checkInLabel}
-              icon={(
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              )}
-              value={checkInDate}
-              minValue={minCheckIn}
-              onApplyDate={onChangeCheckIn}
-              placeholder={t.hero.selectCheckInBtn}
-              language={language}
-              rangeStart={checkInDate}
-              rangeEnd={checkOutDate}
-            />
-          </div>
-
-          <div className="searchDivider" />
-
-          <div className="searchField">
-            <HeroDateField
-              id="hero-check-out"
-              label={t.hero.checkOutLabel}
-              icon={(
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              )}
-              value={checkOutDate}
-              minValue={minCheckOut}
-              onApplyDate={onChangeCheckOut}
-              placeholder={t.hero.selectCheckOutBtn}
-              language={language}
-              rangeStart={checkInDate}
-              rangeEnd={checkOutDate}
-            />
-          </div>
-
-          <div className="searchDivider" />
-
-          <div className="searchField">
-            <HeroGuestsField t={t} guestsValue={guestsValue} onChangeGuests={onChangeGuests} />
-          </div>
-
-          <button className="searchButton" type="submit" aria-label={t.hero.checkAvailabilityBtn}>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="11" cy="11" r="5.5" stroke="currentColor" strokeWidth="2"/>
-              <path d="M15.5 15.5L20 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </button>
-        </form>
-
-        {availabilityResult && isAvailabilityModalOpen && (
-          <div
-            className="availabilityModalBackdrop"
-            role="dialog"
-            aria-modal="true"
-            aria-label={availabilityResult.title}
-            onClick={closeAvailabilityModal}
-          >
-            <div
-              className={`availabilityModalCard ${availabilityResult.isAvailable ? "available" : "unavailable"}`}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="availabilityModalGlow" aria-hidden="true" />
-              <button
-                type="button"
-                className="availabilityModalClose"
-                aria-label={t.hero.closeAvailabilityModal || "Close"}
-                onClick={closeAvailabilityModal}
-              >
-                ×
-              </button>
-              <p className="availabilityModalState">
-                <span className="availabilityModalStateDot" aria-hidden="true" />
-                {availabilityResult.isAvailable ? "Disponibilidad" : "Resultado"}
-              </p>
-              <div className="availabilityModalLayout">
-                <div className="availabilityModalMain">
-                  <strong>{availabilityResult.title}</strong>
-                  <p>{availabilityResult.message}</p>
-
-                  {availabilityResult.isAvailable && (
-                    <button type="button" className="availabilityShowBtn" onClick={showListings}>
-                      {t.hero.showListingsBtn || "Mostrar alojamientos"}
-                    </button>
-                  )}
-                </div>
-
-                {!!availabilityResult.listingNames?.length && (
-                  <div className="availabilityListingsWrap">
-                    <p className="availabilityListingsLabel">Alojamientos recomendados</p>
-                    <div className="availabilityListingsChips">
-                      {availabilityResult.listingNames.map((listingName) => (
-                        <span key={listingName} className="availabilityListingChip">{listingName}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
+
   );
 }
 
