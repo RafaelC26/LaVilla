@@ -1,6 +1,6 @@
 import "./App.css";
 import { lazy, Suspense, useEffect, useState, useMemo, useRef } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { listings } from "./data";
 import { translations } from "./translations";
 import logoImg from "./assets/logo.png";
@@ -78,6 +78,19 @@ const isoToLocalDate = (isoValue) => {
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    const { hash } = location;
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 120);
+      }
+    }
+  }, [location.hash]);
+
   const [language, setLanguage] = useState("es");
   const [currentUserId, setCurrentUserId] = useState(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);

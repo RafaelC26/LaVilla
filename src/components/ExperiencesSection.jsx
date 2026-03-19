@@ -7,7 +7,7 @@ function ExperiencesSection({ t, language }) {
   const personalFacts = host.personalFacts || [];
 
   return (
-    <section id="host" className="hostExperienceSection">
+    <section id="experiences" className="hostExperienceSection">
       <div className="hostExperienceContainer">
         {/* Decorative Background Elements */}
         <div className="hostDecorCircle circle1"></div>

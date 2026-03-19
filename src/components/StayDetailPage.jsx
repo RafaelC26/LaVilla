@@ -1,5 +1,5 @@
 import { addDays, differenceInCalendarDays } from "date-fns";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useNavigate, useParams } from "react-router-dom";
 import anfitrionImg from "../assets/Anfitrion.png";
@@ -314,6 +314,8 @@ function StayDetailPage({
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const [isImageLightboxOpen, setIsImageLightboxOpen] = useState(false);
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+  const [focusHostAboutOnOpen, setFocusHostAboutOnOpen] = useState(false);
+  const [highlightHostAbout, setHighlightHostAbout] = useState(false);
   const [hostChatThreads, setHostChatThreads] = useState(() => ({
     primary: t.detail.hostChat.messages,
     test: [
@@ -329,6 +331,8 @@ function StayDetailPage({
     t.profileDashboard.payments.initialValues.selectedMethodId
   );
   const titleRef = useRef(null);
+  const hostAboutSectionRef = useRef(null);
+  const hostAboutHighlightTimeoutRef = useRef(null);
 
   const renderUserMenu = () => (
     <div className="userMenuContainer" ref={userMenuRef}>
@@ -542,11 +546,55 @@ function StayDetailPage({
 
   const closeHostDialog = () => {
     setIsHostDialogOpen(false);
+    setFocusHostAboutOnOpen(false);
   };
 
   const openHostDialog = () => {
+    setFocusHostAboutOnOpen(false);
     setIsHostDialogOpen(true);
   };
+
+  const focusAndHighlightHostAbout = useCallback(() => {
+    hostAboutSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setHighlightHostAbout(true);
+
+    if (hostAboutHighlightTimeoutRef.current) {
+      clearTimeout(hostAboutHighlightTimeoutRef.current);
+    }
+
+    hostAboutHighlightTimeoutRef.current = setTimeout(() => {
+      setHighlightHostAbout(false);
+    }, 1400);
+  }, []);
+
+  const openHostDialogAbout = () => {
+    if (isHostDialogOpen) {
+      focusAndHighlightHostAbout();
+      return;
+    }
+
+    setFocusHostAboutOnOpen(true);
+    setIsHostDialogOpen(true);
+  };
+
+  useEffect(() => {
+    if (!isHostDialogOpen || !focusHostAboutOnOpen) {
+      return;
+    }
+
+    const frameId = requestAnimationFrame(() => {
+      focusAndHighlightHostAbout();
+      setFocusHostAboutOnOpen(false);
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [isHostDialogOpen, focusAndHighlightHostAbout, focusHostAboutOnOpen]);
+
+  useEffect(() => () => {
+    if (hostAboutHighlightTimeoutRef.current) {
+      clearTimeout(hostAboutHighlightTimeoutRef.current);
+    }
+  }, []);
 
   const ensureChatAccess = () => {
     if (isAuthenticated) {
@@ -1288,7 +1336,7 @@ function StayDetailPage({
                 <button
                   className="hostKnowMoreSidebarBtn"
                   type="button"
-                  onClick={openHostDialog}
+                  onClick={openHostDialogAbout}
                 >
                   {hostDialog.profileButton}
                   <span className="btnArrow">→</span>
@@ -1526,7 +1574,10 @@ function StayDetailPage({
 
               {/* Right Side: Narrative & Facts */}
               <div className="hostDialogRight">
-                <div className="hostDialogNarrative">
+                <div
+                  className={`hostDialogNarrative ${highlightHostAbout ? "hostAboutHighlight" : ""}`}
+                  ref={hostAboutSectionRef}
+                >
                   <span className="narrativeTag">{t.experiences.tag}</span>
                   <h2 className="narrativeTitle">{t.experiences.title}</h2>
                   <p className="narrativeBio">{t.experiences.bio}</p>

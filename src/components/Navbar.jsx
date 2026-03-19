@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const USER_MENU_ICONS = {
   profile: (
@@ -57,6 +58,8 @@ function Navbar({
   showNavLinks = true,
   userMenuOptions
 }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -95,6 +98,14 @@ function Navbar({
 
   const handleNavClick = (event, href) => {
     event.preventDefault();
+    const isHome = location.pathname === "/";
+
+    if (!isHome) {
+      navigate("/" + href);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
     const target = document.querySelector(href);
     if (!target) {
       return;
@@ -125,6 +136,15 @@ function Navbar({
               className="navLink"
               onClick={(event) => handleNavClick(event, section.href)}
             >
+              {section.key === "host" && (
+                <span className="navLinkIcon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', verticalAlign: 'middle' }}>
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+              )}
               {section.label}
             </a>
           ))}
@@ -205,6 +225,15 @@ function Navbar({
                 className="mobileNavLink"
                 onClick={(event) => handleNavClick(event, section.href)}
               >
+                {section.key === "host" && (
+                  <span className="navLinkIcon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px', verticalAlign: 'middle' }}>
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="16" x2="12" y2="12" />
+                      <line x1="12" y1="8" x2="12.01" y2="8" />
+                    </svg>
+                  </span>
+                )}
                 {section.label}
               </a>
             ))}
