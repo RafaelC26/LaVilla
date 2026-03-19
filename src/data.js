@@ -122,14 +122,6 @@ export const listings = [
       { url: R_Bano2, title: 'Medio baño', caption: 'Baño de visitas' },
       { url: R_Patio, title: 'Exterior', caption: 'Patio trasero' },
       { url: R_Exterior2, title: 'Exterior', caption: 'Otra vista exterior' },
-      { url: R_SalaVG, title: 'Sala de estar', caption: 'Sala de estar (vista general)' },
-      { url: R_ComedorVS, title: 'Comedor', caption: 'Vista desde la sala' },
-      { url: R_ComedorVC, title: 'Comedor', caption: 'Vista hacia la cocina' },
-      { url: R_CocinaVG, title: 'Cocina', caption: 'Cocina vista general' },
-      { url: R_CocinaVL, title: 'Cocina', caption: 'Cocina (vista lateral)' },
-      { url: R_Hab1Otra, title: 'Habitación 1', caption: 'Habitación 1 (otra vista)' },
-      { url: R_Hab2Frente, title: 'Habitación 2', caption: 'Vista de frente' },
-      { url: R_Bano1OtraVista, title: 'Baño', caption: 'Baño completo (otra vista)' },
     ],
     reviewsList: [
       {
@@ -223,8 +215,6 @@ export const listings = [
       { url: D_Bano1, title: 'Baño completo 1', caption: 'Baño completo 1' },
       { url: D_Bano2, title: 'Baño completo 2', caption: 'Baño completo 2' },
       { url: D_Oficina, title: 'Oficina', caption: 'Oficina' },
-      { url: D_ComedorVG, title: 'Fotos adicionales', caption: 'Vista general del comedor' },
-      { url: D_ComedorVS, title: 'Fotos adicionales', caption: 'Comedor y sala' },
     ],
     reviewsList: [
       {

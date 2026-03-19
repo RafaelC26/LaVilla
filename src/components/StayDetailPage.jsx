@@ -963,12 +963,6 @@ function StayDetailPage({
 
             {activeTab === "details" && (
               <>
-                <PropertyGallery
-                  images={detailImages}
-                  title={listing.title}
-                  language={language}
-                />
-
                 <h3 className="detailSleepTitle">{t.detail.whereYouWillSleep}</h3>
                 <div className="detailSleepGrid">
                   <div className="detailSleepFeatures">
