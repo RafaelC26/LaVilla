@@ -660,6 +660,7 @@ export const translations = {
       monthLabel: "Mayo 2024",
       chooseDates: "Elige tus fechas, reserva y activa una confirmacion instantanea.",
       contactHost: "Contactar anfitrión",
+      airbnbLink: "Ver en Airbnb",
       hostBadge: "Superanfitrion",
       hostName: "Andres",
       hostSince: "Anfitrión desde 2018",
@@ -1416,6 +1417,7 @@ export const translations = {
       monthLabel: "May 2024",
       chooseDates: "Pick your dates, book, and enable instant confirmation.",
       contactHost: "Contact host",
+      airbnbLink: "Book on Airbnb",
       hostChat: {
         title: "Host chat",
         status: "Online",
